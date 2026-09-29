@@ -40,14 +40,20 @@ compared bytewise only — `AnsiCompareStr`, a sorted `TStringList` and the like
 
 ## Testing
 
-`python dostest.py` runs the DOS build in DOSBox-X on `samples\*.WS` (md, txt and rtf) and compares the
-results with the Windows build byte by byte. Set `DOSBOX_X` to the path of `dosbox-x.exe` if it is not
-`D:\DOSBox-X\dosbox-x.exe`. The samples are real documents typed in WordStar 7.0; the `.md` files next to
-them are the expected Markdown.
+`runtests` runs every case in `tests\` and compares the files written with `expect\` byte by byte.
+A case folder holds the input (`in.ws` and any `.fi`, `.df` or picture files it uses), `args` (the
+command line, one argument per line, run from the case folder) and `expect\`; `tests\index.txt` names
+the cases. Build and run on Windows:
 
-`python compare.py` checks the output against the Python reference converter (every conversion of its
-unit tests, plus every WordStar document of the surrounding project as md, txt, rtf and rtf `-q`). It
-expects the Python converter in `..\wsconvert-master`, which is not part of this repository.
+    fpc -O2 -FUlib runtests.pas
+    runtests wsconv.exe
+
+DOS: `builddos.bat` builds `dos\runtests.exe` as well; `dosbox-x -conf test-dos.conf` then runs the tests
+with the DOS build and writes the result to `dos\test.log`.
+
+The expected files were checked against the Python converter this program was translated from
+(its unit tests, including the real WordStar 7.0 documents in `samples\`). When a fix changes the output
+on purpose, replace the case's `expect\` files with the new, verified output.
 
 ## Origin and license
 

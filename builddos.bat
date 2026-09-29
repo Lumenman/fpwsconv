@@ -4,3 +4,4 @@ if not exist libdos\nul mkdir libdos
 if not exist dos\nul mkdir dos
 ppc386 -Tgo32v2 -O2 -Xs -Fuf:\units\go32v2\* -FUlibdos -FEdos wsconv.pas > dos\build.log
 copy f:\cwsdpmi.exe dos > nul
+ppc386 -Tgo32v2 -O2 -Xs -Fuf:\units\go32v2\* -FUlibdos -FEdos runtests.pas >> dos\build.log

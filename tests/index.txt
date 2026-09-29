@@ -1,0 +1,103 @@
+001 test: Hello
+002 test: One two three
+003 test: example
+004 test: Text^[Short note] end
+005 test: Text^[Tagged note] end
+006 test: X<!-- My annotation --> Y
+007 test: AB
+008 test: A B
+009 test: This was replaced.
+010 test: .xl 0c
+011 test: A	B
+012 test: ![logo](logo.png)
+013 test: ![](C:\WS\NONE.PIX)
+014 rtf test: lain\kerning1\ql\li0\ri0{A \b B\b0  \i C\i0  \u1046?}\par | } | 
+015 test: A☻¶B
+016 rtf test: s24 X}\par | \pard\plain\kerning1\ql\li0\ri0{\f1\fs24 }\par | } | 
+017 rtf test: s24 X}\par | \pard\plain\kerning1\ql\li0\ri0{\f1\fs24 }\par | } | 
+018 rtf test: per\chftn}{\footnote\pard\plain{\super\chftn} Note.}}\par | } | 
+019 rtf test: 0\ri0{A}\par | \pard\plain\kerning1\qc\li0\ri0{\page B}\par | } | 
+020 rtf test: 0\ri0{A}\par | \pard\plain\kerning1\qc\li0\ri0{\page B}\par | } | 
+021 rtf test: {\fldrslt 1}}\par} | \pard\plain\kerning1\ql\li0\ri0{A}\par | } | 
+022 rtf test: plain\kerning1\ql\li0\ri0\tx720\tqdec\tx2592{A\tab B}\par | } | 
+023 rtf test: \pard\plain\kerning1\ql\li0\ri0\tx720\tqdec\tx1440{A}\par | } | 
+024 rtf test: ri0{B}\par | \pard\plain\kerning1\ql\li0\ri0{\column C}\par | } | 
+025 rtf test: ri0{B}\par | \pard\plain\kerning1\ql\li0\ri0{\column C}\par | } | 
+026 rtf test: C\cf16 D}\par | \pard\plain\kerning1\ql\li0\ri0{\cf16 }\par | } | 
+027 rtf test: C\cf16 D}\par | \pard\plain\kerning1\ql\li0\ri0{\cf16 }\par | } | 
+028 rtf test: C\cf16 D}\par | \pard\plain\kerning1\ql\li0\ri0{\cf16 }\par | } | 
+029 rtf test: \ql\li0\ri0{B}\par | \pard\plain\kerning1\ql\li0\ri0{C}\par | } | 
+030 rtf test: \ql\li0\ri0{B}\par | \pard\plain\kerning1\ql\li0\ri0{C}\par | } | 
+031 rtf test: \ql\li0\ri0{B}\par | \pard\plain\kerning1\ql\li0\ri0{C}\par | } | 
+032 rtf test: 8220?Don\u8217?t,\u8221? he said: (\u8216?no\u8217?)}\par | } | 
+033 rtf test: erning1\ql\li0\ri0{a\u8212?b \u8212? c\u8230?\u8221?}\par | } | 
+034 rtf test: rd\plain\kerning1\ql\li0\ri0{\u8220?\u8217?19\u8221?}\par | } | 
+035 rtf test: 20\margb1920 | \pard\plain\kerning1\ql\li0\ri0{"Don't"}\par | } | 
+036 rtf test: {A}\par | \pard\plain\kerning1\ql\li0\ri0{\column Head}\par | } | 
+037 test: A |  | Head
+038 test: 2.3 Item
+039 test: 1.2 Item
+040 test: II.A.3.d. Item
+041 test: 3. Item
+042 test: 1.5. Item
+043 test: A\<TRUNCATED\>B
+044 test: Text
+045 test: <!-- Header: Chapter One --> |  | <!-- Footer: Page # 
+046 test: A |  | B
+047 test: A |  | --- |  | B
+048 test: café
+049 test: A
+050 test: A
+051 test: **bold** *it* ~~x~~
+052 test: one | line |  | two
+053 test: | Name | Age | | |---|---| | | Ann | 31 | | | Bob | 7 |
+054 test: | A | B | | |---|---| | | 1 | 2 |
+055 test: a b |  | c d e
+056 test: Intro |  | - One | - Two |  | End
+057 test: 1. First | 2. Second
+058 test: Code: |  |     a = 1 |     b = 2
+059 test: Indented text
+060 test: <!-- note one --> |  | <!-- note two --> |  | Text
+061 test: <!-- Merge data file: ADDR.DTA --> |  | Dear &name&
+062 test: Before |  | **Inside** |  | After
+063 test: B |  | A
+064 test: <!-- .fi nothere.ws: file not found --> |  | Text
+065 test: X | Y
+066 test: <!-- Merge data file: names.dta --> |  | Dear &name& o
+067 test: Dear Ann of Paris |  | Dear Smith, Bob of Rome
+068 test: Dear Ann of Paris | Dear Smith, Bob of Rome
+069 test: Big
+070 test: Cal
+071 test: T=21 R=4
+072 test: Hi Kim
+073 test: L1 |  | L3
+074 test: Sum:  $1,234.50 K:  7
+075 test: Copy |  | Copy
+076 test: A |  | B |  | C
+077 test: Ann is 31 |  | Bob is 7
+078 test: Pen: 3 |  | Ink: 13
+079 test: | Item | Qty | | |---|---| | | Pen | 3 |
+080 test: | Item | Qty | | |---|---| | | Pen | 3 | | | Ink | 13 |
+081 test: Pen	3 | Ink	13
+082 test: | NAME | AGE | | |---|---| | | Ann | 31 | | | Bob | 7 |
+083 test: Привет, **мир**! Съешь ещё этих булок.
+084 test: Їжак i єнот, Г немає
+085 test: Café crème, élève naïve
+086 test: | Имя | Год | | |---|---| | | Петр | 1990 |
+087 test: î¿α
+088 test: Їжак і єнот, ґанок
+089 test: Сегодня 25°C, завтра Ёлка
+090 test: На старт, внимание
+091 test: Уважаемый Иван! |  | Уважаемый Анна!
+092 test: Ольга
+093 test: | Товар | | |---| | | Ручка |
+094 test: # Big |  | ## Sub |  | Body
+095 test: <!-- Header: Header text --> |  | <!-- Footer: Page # 
+096 test: Plain **bold** *italic* *under* ~~strike~~ x^2^ H~
+097 test: Text with a note^[Footnote text here.] and more te
+098 test: End^[Endnote text.] ann<!-- Annotation text. --> c
+099 test: 1 First |  | 1.1 Sub one |  | 1.2 Sub two
+100 test: Привет, **мир**! Съешь ещё этих мягких французских
+101 test: ## My heading |  | Body paragraph.
+102 test: | Name | Age | | |---|---| | | Ann | 31 | | | Bob | 7 |
+103 test: Їжак і єнот ґанок м'ясо №

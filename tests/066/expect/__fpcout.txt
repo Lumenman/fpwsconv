@@ -1,0 +1,3 @@
+<!-- Merge data file: names.dta -->
+
+Dear &name& of &city&
