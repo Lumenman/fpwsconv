@@ -640,8 +640,8 @@ end;
 
 function TParser.Factor: Double;
 begin
-  if Peek('-') then begin Inc(p); Exit(-Factor); end;
-  if Peek('+') then begin Inc(p); Exit(Factor); end;
+  if Peek('-') then begin Inc(p); Exit(-Factor()); end;
+  if Peek('+') then begin Inc(p); Exit(Factor()); end;
   if Peek('~') then Fail;
   Result := Power;
 end;

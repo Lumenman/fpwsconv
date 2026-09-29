@@ -1,0 +1,5 @@
+in.ws
+-m
+-t
+-o
+got/out.txt
