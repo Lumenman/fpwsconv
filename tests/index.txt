@@ -135,3 +135,6 @@
 135 include: damaged dBASE file (record length 0)
 136 merge: damaged dBASE file (too many records)
 137 pictures: same name in two folders, repeated picture, picture in a .fi document
+138 rtf: .fi on the last line without CR
+139 rtf: .fi on the last line before 1Ah
+140 rtf: .pa on the last line without CR

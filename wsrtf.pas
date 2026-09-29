@@ -801,6 +801,11 @@ begin
     if inDot then dotline := dotline + ch
     else Put(ch, DB(d, i));
   end;
+  if inDot then                                      { a dot command on the last line, without CR }
+  begin
+    DotCommand(dotline, para);
+    inDot := False;
+  end;
   if Length(para) > 0 then
   begin
     on := False;
