@@ -1,0 +1,98 @@
+The version of WordStar in this archive is **"WordStar for DOS 
+North American English Version 7.0 Rev. D."**  By default, it uses 
+WordStar's American English dictionary and American English 
+thesaurus.  
+
+But I've also supplied additional dictionaries, which you can 
+switch to on the fly from within a document by using the **.la** 
+command followed by the DOS country-code number for that language 
+(more dictionaries were published, I believe, but I don't have 
+them):
+
+ .la 001  English (US)
+
+ .la 044  English (UK)
+
+ .la 358  Finnish
+
+ .la 002  French (Canada)
+
+ .la 033  French (France)
+
+ .la 049  German
+
+ .la 039  Italian
+
+ .la 052  Spanish (Mexico)
+
+ .la 034  Spanish (Spain)
+
+If you like, you can included text such as "English (UK)" as part 
+of the dot command as a memory aid, as I have above, but you 
+don't have to: the bare command **".la 044"** works just fine.
+
+If you want to permanently switch the default language for your 
+dictionary and thesaurus, you can do that easily at **WSCHANGE** menu 
+**D**, **C**, **G**, **K** ("Language Default").
+
+If you do a spellcheck now by issuing **^QL**, you'll see that 
+the **.la** codes below cause the words in various languages to be 
+properly recognized or flagged as misspelling
+
+**US ENGLISH TEST:**
+
+tire
+
+tyre
+
+center
+
+centre
+
+customize
+
+customise
+
+jail
+
+gaol
+
+**BRITISH ENGLISH TEST:**
+
+tire
+
+tyre (both tire and tyre are accepted in UK English)
+
+center
+
+centre
+
+customize
+
+customise
+
+jail
+
+gaol
+
+**ITALIAN TEST:**
+
+piazzai
+
+**GERMAN TEST:**
+
+Deutsche
+
+I've also provided a file called **SPLMN001.LGL**, which adds a lot 
+of legal and medical terms from Black's Legal and Stedman's 
+Medical dictionaries to the default American English WordStar 
+dictionary.  To use it, copy **SPLMN001.LGL** to **SPLMN001.DCT** 
+(overwriting the regular American English dictionary0.  To revert 
+back to the regular American dictionary, copy **SPLMN001.BU** to 
+**SPLMN001.DCT**.
+
+-- Robert J. Sawyer
+
+   sawyer@sfwriter.com
+
+   August 2014

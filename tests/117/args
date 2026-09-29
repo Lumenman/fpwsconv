@@ -1,0 +1,5 @@
+fontcrib.ws
+-r
+-q
+-o
+got/out.rtf

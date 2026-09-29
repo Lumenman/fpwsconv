@@ -1,0 +1,29 @@
+<!-- Sunday, December 16, 2007, in Mississauga -->
+
+Test to see which commands can be included in ".tc" lines
+
+Answer:  ^P= font tags, ^P- color tags, and ^P! custom printer codes only
+
+Style
+
+Color
+
+Comment
+
+1 ^OZ
+
+1 ^OZ
+
+1 ^OZ
+
+Font
+
+Alt
+
+Normal
+
+Custom print control
+
+Index Entry
+
+Pix Tag

@@ -1,0 +1,5 @@
+DOTCMDNS.WS
+-r
+-q
+-o
+got/out.rtf

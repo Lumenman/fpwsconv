@@ -1,0 +1,1409 @@
+SFWRITER.COM Inc.
+XXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXX
+
+(((sawyer@sfwriter.com)))&|&& URL-em &&||&& TXT-em &&|||&
+XXX-XXX-XXXX 
+
+110,000 words 
+(exclusive of front and back matter)
+
+
+
+
+
+	THE OPPENHEIMER ALTERNATIVE
+
+
+By Best-Novel Hugo and Nebula Award-Winner
+
+ROBERT J. SAWYER
+
+
+
+
+
+
+
+
+	Draft:  &@&
+
+
+
+
+
+A Personal Request to the Art Director
+
+	(Please do NOT set in type)
+
+If you choose to depict J. Robert Oppenheimer on the book's 
+cover, may I please ask you not to depict him smoking?  Yes, 
+Oppie was a chain smoker, but I lost my younger brother to lung 
+cancer and find such imagery disturbing (it was hard enough for 
+me to write all the smoking Oppie does in this novel).  Many 
+thanks!
+
+
+	Notes for the Copyeditor
+
+	(Please do NOT set in type)
+
+
+
+I update these notes with every novel.  Even if you've previously 
+copyedited one of my books, please review the notes below.  Thank 
+you.
+
+Feel free to regularize any deviations from the following 
+standards, but please query on all other changes.
+
+
+REFERENCES
+
+My standard reference for spelling and word usage is The American 
+Heritage Dictionary, Fifth Edition (unabridged), 2011 (American 
+Heritage is listed in CMS 16 section 7.1 as an acceptable 
+choice).
+
+I've decided I much prefer AHD to WEB 11, which had been my 
+choice for some earlier novels.  Note that AHD relied on a usage 
+panel of professional writers, including, when he was alive, 
+Isaac Asimov; the panel was chaired by linguist Steven Pinker.
+
+You can access this dictionary online for free:
+
+(((https://ahdictionary.com))))&|&& URL-ahd &&||&& TXT-ahd &&|||&
+
+However, although The Chicago Manual of Style may advise to 
+"normally opt for" the first spelling listed in the dictionary of 
+choice, I consider the selection between variant spellings (such 
+as "aesthetics" and "esthetics" or "advisor" and "adviser") to be 
+the author's prerogative.  I prefer the former spellings in each 
+of the foregoing pairs, and also prefer "café" to "cafe," 
+"cliché" to "cliche," "cross-section" to "cross section," "naïve" 
+to "naive," "naïveté" to "naiveté," and "disruptor" (well 
+established as the usual spelling in science-fictional contexts) 
+to "disrupter."  If my preferred spelling is listed in my 
+preferred dictionary, whether as an equal variant (which American 
+Heritage shows following the word "or") or an unequal variant 
+(which American Heritage shows following the word "also"), please 
+don't change it to another form.  Note that I use both the terms 
+"atomic bomb" and "atom bomb" deliberately; please do not 
+regularize.
+
+If suggesting a change to my usage, please query with CMS edition 
+and section number or Words Into Type page reference.
+
+
+PERIOD FLAVOR
+
+This novel is set mostly in the 1940s and 1950s.  Spelling 
+conventions have changed in the last seventy-five-odd years, 
+largely at the bullying behest of the Chicago Manual of Style.  
+To retain the period flavor of this novel, I've deliberately 
+chosen to hyphenate many prefixes and suffixes that in 
+contemporary works might be set solid.  For instance, J. Robert 
+Oppenheimer's actual job title, in all historical documents, was 
+"Co-ordinator of Rapid Rupture" (not "Coordinator").  
+
+To add to the overall feeling of historical authenticity, I've 
+chosen to use these spellings throughout:
+
+	anti-electron
+	anti-matter
+	anti-Semite
+	co-author
+	co-operation
+	co-ordinates
+	co-ordinator
+	counter-clockwise
+	counter-espionage
+	counter-intelligence
+	cross-examining
+	extra-terrestrial
+	Hallowe'en
+	house-warming
+	in-falling
+	lower-case
+	multi-armed
+	off-site
+	post-war
+	pre-eminent
+	pre-emptive
+	re-evaluation
+	pre-war
+	re-examine
+	semi-circle
+	space-time
+	table-top
+	time-like
+	twig-like
+	war-time
+	world-line
+	world-view
+
+For the same reason, I'm also retaining the diphthong in 
+archaeology and palaeontology, and am writing policy maker, space 
+flight, and space ship as two words.
+
+Today, we would commonly write of a voyage "from the Earth to the 
+Moon and then on to Mars."  However, prior to the Space Age, our 
+planet and its natural satellite were almost always referred to 
+by uncapitalized nouns, and I've adhered to that usage in the 
+text:  "from the earth to the moon and then on to Mars."
+
+Those long-gone decades predate modern attempts (of which in 
+other contexts I heartily approve) toward gender-neutrality and 
+gender-inclusivity in language.  Therefore, I'm adhering here to 
+the old practices of using blond for males and blonde for females 
+(as both adjective and noun), and using only "he" where today we 
+might write "he or she."
+
+I'm also treating "Jr." as a parenthetical, as it was back then:  
+Leslie Groves, Jr., not Leslie Groves Jr. (which is what the 17th 
+edition of CMS would have us write).
+
+I've chosen to include the periods in acronyms and academic 
+degrees, as they would indeed have been commonly styled this way 
+in the 1940s and 1950s:
+
+	A.E.C.
+	A.U.
+	F.B.I.
+	I.A.S.
+	I.D.
+	J.P.L.
+	M.D.
+	M.E.D.
+	M.I.T.
+	N.K.G.B.
+	Ph.D.
+	R.H.I.P.
+	S.S.
+	T.N.T.
+	U.C.B.
+	U.K.
+	U.N.
+	U.S.
+	U.S.A.
+
+EXCEPTION:
+
+In the acronym-heavy scene in which Feynman is reading the 
+dossier on von Braun, I've deliberately left out all the periods 
+(a) for readability and (b) because this particular real 
+historical document rendered them that way.
+
+
+ITALICS
+
+I use italics for:
+
+Emphasis
+
+The titles of publications, movies, and television series
+
+Some verbatim transcriptions of thoughts, especially when there 
+might be ambiguity about whether the text is thought or narration
+
+All non-English words and phrases being consciously used as 
+non-English, and all Latin phrases (which are usually 
+affectations) even if they appear in English dictionaries: 
+"au revoir" and "en route" (French), "a cappella" (Italian), and 
+"per se" (Latin) are all italicized.  Please note however that I 
+do not italicize foreign-source single words (not phrases) that 
+have been wholly co-opted into standard English, and whose usage 
+doesn't constitute an affectation: words such as "milieu" or 
+"liaison" (French) and "trek" (Afrikaans) are not italicized, but 
+bon voyage -- being a phrase -- is.  (My rationale is that "au," 
+"revoir," "en," "cappella," "bon," and so on are not valid 
+English words on their own, and only the italicizing linking them 
+to the preceding or following text turns them into a meaningful 
+phrase.)
+
+The Chicago Manual of Style 14th Edition (1993), section 5.4, 
+says, "Generally, punctuation marks are printed in the same style 
+or font of type as the word, letter, character, or symbol 
+immediately preceding them."
+
+I agree with this.  However, starting with CMS's 15th Edition 
+(2003), section 6.3 ("Punctuation and font: primary system"), 
+changed this, saying: "All punctuation marks should appear in the 
+same font -- roman or italic -- as the main or surrounding text, 
+except for punctuation that belongs to a title or an exclamation 
+in a different font."  (A similar point is made in CMS's 16th 
+edition in section 6.2.)
+
+I prefer the older standard set by CMS's 14th Edition (or as 
+still allowed for print publications under CMS 16 section 6.4 
+("Punctuation and Font -- aesthetic considerations")) as it does 
+indeed respect the aesthetics of how type actually looks on the 
+printed page.  In particular I want question marks, exclamation 
+marks, colons, and semicolons immediately following italicized 
+words to always be italicized, along with any closing quotation 
+mark that follows them: Look out! not Look out! and "Say what?" 
+not "Say what?" or "Say what?"
+
+EXCEPTIONS:
+
+Although the names of sailing vessels and spaceships are 
+italicized, if they are being used in the possessive form the 
+following apostrophe and the letter s are not italicized: "the 
+Titanic's crew."
+
+I do not italicize an em dash even if it immediately follows 
+italicized text, unless the em dash is the end of a paragraph or 
+is included in italicized dialogue.
+
+If the first word in a sentence is italicized, and that word is 
+preceded by a quotation mark, I also italicize that quotation 
+mark.
+
+When letters of the alphabet appear as words in the manuscript, 
+I've italicized them except (per CMS 16 section 7.63) when the 
+letters are meant to suggest shapes: He drew a T in Scrabble 
+while he was wearing a T-shirt.  However, I don't italicize 
+letters when they are used for spelling: "That word is spelled 
+c-a-t."
+
+
+PUNCTUATION
+
+I use serial (Oxford) commas.
+
+I use commas before terminal too and around internal too, but I 
+don't use commas with close appositives when the name is a single 
+word: I write "her husband John" but, except in long lists (as in 
+the Acknowledgments), "her husband, John Smith."
+
+I deliberately do not precede "suddenly" with a comma; the comma 
+negates the rapid effect.  I write, "Suddenly a bomb exploded," 
+not "Suddenly, a bomb exploded."
+
+Except for Biblical and Classical names, I form the possessive of 
+names ending in s by adding apostrophe-s.
+
+I use three (never four) periods for ellipsis points.  My 
+rationale is that an ellipsis in dialog indicates a trailing off 
+(an incomplete sentence, which, since it is incomplete, has no 
+terminal punctuation).  Likewise, sentence fragments ending in an 
+em dash (denoting an interruption or abrupt change of thought) 
+are also incomplete and therefore are not followed by terminal 
+punctuation.
+
+I almost always hyphenate compound adjectives (phrasal 
+adjectives).  
+
+However, I do not treat color specifications as components of 
+compound adjectives.  I write "green phosphor line," not 
+"green-phosphor line," "orange vinyl upholstery," not 
+"orange-vinyl upholstery," and so on.
+
+Please note that according to CMS 15 section 7.90, compound 
+chemical terms are not hyphenated, even when they are being used 
+as adjectives: it is correct to write, as I do, "carbon dioxide 
+gas."
+
+I do not usually employ the genitive or possessive case with 
+gerunds in constructions such as in the following examples 
+(although in dialogue individual characters may deviate from 
+this); pedantry may be appropriate in academic contexts, but it 
+can be disruptively formal in fiction.  I write "Despite Atlanta 
+also being home to CNN" not "Despite Atlanta's also being home to 
+CNN," and "Recall Dr. Goldsmith giving testimony" not "Recall Dr. 
+Goldsmith's giving testimony."  Please do not adjust my usage.
+
+I have set as closed pairs or triplets of initials in a person's 
+name:  "I.I. Rabi," not "I. I. Rabi," for Isidor Isaac Rabi; 
+"E.O. Lawrence," not "E. O. Lawrence," "J.R.R. Tolkien," not 
+"J. R. R. Tolkien," and so on.
+
+
+SPLIT INFINITIVES
+
+I'm aware of the supposed prohibition against split infinitives; 
+however, I don't agree with it.  Please do not adjust my usage; I 
+prefer to boldly go where a great many writers have gone 
+before ...
+
+
+CAPITALIZATION
+
+I use lower-case for the first letter in a sentence following a 
+colon.
+
+
+NUMBERS
+
+I spell out all numbers that begin sentences; except for dates, 
+spell out zero through one hundred (even when followed by the 
+word "percent"), and use numerals for 101 and beyond, including 
+years ("2019"), their two-digit abbreviations ("'19"), and 
+precise times ("9:30 a.m."); when an ordinal date is mentioned in 
+dialog, I spell it out as a word: I write "March 15, 2019," in 
+normal text, but in dialog would write, "Beware March fifteenth 
+-- it's the Ides of March!"
+
+However, when using slang terms referring to rotational turns, I 
+always spell out "one-eighty" and "three-sixty," and in dialog 
+when I want to differentiate the pronoun, I write "a hundred and 
+fifty," rather than "150" (which would normally be read as "one 
+hundred and fifty").
+
+I don't usually spell out numbers containing decimal points, even 
+in dialog (I use "123.45" rather than "one hundred and 
+twenty-three point four five"). 
+
+I do not use apostrophes to pluralize numbers: "1990's" is 
+possessive of the year 1990 ("1990's best novel was ..."), not a 
+reference to the decade that ran from 1990 to 1999 (I write: "The 
+1990s were a wonderful time").
+
+
+PROFANITY
+
+The term "damn it" is stronger than "dammit."  I use both 
+deliberately for specific effect; please do not adjust my usage.
+
+
+VERBALIZED PAUSES
+
+I use "um" and "umm" to represent verbalized pauses of different 
+lengths.  I use both deliberately for specific effect; please do 
+not adjust my usage.  I treat "hmmm" as speech, and don't 
+italicize it, unless I'm doing so for emphasis (in other words, 
+sometimes it is italicized and sometimes it isn't, and that's a 
+deliberate choice on my part).
+
+
+"NOW," "HERE," AND "AND THEN"
+
+Even when writing in the past tense, I sometimes use the terms 
+"now" and "here."  This is unexceptionable grammatically: The 
+American Heritage Dictionary, for instance, gives the following 
+as one of the definitions of "now," employing a past-tense 
+example: "At this point in the series of events; then: The ship 
+was now listing to port."
+
+I use "and then" (including sometimes to begin a sentence) when 
+perhaps either just "and" or "then" could have been employed; I 
+do this for reasons of cadence and personal style.  Please do not 
+modify my usage.
+
+I have a fondness for stream-of-consciousness narrative devices, 
+including ending one paragraph with "and" followed by an em dash, 
+and beginning the next with an em dash and "and" (with a 
+lowercase a) followed by a description of a suddenly changed 
+circumstance or mental state.  These devices are employed 
+deliberately; please do not modify them.
+
+
+Praise for The Oppenheimer Alternative
+
+"My favorite Sawyer book of all; the extrapolation is as 
+brilliant as the history. An extremely clever science-fictional 
+tale that grows naturally out of the research done by extremely 
+smart people on the way to the development of the atomic age. 
+They will live for you after you are done reading this book; this 
+is what they were really like. A solid award contender!" 
+--Amazing Stories
+
+"Sawyer does a magnificent job. Every individual pops right off 
+the page, fully integrated both into their era and amongst 
+themselves. The whole book is rich in emotional depth. This fine 
+novel makes explicit its relevance to the present." --Locus
+
+"I loved it! I know the history of this period well and I'm one 
+or two degrees of separation from many of these people. Sawyer's 
+portrayals ring true to me. Getting to read this early was a 
+treat!" --Lee Smolin, bestselling author of The Trouble with 
+Physics
+
+"Impressive use of scientific and historical detail and Sawyer's 
+characterization of the man himself pull back the layers of 
+Oppenheimer's morals, genius, and grief. Science fiction fans 
+will devour this smart speculative tale." --Publishers Weekly
+
+"You can always count on Sawyer, a storyteller of the first 
+order, for a good read. The Oppenheimer Alternative delivers on 
+that count, but it's also a book that explores, on a human level, 
+the sort of bigger questions raised by world-changing events, 
+both real and imagined." --The Toronto Star
+
+"With typical stylistic verve and a remarkable degree of 
+research, Sawyer has crafted a world that is an apt and accurate 
+reflection of our own while also folding in the shifts and 
+changes that create this alternate reality. The Oppenheimer 
+Alternative is precisely the kind of well-constructed and 
+thoughtful speculative fiction that we've come to expect from 
+Robert J. Sawyer. It's a fascinating premise brought to fruition 
+by one of our most gifted sci-fi authors." --The Maine Edge
+
+"An imaginative restructuring of a phantasmagoric life into an 
+alternative phantasmagorical story. Oppenheimer fans will be 
+intrigued." --Martin J. Sherwin, co-author of the Pulitzer 
+Prize-winning biography American Prometheus: The Triumph and 
+Tragedy of J. Robert Oppenheimer
+
+"A truly science fictional work of alternate history which turns 
+on the decisions -- and discoveries -- of the great physicists 
+who wrote the history of the 20th century: Einstein, Fermi, 
+Gödel, and Oppenheimer. They are the vividly realized, 
+all-too-human characters who people this novel, and give its 
+brilliant speculations human life and blood. I read this book at 
+a gulp, and you should too -- now I'm going to go read it again. 
+Bravo!" --S.M. Stirling
+
+"You might think you know what to expect from a Robert J. Sawyer 
+book: something set in a near-future world similar to our own; 
+real people dealing with the social implications of ideas from 
+the edges of current science; fascinating, well-dramatized 
+exploration of philosophical and ethical matters. The Oppenheimer 
+Alternative, an alternate history thriller set in the opening 
+years of the atomic age, might seem a bit of a departure. Not to 
+worry, this book has everything a reader wants from Sawyer. 
+Well-drawn alternate history, rigorous SF thriller, social 
+commentary, redemption narrative -- The Oppenheimer Alternative 
+reimagines one of the most influential lives of the twentieth 
+century. Well worth reading." --Analog Science Fiction & Fact
+
+"Incredibly realistic: the characters, locations, the era, and 
+even the science. I felt like I was back in Los Alamos -- and I 
+should know: I worked there! Breathlessly riveting; Sawyer pulls 
+it off masterfully." --Doug Beason, former Associate Laboratory 
+Director, Los Alamos National Laboratory
+
+"The feel and detail of the Manhattan Project figures is deep and 
+well done. I knew many of these physicists, and Sawyer nails them 
+accurately." --Gregory Benford, author of The Berlin Project and 
+Edward Teller's graduate student
+
+"An excellent blend of hard science, alternate history and the 
+inner workings of one of the key men of the 20th century. Highly 
+recommended." --Sci-Fi Bulletin
+
+"Hugo and Nebula award-winning author Robert J Sawyer balances 
+effortless prose with extensive research to create a novel so 
+well-crafted that the lines between reality and alternate reality 
+blur. Combining a whole lot of science with a whole lot of 
+speculation, The Oppenheimer Alternative succeeds as an amazing 
+border-hopper between the reality of science and the boundless 
+imagination. It's the perfect addition to hard science fiction 
+collections." --Aurealis
+
+"I enjoyed it tremendously! Really great, a page turner. I was 
+hooked from the beginning to the end. Another fine addition to 
+the Sawyer canon!" --Andre Bormanis, producer, The Orville and 
+Cosmos
+
+"An expert and engrossing knitting of the threads of history, 
+with genuine characters of the mid 20th Century, to weave out a 
+compulsive fictional narrative." --Jem Rolls, author of the play 
+The Inventor of All Things about Leo Szilard
+
+"Sawyer portrays brilliantly and poignantly the struggles of the 
+scientists who started it all and were consequently obliged to 
+bear an unbearable burden." --James Christie, Chair, Project 
+Ploughshares, member organization of the Nobel Peace 
+Prize-winning International Campaign to Abolish Nuclear Weapons
+
+"Every single character in this book is a real person. That's 
+right, all of them. Even some of the dialogue is real. This is 
+one of the most ambitious books I've come across. I can't imagine 
+the amount of research that went into giving each character a 
+believable voice and personality (actually, I can, the 
+bibliography runs 30 pages on my phone), but this is Robert J. 
+Sawyer so maybe I shouldn't be surprised. In some ways, it 
+reminded me of the play Copenhagen by Michael Frayn, with more 
+thrills, cool rockets and a doomsday scenario to boot." --Tor.com
+
+"You can call this alternate history or alternate astrophysics 
+(or both). Whatever term you choose, it's a terrific story." 
+--Eric Flint
+
+"A novel as expansive as the physics (and physicists) under whose 
+watch the original Project Orion was launched." --George Dyson, 
+author of Project Orion: The Atomic Spaceships 1957-1965
+
+"A wealth of detail lends Sawyer's novel the grounded 
+believability necessary to pull off a fictionalization of events, 
+speculating on the inner lives of the players, the meaning behind 
+the discoveries they made, and the philosophical impact thereof. 
+Sawyer employs a no-nonsense style reminiscent of that of Isaac 
+Asimov or Ben Bova, which makes the narrative easy to navigate. 
+The result is a realistic and intriguing look at Oppenheimer and 
+his work." --Booklist, journal of the American Library 
+Association
+
+"There are some writers who, even if they do not write the same 
+book over and over again, write very similar books. Not so with 
+Robert Sawyer, who pairs an enormous imagination with extensive 
+research. Whether writing about a dinosaur Galileo, atheist 
+Neanderthals, or a self-aware World Wide Web, Sawyer makes his 
+characters, and the world in which they live, come alive. If 
+there is one thing Sawyer's books do have in common, in addition 
+to their overall excellence, it is his concern for morality and 
+determining the right thing to do. In this book, this concern is 
+reflected in discussions over the nuclear bomb and later keeping 
+the end of the world a big secret from ordinary people. Fans of 
+historical novels set in the recent past will love The 
+Oppenheimer Alternative. Fans of alternate history who are 
+willing to wait a while for the speculative content will find 
+their patience rewarded. Readers interested in science, and how 
+scientists interact also will find much to enjoy." --SFRevu
+
+"Sawyer has outdone himself! No one could have taken on this 
+project with such gusto and with such a search for the truth as 
+this outstanding author. I've never read such a complete and 
+thrilling account of Oppenheimer's world." --Jonas Saul
+
+
+	Praise for Robert J. Sawyer
+
+"A new Robert J. Sawyer book is always cause for celebration." 
+--Analog Science Fiction and Fact
+
+"Sawyer not only has an irresistibly engaging narrative voice but 
+also a gift for confronting thorny philosophical conundrums.  At 
+every opportunity, he forces his readers to think while holding 
+their attention with ingenious premises and superlative 
+craftsmanship." --Booklist
+
+"Can Sawyer write? Yes -- with near-Asimovian clarity, with 
+energy and drive, with such grace that his writing becomes 
+invisible as the story comes to life in your mind." --Orson Scott 
+Card, author of Ender's Game
+
+"Robert J. Sawyer is by any measure one of the world's leading 
+(and most interesting) science-fiction writers.  His fiction is a 
+fascinating blend of intellectually compelling big ideas and 
+humane, enduring characters." --The Globe and Mail
+
+"Sawyer, an articulate fountain of ideas, is the genre's northern 
+star -- in fact, one of the hottest SF writers anywhere.  By any 
+reckoning Sawyer is among the most successful Canadian authors 
+ever." --Maclean's: Canada's National Magazine
+
+"Robert J. Sawyer is a writer of boundless confidence and bold 
+scientific extrapolation." --The New York Times
+
+"Sawyer's books -- always rich in science, action, and profound 
+thinking -- never fail to surprise, delight, and cause us to 
+transcend our ordinary thinking.  I've read Crichton, Asimov, 
+Heinlein, Clarke, King, and Koontz -- and Sawyer outdoes them 
+all." --Clifford A. Pickover, author of Time: A Traveler's Guide
+
+"A polished, exciting writer.  Sawyer writes with the scientific 
+panache and grandeur of Arthur C. Clarke and the human touch of 
+Isaac Asimov." --Quill & Quire
+
+"Cracking open a new Robert J. Sawyer book is like getting a gift 
+from a friend who visits all the strange and undiscovered places 
+in the world.  You can't wait to see what he's going to amaze you 
+with this time." --John Scalzi, author of Old Man's War
+
+"Sawyer is Canada's answer to Michael Crichton." --The Toronto 
+Star
+
+"No reader seeking well-written stories that respect, emphasize 
+and depend on modern science should be disappointed by the works 
+of Rob Sawyer." --The Washington Post
+
+"Sawyer is a terrific writer.  He can write about the most 
+sophisticated science while giving readers the room to understand 
+what's happening and follow the plot." --Winnipeg Free Press
+
+
+
+
+
+
+
+
+
+	Note for the Copyright Page
+
+
+Copyright ☻ 2020 by Robert J. Sawyer.
+
+	Books by Robert J. Sawyer
+
+NOVELS
+Golden Fleece
+End of an Era
+The Terminal Experiment
+Starplex
+Frameshift
+Illegal Alien
+Factoring Humanity
+FlashForward
+Calculating God
+Mindscan
+Rollback
+Triggers
+Red Planet Blues
+Quantum Night
+The Oppenheimer Alternative
+
+The Quintaglio Ascension Trilogy
+Far-Seer
+Fossil Hunter
+Foreigner
+
+The Neanderthal Parallax Trilogy
+Hominids
+Humans
+Hybrids
+
+The WWW Trilogy
+Wake
+Watch
+Wonder
+
+COMPLETE SHORT FICTION
+Volume 1: Earth
+Volume 2: Space
+Volume 3: Time
+
+For book-club discussion guides, visit (((sfwriter.com)))&|&& 
+URL-sf &&||&& TXT-sf &&|||&
+
+
+
+
+
+
+
+	Dedication
+
+
+
+For
+
+Alisha Souillet
+
+Who made this a better book
+And me a better person
+
+
+	Acknowledgments
+
+	Special thanks to the late Manhattan Project physicist and 
+Nobel laureate Luis W. Alvarez, who graciously spent an afternoon 
+with me in 1983, a meeting I'll never forget; to Dr. Doug Beason, 
+former Associate Laboratory Director, Los Alamos National 
+Laboratory; to Alex von Thorn, whose great-uncle, Brigadier 
+General Thomas F. Farrell, was an assistant to Manhattan Project 
+leader General Leslie R. Groves; to Liz Cano, who first 
+introduced me to the work of Leo Szilard via Jem Rolls's one-man 
+play The Inventor of All Things, and to Jem Rolls himself.
+	Many thanks to Sharon Fitzhenry and Richard Dionne at 
+Fitzhenry & Whiteside's Red Deer Press imprint in Canada and to 
+Shahid Mahmud and Lezli Robyn at Arc Manor's CAEZIK SF & Fantasy 
+imprint in the United States: they rose to the almost-impossible 
+challenge of getting this book out in time for the seventy-fifth 
+anniversary of the birth of the atomic age.  Special thanks to my 
+editor, Adrienne Kerr -- it was wonderful to be working with her 
+again.  Adrienne used to be my editor at Penguin Random House 
+Canada, but Fitzhenry & Whiteside engaged her on a freelance 
+basis to edit this book; you can hire her, too: see 
+adriennekerr.net.
+	Thanks for help along the way to Alisha Souillet, Roy 
+Ashton, Gabor Bagi, Gregory Benford, Jerry Bokser, Dave Brohman, 
+David De Graff, Paddy Forde, Marcel Gagné, James Alan Gardner, 
+Gerald I. Goldlist, Dominick Grace, Judith Hayman, Steve Hoban, 
+Matt Kennedy, Michael Lennick, W. Thomas Leroux, Chris Lotts, 
+Donald Maass, Mickey Mickkelson, Brian Morey, W. Maynard 
+Pittendreigh, Jensenne Roculan, Robin Rowland, Daryl Rybotycki, 
+Stephen W. Saffel, Martin L. Shoemaker, James Snyder, Laura 
+Frankos Turtledove, Vince Gerardis, Alex Wellerstein, Elizabeth 
+Westbrook-Trenholm, Andreas Wolz, and George Zebrowski.
+	Beta readers for this novel were Robb Ainley, Keith 
+Ballinger, Denise Bérubé (who read the manuscript while in 
+Hiroshima!), Ted Bleaney, Andre Bormanis, Aleksandar Bradaric, 
+Stephanie Bradfield, Wayne Brown, Nixie Byrd, Jon Caruana, James 
+Christie, David Livingstone Clink, Fiona Reid Cosgrove, Melissa 
+L. Cox, Irene Dutchak, Andrew Edmunds, Talisa Edmunds, Shayna 
+Feldstein, Hugh Gamble, Michael Jäger, Andrew Zimmerman Jones, 
+Herb Kauderer, Wouter Lagerweij, Clare Levijoki, Joel Lee 
+Liberski, John Lynch, Michael Mariani, Erik Maronde, Ryan 
+McCarty, Margareta Mina, Andrea Mitchell, Chris Nolan, Colin 
+Porter, Karin Porter, Lou Prosperi, Natalka Roshak, Judy Sanders, 
+Larry Schoeneman, Georgina Scott, Lee Smolin, Lynne 
+Stonier-Newman, Lou Sytsma, Gord Tulloch, Keith Ward, Bret Wiebe, 
+Stephanie Wilson, and Len Zaifman.
+	For the first time in over twenty years, I've written a 
+novel without first securing a publishing contract.  My Patreon 
+supporters made that possible, including, most generously, 
+Christopher Bair, Keith Ballinger, Kelly Barratt, Judith Bemis, 
+Jennifer Blanchard, Ronda Bradley, Matt Ceccato, James Christie, 
+Phillip Clark, Christine V. Connell, Nancy T. Curriden, Genevieve 
+Doucette, Hugh Gamble, Gordon Getgood, James Kerwin, Gregory 
+Koch, Archie Kubacki, Matthew LeDrew, Joel Lee Liberski, Gillian 
+Martin, Catharine McKeever, Christina Dawn Monroe, Arioch 
+Morningstar, Kel N., Anna Nelson, Chris Nolan, Andrew Olsen, Ian 
+Pedoe, Ken Ray, Fiona Reid, Carol Richards, Robin Schumacher, 
+Timothy W. Spencer, Ralston Stahler, Aaron Suarez, Andrew 
+Tennant, Douglas Tindal, Kurt Weingarten, Scott Wilson, Joshua 
+Paul Wolff, Brian Wright, and Len Zaifman.  If you'd like to join 
+them in supporting my work directly, please visit 
+patreon.com/robertjsawyer.
+	Most of all, thanks to Carolyn Clink, the strong nuclear 
+force that keeps everything from flying apart.
+
+	Dramatis Personae 
+
+
+Luis Alvarez (1911-1988): American physicist; 1968 Nobel 
+laureate.
+
+Stepan Zakharovich Apresyan (1914-1990): Russian diplomat and 
+spy; vice consul at the Soviet Consulate in San Francisco.
+
+Kenneth Bainbridge (1904-1996): American physicist; director of 
+the Manhattan Project's Trinity test.
+
+Hans Bethe (1906-2005): German-born American physicist; 1967 
+Nobel laureate.
+
+Patrick Blackett (1897-1974): British physicist; Robert 
+Oppenheimer's tutor at Cambridge's Cavendish Laboratory; 1948 
+Nobel laureate.
+
+Niels Bohr (1885-1962): Danish physicist; 1922 Nobel laureate.
+
+Vannevar Bush (1890-1974): Head of the U.S. Office of Scientific 
+Research and Development.
+
+James F. Byrnes (1882-1972), Secretary of State under Harry S. 
+Truman.
+
+Barbara Chevalier (1907-2003): First wife of Haakon Chevalier.
+
+Haakon Chevalier [«HOKE-on SHEV-al-EE-eh»] (1901-1985): 
+American-born professor of French literature at the University of 
+California at Berkeley and translator at the Nuremberg Trials.
+
+Robert Christy (1916-2012): Canadian-born physicist.
+
+Arthur Holly Compton (1892-1962): American physicist; 1927 Nobel 
+laureate.
+
+Edward Condon (1902-1974): American physicist.
+
+Watson Davis (1896-1967): Editor, Science Service.
+
+Peer de Silva (1917-1978): Manhattan Project security officer.
+
+Major General Walter Dornberger (1895-1980): Military leader of 
+Germany's V-2 rocket program.
+
+Helen Dukas (1896-1982): Einstein's live-in secretary.
+
+Freeman Dyson (1923-2020): British-born American physicist.
+
+Albert Einstein (1879-1955): German-born Swiss/American 
+physicist; 1921 Nobel laureate.
+
+George C. Eltenton (1905-1991): British chemical engineer (or so 
+it was thought at the time; actually a physicist) for Shell 
+Development in California who approached Haakon Chevalier on 
+behalf of Russia.
+
+Ward V. Evans (1880-1957): Member of the 1954 Atomic Energy 
+Commission security-review board.
+
+Enrico Fermi [«FAIR-mee»] (1901-1954): Italian-born American 
+physicist; 1938 Nobel laureate.  In 1942, he produced the 
+first-ever controlled nuclear chain reaction at the University of 
+Chicago.
+
+Richard Feynman [«FINE-man»] (1918-1988): American physicist; 
+1965 Nobel laureate.
+
+Lloyd K. Garrison (1897-1991): American lawyer; represented 
+Oppenheimer before the 1954 Atomic Energy Commission 
+security-review board.
+
+Kurt Gödel (1906-1978): Austrian-born American logician.
+
+Gordon Gray (1909-1982): Chairman of the 1954 Atomic Energy 
+Commission security-review board.
+
+General Leslie R. Groves (1896-1970): Head of the Manhattan 
+Project.
+
+Bourke Hickenlooper (1896-1971): United States senator and past 
+chairman of the Joint Committee on Atomic Energy.
+
+Verna Hobson (1923-2004): Robert Oppenheimer's secretary at the 
+Institute for Advanced Study.
+
+J. Edgar Hoover (1895-1972): Director of the Federal Bureau of 
+Investigation.
+
+Dieter Huzel (1912-1994): German rocketeer working under Wernher 
+von Braun.
+
+Lt. Lyall Johnson (1914-2006): American counter-intelligence 
+officer stationed on the campus of the University of California, 
+Berkeley.
+
+Lyndon B. Johnson (1908-1973): 36th President of the United 
+States, in office 22 November 1963 to 20 January 1969.
+
+George Kistiakowsky (1900-1982): Ukrainian-American chemist, 
+leader of explosives group at Los Alamos.
+
+Anne Wilson Marks (1924-2006): Robert Oppenheimer's secretary at 
+Los Alamos.
+
+Herbert Marks (1907-1960): Robert Oppenheimer's lawyer (and 
+Anne's husband).
+
+Lt. Col. (and later Major General) Kenneth Nichols, Ph.D. 
+(1907-2000): General Groves's assistant, and, later, general 
+manager of the Atomic Energy Commission.
+
+J. Robert Oppenheimer (1904-1967): American physicist, scientific 
+director of the Los Alamos site of the Manhattan Project; 
+director of the Institute for Advanced Study.
+
+Katherine "Kitty" Oppenheimer (1910-1972): German-American 
+botanist; wife of Robert Oppenheimer.
+
+Katherine "Tyke" Oppenheimer (1944-1977): Robert and Kitty's 
+younger child, known as "Toni" when she was older.
+
+Peter Oppenheimer (1941-    ): Robert and Kitty's older child.
+
+William S. "Deak" Parsons (1900-1953): Associate director of the 
+Los Alamos laboratory under Oppenheimer; weaponeer on the Enola 
+Gay; promoted to rear admiral following the war.
+
+Lt. Col. Boris Pash (1900-1995): American military intelligence 
+officer; commander of the Alsos Mission into Germany.
+
+Isidor Isaac Rabi [«ROB-ee»] (1898-1988): Austrian-born American 
+physicist; 1944 Nobel laureate.
+
+Roger Robb (1907-1985): Attorney for the Atomic Energy 
+Commission.
+
+C. Arthur Rolander, Jr. (1920-2017): First, the Atomic Energy 
+Commission's deputy director of security, then vice president of 
+General Atomic.
+
+Robert "Bob" Serber (1909-1997): American physicist; Robert 
+Oppenheimer's close colleague.
+
+Rita "Pat" Sherr (1916-1997): wife of physicist Rubby [«ROO-bee»] 
+Sherr; looked after Robert Oppenheimer's daughter.
+
+Robert Sproul (1891-1975): President of the University of 
+California, Berkeley.
+
+Henry L. Stimson (1867-1950): Secretary of War during both World 
+Wars.
+
+Lewis L. Strauss [«Straws»] (1896-1974): Chairman of the Atomic 
+Energy Commission.
+
+Leo Szilard [«LAY-o SIL-ard»] (1898-1964): Hungarian-born 
+physicist.
+
+Jean Tatlock, M.D. (1914-1944): American Communist Party member; 
+Robert Oppenheimer's mistress.
+
+Ted Taylor (1925-2004): Mexican-born American physicist who 
+worked at Los Alamos and then headed the Orion project.
+
+Edward Teller (1908-2003): Hungarian-born physicist, often called 
+"the father of the hydrogen bomb."
+
+Charles Tobey (1880-1953): United States senator.
+
+Harry S. Truman (1884-1972): 33rd President of the United States, 
+in office 12 April 1945 to 20 January 1953.
+
+Harold Urey (1893-1981): American physical chemist; 1934 Nobel 
+laureate.
+
+Joseph Volpe (1914-2002): legal counsel for the Atomic Energy 
+Commission.
+
+Magnus von Braun (1919-2003): younger brother of Wernher von 
+Braun.
+
+Wernher von Braun [«VAIRN-er fon Brrrown»] (1912-1977): German 
+rocketeer.
+
+John von Neumann [«von NOY-man»] (1903-1957): Hungarian-born 
+American mathematical physicist.
+
+Henry A. Wallace (1888-1965): vice president of the United States 
+under Harry S. Truman.
+
+
+
+Author's Note
+
+	Every character in this novel was a real person and, with the 
+exception of Peter Oppenheimer, is now deceased.  The Manhattan 
+Project and Project Orion both really existed as described here, 
+and the Institute for Advanced Study still exists.
+
+	The chapter-head quotes are all real, and, 
+thanks to the published recollections of the 
+participants, official transcripts, illicit 
+recordings, and so on, some of this novel's 
+dialog is real, too.
+
+
+
+
+
+
+
+	That is what novels are about.  There is a 
+dramatic moment and the history of the man, 
+what made him act, what he did, and what sort 
+of person he was.  That is what you are 
+really doing here.  You are writing a man's 
+life.
+	--I.I. Rabi, testifying at Robert 
+Oppenheimer's security hearing
+
+
+	Prologue
+
+	What pithy words should one use to sum up the life of J. 
+Robert Oppenheimer before dropping the urn with his ashes 
+overboard?
+	Do you wax poetic about the precocious child who, at age 
+twelve, gave a lecture to the venerable New York Mineralogical 
+Club?  Perhaps you'd discuss his rise to fame in 1945 as "the 
+father of the atomic bomb" -- and then lament the McCarthy Era 
+witch-hunt that later sought to strip his security clearance?  
+You might even include a word or two about his supposedly quiet 
+twilight overseeing the monastic Institute for Advanced Study in 
+Princeton.
+	In the end, Kitty Oppenheimer, the compact alcoholic for 
+whom Robert had been the fourth -- albeit longest-serving -- 
+husband, said nothing while raindrops fell like bombs from the 
+heavens.  She let go of his urn seconds after dangling it over 
+the gunwale of the motorboat that she, their twenty-two-year-old 
+daughter, and two friends had taken out from the Oppenheimer 
+beach house on Hawksnest Bay that monochromatic afternoon in 
+February 1967.
+	Surprisingly, the urn didn't sink at once.  Rather, it 
+bobbed up and down as if empty, the waves themselves giving the 
+storied physicist a final sinusoidal eulogy before the container, 
+taking on water, at last sank beneath the choppy surface.
+
+	Chapter 1
+
+	1936
+
+
+	I have to explain about Oppie: about every 
+five years, he would have a personality 
+crisis; he would change his personality.  I 
+mean, when I knew him at Berkeley, he was the 
+romantic, radical bohemian sort of person, a 
+thorough scholar ...
+	--Robert R. Wilson, American physicist
+
+	"You're bad luck for me," said Haakon Chevalier.  "I hope 
+you know that."
+	Robert Oppenheimer looked at his friend, seated next to him 
+on the pink-and-green living-room couch as the party bustled 
+about them.  Oppie's sense was the exact opposite: Hoke had 
+brought him nothing but good fortune, including getting him into 
+this offbeat rooming house here on Shasta Road.  "Oh?"
+	"Absolutely.  When I go places without you, I'm considered 
+the attractive one."
+	Oppenheimer made a small chuckle.  Chevalier, who had just 
+turned thirty-five, was three years his senior, and was indeed 
+movie-star handsome: gallant, as befitted his last name, and long 
+of face, with wide-spaced eyes and sandy hair swept back in a 
+slight pompadour.
+	By comparison, Oppie knew he himself was scrawny, his tall 
+body angular, his coarse black hair a wild nimbus, and his 
+duck-footed gait awkward -- one friend had described it as a 
+constant falling forward as if he were forever tumbling into the 
+future.
+	"See that one over there?" continued Hoke, with a subtle 
+nod.  "She hasn't glanced at me once since we got here, but 
+you --"  Chevalier shook his head in good-natured exasperation.  
+"It's those goddamn eyes of yours, I tell you.  Fucking opals."
+	Oppie was used to compliments about his pale blue eyes: he 
+often heard them called "transparent" or "luminous," but this 
+metaphor was new to him.  He smiled as he turned to look at the 
+woman Hoke had indicated, and --
+	And, my God, he'd seen that lovely face before -- he was 
+sure of it.  But where?  "Wow," said Oppie softly.
+	"Wow, indeed," agreed Hoke.  "And she keeps looking your 
+way.  You should go over and say hello."
+	"I ... um ..."
+	"Oh, for Pete's sake, Robert, go!  You study the mysteries 
+of the universe; girls are simple by comparison."
+	Hoke taught French literature at the University of 
+California's Berkeley campus; Oppie was a professor of physics 
+there.  Normally, members of such diverse faculties would have 
+little to do with each other, but Oppie loved French poetry, and 
+the two men had become great friends.  One advantage Hoke had was 
+a lot of female students -- he'd married one, in fact -- whereas 
+in Robert's circles, women were rare.  "Come on," said Hoke.  
+"Give me a story to tell Barb when I get home.  Go try your 
+luck."
+	Luck.  Einstein said that God didn't play dice with the 
+universe -- but, then again, God probably wasn't itching to get 
+laid.  "All right already," Oppie said, unfolding himself from 
+the couch.  Of course, he couldn't just go up and say hello, but 
+Mary Ellen, his landlady, was swirling by in one of her 
+floor-length batik dresses.  She threw many parties, often as 
+fund-raisers.  This one was for the Republicans in Spain -- or 
+maybe it was for the Spanish Nationalists?  Whoever the good guys 
+were, anyway; Oppie had come downstairs from his room for donuts 
+and drinks, not the cause.
+	"Say, Mary Ellen, I wonder if you might --"
+	"Robert!  So good of you to pull your nose out of your books 
+and join us!  But your glass is empty.  Let me --"
+	"No, no; I'm fine.  But if you could ..."  He gestured 
+feebly at the busty young woman seated by the fireplace.
+	"Ah!" said Mary Ellen, her wide face splitting in a grin.  
+"Yes, of course!"  She took Oppie's hand and pulled him across 
+the crowded room.  "Jean," she said, and the woman looked up, 
+"this is my best tenant -- oh, hush, Fred; you know I love you, 
+too!  This is Robert.  He teaches physics.  Robert, Jean here is 
+studying to be a doctor."  Mary Ellen managed to make an art-deco 
+chair appear out of nowhere and maneuvered Robert onto it so that 
+he was facing Jean.  "Now, let me get you a drink!"
+	"A doctor," said Oppie, impressed, smiling at Jean.
+	"Yes.  A psychiatrist, in particular."  Jean's voice was 
+warm.  She was, as he'd noted from across the room, beautiful -- 
+even more so close-up.  "I'm fascinated by Freud," she continued.  
+"Do you know his work?"
+	Well, well: look at those dice.  Six the hard way!  "I do 
+indeed.  In fact, I know Ernest Jones."
+	"Oh my!" said Jean.  "Really?"
+	"Yes.  We, ah, met when I was at Cambridge in 1926."  Jones, 
+a great friend of Freud, was the first English-speaking 
+practitioner of psychoanalysis and had become its chief proponent 
+in the English world.
+	"Tell me -- my God, tell me everything about him!"
+	Mary Ellen fluttered by again, giving Oppie a bourbon and a 
+wink, then went upon her way.  "Well," said Oppie, "he was 
+practicing in Harley Street ..."  As he spoke, he continued to 
+study her smooth, classically beautiful face and striking green 
+eyes, emeralds to his opals.  Jean wore her black hair short and 
+had a slight dimple in her chin.  She was probably a decade 
+younger than he was.
+	They talked for most of an hour, and the conversation 
+slipped easily from topic to topic.  He was enthralled by that 
+hauntingly familiar beauty of hers and by her nimble mind and 
+ready wit, and yet she was mercurial.  One moment she'd seem 
+animated and boisterous, the next fragile and sad.  Still, 
+against a noisy background of someone banging away on the piano, 
+dozens of overlapping conversations, and the clink of glasses, he 
+listened attentively, although at one point he had to hold up his 
+hand to stop her.  "My family," she said, "moved out here from 
+Massachusetts just before the crash, and --"
+	"You were in an accident?"
+	She looked at him for a moment, puzzled.  "No.  The 
+stock-market crash."
+	Oppie shook his head slightly.
+	"The stock-market crash of 1929.  The beginning of the Great 
+Depression."
+	"Oh -- ah, yes.  Yes, of course."
+	"You don't know, do you?"  Jean looked amazed.  "Where have 
+you been?"  He wished she'd gone on to add the words all my life, 
+but instead she finished by observing: "Born with a silver spoon 
+in your mouth, were you?"
+	"Well, I -- I mean, my father did all right."  Then he 
+added, as if somehow it explained his ignorance: "He invested, 
+but mostly in art, not stocks."
+	She tilted her head again, and the light from the porcelain 
+table lamp hit her just so, and he suddenly realized where he'd 
+seen that face before.  Oppie's favorite book was Baudelaire's 
+poetry collection Les Fleurs du mal.  The shape of Jean's face 
+and the curve and length of her nose were identical to that of 
+the woman in the etching accompanying Baudelaire's heartbreaking 
+"Une Martyre" in the glorious 1917 edition.  He frowned, ousting 
+the thought.  That etching was gruesome: the woman's head had 
+been severed, a beauty cut down in the flower of youth as her 
+older lover traveled the world.
+	The evening was ending at last, and Oppie, four drinks in, 
+was ready to ask the young lady out.  "And so, Miss ..." he 
+began.
+	"Tatlock," she said, and the crisp syllables hit him like 
+bullets.
+	"Are ... are you related to John Tatlock?"
+	"He's my father."
+	"John Tatlock?  The medievalist at Berkeley?"
+	"Yes, why?  Do you know him?"
+	Oh, yes, thought Oppie.  John Strong Perry Tatlock was an 
+expert on Geoffrey Chaucer, a towering presence at Berkeley 
+faculty-association meetings, a loud voice often heard booming 
+across the Faculty Club dining hall -- and a raging anti-Semite.  
+That wasn't unusual at Berkeley; when Robert had tried to get his 
+student Bob Serber a job there, the physics chairman had said 
+that having one Jew in his department was quite sufficient.  
+But ... damn.
+	"Ah," said Oppie, his stomach knotting; he hadn't mentioned 
+his own last name.  He got up from the funky chair.  "Well," he 
+said sadly, "it was nice meeting you."  He made his way toward 
+the staircase that led up to his lonely room.
+#
+	Jean was present at the next party Mary Ellen hosted, and 
+the one after that, each time just as lovely, just as magnetic.  
+Finally, her father's prejudice be damned, Oppie mustered the 
+courage to ask her to dinner.
+	"Where would you like to go?" she replied, and he was 
+flustered again.  Did that mean her acceptance was a given, or 
+that it was now contingent on him naming a suitably posh place?  
+"I, um, well --"
+	"Oh, it doesn't matter!" she said, smiling. "Do you like 
+spicy?"
+	"Very much so."
+	"There's a place over in San Francisco, the Xochimilco Café.  
+Do you know it?"
+	He shook his head.
+	"Well, good!  Then it can become our place!  Saturday night?  
+Or -- or do you ...?"  The question, he realized, was a belated 
+reference to his Jewishness.
+	"No, Saturday is fine."
+	And it was.  The café, which had a name more appropriate to 
+the Southwest he'd loved in his youth than the Northern 
+California he was in now, was a dive.  Not that it mattered; 
+she'd been right that money wasn't a concern for him -- he'd 
+happily have taken her to the most-expensive seafood place on the 
+wharf.  But the booth they found was suitable for conversation, 
+the carne adovada agreeably piquant, and the tequila strong and 
+plentiful.
+	She was, he discovered, a member of the Communist Party and 
+wrote for its newspaper, The Western Worker.  When she spoke of 
+downtrodden people, of the fight for liberty -- common coin on 
+the Berkeley campus, stuff he'd previously tuned out as 
+background noise -- he found himself listening, nodding, and 
+repeatedly interjecting, "Yes, yes, yes!"
+	That night, he walked her home.  After a block, she reached 
+over and took his hand.  When they arrived at the entrance to the 
+small building she lived in, they could hear a jazz recording 
+through a neighbor's open window; she told him it was Benny 
+Goodman's latest, "The Glory of Love."  Oppie pulled her near 
+and, bending his head down, he kissed her for the first time, 
+starting slowly, gently, but, as she responded, growing more and 
+more passionate.
+	They began dating regularly.  A few years before, he'd given 
+a talk entitled "Stars and Nuclei" to the Caltech astronomy club; 
+he'd studied the largest and smallest of objects, but, until 
+Jean, he'd missed seeing the human world all around him.
+	Still, it wasn't long before he learned of the darkness that 
+chased her inner light -- her mood swings, her nightmares; she 
+was a chimera, angel and demon in one body, the would-be 
+psychiatrist who had long seen a psychiatrist of her own.  
+Despite it all, he came to love her unwaveringly, and she, with 
+the deeper feelings both high and low that heaved and tossed her 
+spirit, perhaps loved him even more.
+	After only a few months, they were engaged ... and then, 
+bewilderingly, Jean broke it off.  "Not ready," she said, and 
+"Too soon."  They continued to date, though, and he finally 
+worked up the courage to ask her a second time to marry him.  She 
+agreed, but then, weeks later, once again changed her mind: she 
+did love him, she insisted, but said he deserved more, better, 
+and his protestations failed to sway her.  Robert, heartbroken, 
+started seeing other women, including Kitty, the petite 
+temptress, the flirtatious vixen, the skilled horsewoman who 
+could, or so it seemed, break any stallion.  To his surprise at 
+the time, she was soon pregnant.  He did the honorable thing -- 
+did his duty -- and married her.
+	But it was winsome, bittersweet Jean Tatlock, not Kitty, who 
+was forever in his heart, his mind, the soulmate he could never 
+have.
+
+	Chapter 2
+
+	Six Years Later: 1942
+
+
+	Question: What is an optimist?  Answer: One 
+who thinks the future is uncertain.
+	--Leo Szilard
+
+	Leo Szilard, still cherubic at forty-four, had been warned 
+about this visit.  General Leslie Groves was coming to the 
+Metallurgical Laboratory, the drab code name given to the 
+facility at the University of Chicago that studied the 
+fissionable elements uranium and plutonium.  The man who'd been 
+merely a colonel days ago had apparently leveraged a promotion to 
+go along with being appointed head of -- what the hell were they 
+calling the overall bomb effort now?  Ah, yes: "The Manhattan 
+Engineer District."
+	Leo suspected he'd soon have some obscure code name himself.  
+His preference would be "Martian Number One."  Enrico Fermi, who 
+believed the universe should be teeming with intelligent life, 
+had exhorted Leo to explain the absence of these advanced 
+visitors, which, for lack of a generic term, Enrico had taken to 
+calling "Martians."  Leo had quipped, "Oh, we are here -- but we 
+call ourselves Hungarians."
+	Szilard had already bestowed nicknames on others, which he 
+mostly kept to himself.  His largely platonic girlfriend Trude, a 
+dozen years younger, was "Kind," the German for "child."  Eugene 
+Wigner, a fellow Martian, was "Pineapple Head," in honor of his 
+oddly prolate noggin.  And he'd decided the best name for this 
+general who had burst into their seminar room in Eckart Hall was 
+"Bumpy," commemorating both his lumpy exterior and his bumptious 
+nature.  Leo couldn't fault a person for being overweight; his 
+own fondness for pastries and rich sauces had made him, as Trude 
+affectionately chided from time to time, more than a little 
+rotund.  But a man's clothes should fit, for God's sake, and this 
+blustering martinet's jacket seemed at least one size too small.
+	The general and his military aide had been brought to see 
+this group -- the Met Lab's fifteen most-senior scientists -- by 
+Arthur Holly Compton, the jutting-jawed director of the 
+laboratory.  The seminar room was large and luxurious with 
+built-in glass-fronted bookcases, plush maroon leather furniture, 
+and two blackboards, one wall-mounted and another that had been 
+wheeled in.  A central mahogany table was strewn with papers, 
+dog-eared journals, and coffee mugs.
+	Thirty-two-year-old Luis Alvarez, lanky and intense, was 
+trying to answer the general's slew of questions by writing 
+equations on the built-in blackboard, but that oaf had the gall 
+to interrupt him.  "Just a second, young man.  In the third 
+equation, you've got the exponent as ten-to-the-minus-five, but 
+then it magically becomes ten-to-the-minus-six on the next line."
+	"Oh, yes, yes," replied Alvarez sheepishly, rubbing out the 
+mistake with his thumb and writing in the correct value.  "Slip 
+of the chalk."
+	"That raises a question," Groves said to the whole group.  
+"Your estimates for how much fissionable material you'll need -- 
+how accurate are they?"
+	Leo, with his shoeless feet propped up on a vacant chair, 
+shrugged slightly.  "Within a factor of ten."
+	"A factor of ten!" exploded Groves.  "That's idiotic!  
+That's like telling a wedding caterer to prepare for a hundred 
+guests when the real number could be anywhere from ten to a 
+thousand.  No engineer can work with sloppy figures like that."
+	"General ..." said Leo, giving him his newfound title in 
+hopes of placating the brute, "you have to understand --"
+	"No," snapped Groves.  "All of you have to understand.  This 
+isn't a theoretical project; it's a practical one.  I have to 
+build actual working bombs."  He took a deep breath then let it 
+out loudly.  "Now, you lot may think engineers are just 
+technicians" -- Leo had the good sense not to interject -- "and 
+you may know that I don't have a Ph.D.  Colonel Nichols here has 
+one, but I don't.  But let me tell you that I had ten years of 
+formal education after I entered college -- ten full years.  I 
+didn't have to make a living or give up time for teaching.  I 
+just studied.  That'd be the equivalent of about two doctorates, 
+wouldn't it?"
+	Leo swung his feet off the chair and leaned forward.  "Sir," 
+he said, the word almost a hiss, "I would never claim your rank 
+-- even if you have only just attained it -- as my own.  But 
+forget doctorates; everyone in this room, save you, has one."
+	"Leo ..." cautioned Compton, thin eyebrows drawn together in 
+a don't-do-this glare.
+	"No, no, no," said Szilard.  "We're trotting out credentials 
+here, are we not?  And you, Arthur, you are none other than the 
+winner of the 1927 Nobel Prize in physics."  Leo locked his gaze 
+on Groves.  "Maybe you saw him on the cover of Time a few years 
+ago?"  Szilard then indicated a slender, balding man seated on 
+the opposite side of the table.  "And him?  That's Enrico Fermi.  
+He won the 1938 Nobel.  And next to me?"  He pointed to an 
+egg-headed man with a mustache.  "Say hello to James Franck, the 
+1925 Nobel laureate.  As for me, I have collaborated with -- and 
+share patents with! -- Albert Einstein."
+	Groves rose, fuming.  "I'm going to Berkeley," he snapped, 
+"but I'll be back in a few days."  He jabbed an accusatory finger 
+at the blackboard.  "And I expect precise answers when I return."  
+His footfalls on the hardwood floor shook the bookcase glass as 
+he stormed out.
+	Leo got up, turned to face his colleagues, and spread his 
+arms.  "I warned you how it would be if the military were allowed 
+to take over!  How can we work with people like that?"
+	Compton had calmed down a bit.  "Well, once Groves gets to 
+Berkeley, Oppie will set him straight on the theoretical issues."
+	Szilard frowned.  Oppenheimer?  Too eager to please, too 
+much of a climber.  Oh, sure, charismatic in person -- who hadn't 
+felt that?  But as the champion of science and reason against 
+Bumpy Groves?  "May God have mercy on our souls," Leo said, 
+shaking his head.
+#
+	Robert Oppenheimer gazed out the mammoth window in the 
+university president's living room, lost, as often, in thought.  
+Of course he was thinking about the vexing problem of isotope 
+separation, but --
+	Isotopes were the same element but different -- both this 
+and yet each separately that.  Just as it was with the women in 
+his life, both beautiful and brilliant, but different, too: 
+Kitty, who demanded to be satisfied, and Jean, whom he could 
+never fully satisfy.  The same and yet not: Kitty, who had been 
+married to someone else when she first began dating Robert and 
+who he'd now learned from friends had bragged that she'd gotten 
+him to marry her "the old-fashioned way, by getting pregnant," 
+and Jean, still there, still in his social circle, occasionally 
+still in his arms, who ran away from commitment.
+	Robert hadn't been blind as time went on.  His former 
+landlady, that whirlwind of energy named Mary Ellen, and the 
+delicate, moody Jean, now indeed an M.D., were more than casual 
+friends.  In just one of many ways in which Jean was pulled in 
+multiple directions simultaneously, Mary Ellen -- always 
+confident where Jean was often diffident; always a confidant, as 
+close as Oppie himself was -- had also taken Jean to bed.
+	"Robert?"
+	The voice had been that of the reception's host, President 
+Sproul.  He turned.  "Yes?"
+	Sproul -- panther-lean, bespectacled, and wearing a gray 
+three-piece suit -- indicated the uniformed man next to him, and 
+Oppie beheld the visitor.  "General Leslie Groves, meet Dr. J. 
+Robert Oppenheimer."
+	The term "fission" describing how a uranium nucleus could 
+split into two had been borrowed from biology, and Oppie had a 
+sudden flash of micrographs he'd seen of a dividing cell: an 
+entity pinched in the middle to form bulbous halves.  Groves's 
+belt was the constriction and an ample gut billowed out above and 
+below it.
+	The general was almost as tall as Oppie, with an elongated 
+head weighed down by jowls and crowned by swept-back hair.  
+Groves sported a short, bristly mustache that had grayed at 
+either side, lending the more-prominent dark part -- 
+inadvertently, Oppie was sure -- a Hitlerian aspect.  Binary 
+stars adorned each side of his khaki collar.  Oppie offered his 
+hand, and Groves shook it firmly.  "You're the head theoretician 
+here," the general said as if it were an accusation.
+	Oppie nodded.  "My actual job title is -- if you can believe 
+it -- `Co-ordinator of Rapid Rupture,' but, yes, that's right."
+	"I'm a nuts-and-bolts man myself," said Groves.  His voice 
+reminded Oppie of the sound stones made in his lapidary tumbler.  
+"An engineer."
+	Oppie nodded amiably.  "You're in charge of building the 
+Pentagon."  The massive new structure in Virginia was nearly 
+finished.
+	The general's eyebrows creased his forehead, clearly 
+impressed that Oppie knew this.  "Indeed I am."  Oppie left 
+unspoken the fact that Groves had also been in charge of building 
+the internment camps for Japanese Americans.  The army man looked 
+around the vast room, apparently uncomfortable with the opulent 
+surroundings.  "I was hoping that I'd have earned my pick of 
+assignments after the Pentagon -- I wanted to see action overseas 
+-- but they gave me this thing."
+	"This thing," Oppie knew, was being in charge of the 
+atomic-bomb project, including the work here at Ernest Lawrence's 
+Radiation Laboratory and that at Arthur Compton's Metallurgical 
+Laboratory in Chicago.
+	President Sproul apparently knew the way to this particular 
+man's heart, at least: "Lunch will be served momentarily."  
+Groves smiled at that, and Oppie smiled at Groves's smile.
+	"I'm glad they put an engineer in charge," Oppie said, 
+turning on the charm as Sproul was beckoned away by another 
+guest.  "We scientists can spend far too much time 
+woolgathering."
+	The general's eyes, a darker blue than his own, fixed on 
+Oppie.  "Are you free this afternoon?  I'd like to talk to you 
+some more."
+	It was all falling into place; Kitty would be so pleased.  
+"Your wish is my command, General."

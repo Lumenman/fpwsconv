@@ -101,3 +101,33 @@
 101 test: ## My heading |  | Body paragraph.
 102 test: | Name | Age | | |---|---| | | Ann | 31 | | | Bob | 7 |
 103 test: Їжак і єнот ґанок м'ясо №
+104 md REF\DOTCMDNS.WS
+105 txt REF\DOTCMDNS.WS
+106 rtf REF\DOTCMDNS.WS
+107 rtf -q REF\DOTCMDNS.WS
+108 md REF\-TOC-TAG.WS
+109 txt REF\-TOC-TAG.WS
+110 rtf REF\-TOC-TAG.WS
+111 rtf -q REF\-TOC-TAG.WS
+112 md RTF-RJS\NOVEL.WS
+113 txt RTF-RJS\NOVEL.WS
+114 md PRINTERS\fontcrib.ws
+115 txt PRINTERS\fontcrib.ws
+116 rtf PRINTERS\fontcrib.ws
+117 rtf -q PRINTERS\fontcrib.ws
+118 md REF\DOT-WI.WS
+119 txt REF\DOT-WI.WS
+120 rtf REF\DOT-WI.WS
+121 rtf -q REF\DOT-WI.WS
+122 md DICT\-README.WS
+123 txt DICT\-README.WS
+124 rtf DICT\-README.WS
+125 rtf -q DICT\-README.WS
+126 md REF\ASCIITAB.WS
+127 txt REF\ASCIITAB.WS
+128 rtf REF\ASCIITAB.WS
+129 rtf -q REF\ASCIITAB.WS
+130 md LJ6DTP.WS
+131 txt LJ6DTP.WS
+132 rtf LJ6DTP.WS
+133 rtf -q LJ6DTP.WS

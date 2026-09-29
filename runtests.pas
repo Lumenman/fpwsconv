@@ -1,10 +1,10 @@
 { Regression tests: runs wsconv on every tests\NNN\ case and compares the files it writes with expect\.
   Usage: runtests [path to wsconv.exe]   (default wsconv.exe)
-  A case folder holds the input files (in.ws and any .fi / .df / picture files), args (one argument
+  A case folder holds the input files (the document and any .fi / .df / picture files), args (one argument
   per line, run from the case folder) and expect\ (the files the converter must write to got\). }
 program runtests;
 {$mode objfpc}{$H+}
-uses SysUtils;
+uses SysUtils, Classes;
 
 function Slurp(const path: string): RawByteString;
 var f: File;
@@ -84,7 +84,8 @@ end;
 var
   exe, root, err: string;
   sr: TSearchRec;
-  run, failed: Integer;
+  run, failed, i: Integer;
+  cases: TStringList;
 begin
   exe := 'wsconv.exe';
   if ParamCount > 0 then
@@ -93,21 +94,24 @@ begin
   root := ExpandFileName('tests') + PathDelim;
   run := 0;
   failed := 0;
+  cases := TStringList.Create;          { listed first: a DOS directory search does not survive the runs }
   if FindFirst(root + '*', faDirectory, sr) = 0 then
   begin
     repeat
       if (sr.Attr and faDirectory <> 0) and (sr.Name[1] <> '.') then
-      begin
-        Inc(run);
-        err := RunCase(exe, root + sr.Name + PathDelim);
-        if err <> '' then
-        begin
-          Inc(failed);
-          WriteLn('FAIL ', sr.Name, ':', err);
-        end;
-      end;
+        cases.Add(sr.Name);
     until FindNext(sr) <> 0;
     FindClose(sr);
+  end;
+  for i := 0 to cases.Count - 1 do
+  begin
+    Inc(run);
+    err := RunCase(exe, root + cases[i] + PathDelim);
+    if err <> '' then
+    begin
+      Inc(failed);
+      WriteLn('FAIL ', cases[i], ':', err);
+    end;
   end;
   WriteLn(run, ' cases, ', failed, ' failed');
   if (run = 0) or (failed > 0) then

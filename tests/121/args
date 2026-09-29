@@ -1,0 +1,5 @@
+DOT-WI.WS
+-r
+-q
+-o
+got/out.rtf

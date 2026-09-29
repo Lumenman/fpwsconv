@@ -1,0 +1,457 @@
+Dot Commands
+
+Additional formatting information is recorded in WordStar files 
+through means of "dot commands."  Dot commands are instructions 
+that are preceded (in the first position in the line) by a period 
+<2Eh> and stand alone as the only entry on that line.  (See the 
+WordStar documentation for exact descriptions of each dot 
+command.)
+
+In the table below, the codes in the "Usage" column indicate the 
+following:
+
+	M	Affects only merge printing.
+	I	Affects only indexing.
+	T	Affects only table of contents.
+	P	Affects printing or merge printing.
+	E	Affects editing, printing, or merge printing.
+
+In most cases, the dot commands that affect editing show some 
+effect on the screen as the command is typed or changed.  As the 
+cursor is moved forward through the document, WordStar stores 
+enough information about the command so that the previous state 
+can be restored when the cursor is later moved backwards.  There 
+is a limited amount of storage for this information and it is 
+controlled with the User Area variable DSTKSZ.
+
+Versions prior to 4.0 require whole numbers as arguments to dot 
+commands that require numbers (subscript roll, page offset).  
+With version 4.0, math was allowed in the arguments for easier 
+entry of complex page layouts.  In version 5.0, the ability to 
+specify measurements in inches was added.  In version 5.5 
+revision C, measurements in points and centimeters were allowed.  
+Inches in 5.0 were specified using the double quote only.  In 
+5.5C, inch measurements were allowed with 'I' or 'IN'.  
+Centimeters are specified as 'C' or 'CM', and points with 'P' or 
+'PM'.  Upper and lower case are allowed with these.  Most dot 
+commands that take their arguments as number of lines or columns 
+will allow measurements as well.  Refer to the WordStar 
+documentation to find out which dot commands accept measurements 
+as arguments. 
+
+
+
+The present interpretation of dot commands is:
+
+	Command  Usage   Meaning
+
+	.AV	M	Ask for variable.  Requests the user to  
+enter data from the keyboard at print 
+time for a specific variable.
+
+	.AW	E M	Aligning and word wrap ON/OFF.  Enables 
+or disables aligning and word wrap at a 
+specific point in the document.  Used 
+primarily to prevent changes to tables.
+
+	.BN	P	Bin select.  Selects one of the sheet
+	                 feeder bins at print time. The number 
+	                 of sheet feeders is defined in the
+	                 PDF.
+
+	.BP	P	Bidirectional print ON/OFF.  Enables and 
+disables bidirectional printing.  If the 
+printer does not have bidirectional 
+printing capability, this command is 
+ignored.
+
+	.CC	E P	Conditional column break.  Like the .CP 
+command, but works with columnar breaks 
+instead.  If the number of lines 
+following the conditional column break 
+command fit on the current page, then 
+there is no effect, otherwise, a 
+columnar break will occur.
+
+	.CO	E P	Columns.  Allows the user to specify the 
+number of columns and optionally, the 
+gutter width in columns or inches.
+
+	.CP	E P	Conditional page break.  If there are 
+less than the number of lines specified 
+remaining on the page, then a page break 
+is generated.  If the number of lines 
+following the conditional page break fit 
+on the current page, then there is no 
+effect.  Takes the line height changes 
+into account.
+
+	.CS	P	Clear screen and display message.  This 
+command is used to clear the screen 
+during printing.  If a message follows 
+the .CS, it is displayed on the first 
+screen line below the Print Menu.
+
+	.CV	E P	Convert note type.  For further areas in 
+the document, all notes of the first 
+type specified will be treated as notes 
+of the second type.  Works with 
+comments, footnotes, and endnotes.
+
+	.CW	P	Character width.  This command allows 
+the user to specify the width of the 
+characters in 1/120 inch increments.  
+This width takes effect on the next line 
+of text.  Either the normal (^N) or  
+alternate (^A) character width is 
+changed depending which is in effect.  
+The default is 12 (12/120ths is 10 
+characters per inch).
+
+	.DF	M	Data file.  This merge print command is 
+used to specify the file name which 
+holds data that will be merged into 
+text.  The data file may be in comma 
+delimited format, a dBASE file, or a 
+Lotus 123, Symphony, Quattro, or VP- 
+Planner worksheet.  The user may also 
+optionally change the data separator 
+character for that file.
+
+	.DM	P	Display a message. Displays a message on 
+the screen at print time.  If printing 
+in the background, .DM's can "scroll 
+off" the screen while it is hidden from 
+the user.
+
+	.E#	E P	Set endnote value.  Specifies the new 
+value for endnote numbering.
+
+	.EI	M	End if.  Indicates the final spot in a 
+merge print document affected by a .IF 
+command.  There must be one .EI for 
+every .IF command.
+
+	.EL	M	Else.  Used for the "else" case after 
+using a .IF command.  .EL commands are 
+optional.
+
+	.F#	E P	Set footnote numbering type and value.  
+Specifies the new value for footnote 
+numbering.  Optionally specifies whether 
+footnote numbering should restart every 
+page or be consecutive throughout the 
+document.
+
+	.FI	P	File insert.  Prints the specified file 
+at that point in the document.  .FI 
+commands may be nested up to 7 levels 
+deep.  .FI files can be in ASCII, 
+WordStar, or Lotus 123, Symphony, 
+Quattro, or VP-Planner worksheets.
+
+	.FM	P	Footer margin.  The number of blank 
+lines from the end of the text on a page 
+to the first footer line.  Default is 2.  
+The sum of the footer margin plus the 
+number of footer lines must be less than 
+or equal to the bottom margin. 
+
+	.FO or F1	P	Footer.  The text following the 
+command .F1 will be printed as the first 
+footer line on this and all subsequent 
+pages.  A .FO (or .F1) followed by one 
+or zero blanks  cancels the footer line.  
+The footer uses the character width and 
+line height in effect at the time 
+the .FO (or .F1) command is encountered 
+in the text.  .FO can optionally specify 
+even or odd numbered page footers.
+
+	.F2	P	Second footer.
+
+	.F3	P	Third footer.
+
+	.F4	P	Fourth footer.
+
+	.F5	P	Fifth footer.
+
+	.GO	P	Go to top or bottom of document.
+
+	.HE or H1	P	Header.  The text following the 
+command .H1 is printed as the first 
+header line on all subsequent pages.  If 
+the header command is one of the first 
+dot commands on a page it takes effect 
+for that page, otherwise it affects the 
+following pages.  A .HE or .H1 followed 
+by one or zero blanks cancels the header 
+line.  The header uses the character 
+width and line height in effect at the 
+time the .HE or .H1 command is 
+encountered in the text.  .HE can 
+optionally specify even or odd numbered 
+page headers.
+
+	.H2	P	Second header.
+
+	.H3	P	Third header.
+
+	.H4	P	Fourth header.
+
+	.H5	P	Fifth header.
+
+	.HM	P	Header margin.  The number of blanks 
+lines between the top of the text on a 
+page and the last header line.  Default 
+is 2.  The sum of the header margin plus 
+the number of header lines must be less 
+than or equal to the top margin.
+
+	.HY	E P	Turn Auto-Hyphenation ON/OFF.  Enables 
+or disables the hyphenator.  Starting 
+with WordStar 6.0 Rev. D.
+
+	.IF	M	If.  Used for conditional merge printing 
+in conjunction with the .EL and .EI 
+commands.  Only simple conditions can be 
+tested using the following operators:
+
+				=   Strings alphabetically equal.
+				<>  Strings unequal.
+				>   Greater than.
+				<   Less than.
+				#=  Numbers equal.
+				#<> Numbers unequal.
+				#>  Greater than.
+				#<  Less than.
+
+			.IF commands may be nested up to 255 
+levels deep.
+
+	.IG or ..	E	Ignore.  The text on the remainder of 
+the line is treated as an unprinted 
+comment.
+
+	.IX	I	Index.  The text on the remainder of the 
+line is put in the index.  A comma is 
+used to separate a main index entry from 
+a subentry.  If a dash is the first 
+character following the .IX, the index 
+entry is treated as a cross reference 
+entry.  If a plus sign is the first 
+character following the .IX, the page 
+number for that index entry is printed 
+in boldface.
+
+	.KR	P	Kerning.  Adjusts space between certain 
+pairs of printed characters for fonts 
+that contain kerning information.
+
+	.L#	P	Line numbering.  Specifies whether to 
+turn line numbering off, or the spacing 
+and position of the line numbering.  
+Also optional is whether to start 
+numbering at the beginning of each page 
+or the beginning of the document.
+
+	.LH	E P	Line height.  Changes current line 
+height in 1/48 inch increments.  The 
+default is 8/48 or 6 lines per inch.  
+All lines following this command are set 
+based on the current line height value.  
+Optionally, an argument of 'A' or 'a' 
+will turn on "auto-leading", and all 
+subsequent lines will use the line 
+height of the largest font in the line.
+
+	.LM	E P	Left margin.  Determines the left edge 
+of subsequent text.
+
+	.LQ	P	Letter quality ON/OFF.  Enables or 
+disables letter quality printing on dot 
+matrix printers (ignored if not 
+supported on the printer).
+
+	.LS	E P	Line spacing.  Selects a line spacing of 
+between 1 and 9 for subsequent typing or 
+paragraph alignment.  A value of 1 is 
+for single spacing, 2 for double 
+spacing, etc.
+
+	.MA	M	Math.  Stores the results of a complex 
+equation in a variable.
+
+	.MB	E P	Bottom margin.  The footer or page 
+number is printed within this margin.  
+The default value is 8 lines.
+
+	.MT	E P	Top margin.  The number of lines from 
+the beginning of the page to the 
+beginning of printed text.  The header 
+is printed within this margin.  Default 
+value is 3 lines.
+
+	.OC	E P	Centering ON/OFF.  When ON, further 
+lines in the document will be centered 
+within the left and right margins until  
+a .OC OFF command is encountered.
+
+	.OJ	E P	Output justification ON/OFF.  Command 
+which turns right justification ON or 
+OFF for subsequent typing or paragraph 
+realignment.  When OFF, text is ragged 
+at the right margin.  When ON, text is 
+flush right.
+
+	.OJ	C	Center.
+
+	.OJ	R	Right flush.
+
+	.OP	P	Omit page number.  At print time no page 
+numbers are printed unless the "#" has 
+been used in footers or headers.
+
+	.P#	E P	Paragraph number.  Specifies the initial 
+value and/or the format to use for 
+paragraph numbering.  Also optionally 
+specifies whether compound or outline 
+numbering is to be used.
+
+	.PA	E P	Page break.  Begin a new page here.
+
+	.PC	P	Page column. Indicates the column at 
+which the page number will be printed.  
+This is active only when the footers are 
+not in use and page numbering is turned 
+on.  If the column specified is 0, then 
+the page number is centered between the 
+margins in effect where the .PC command 
+is given.
+
+	.PE	P	Print endnotes.  When encountered during 
+printing, endnotes will be printed at 
+this point in the document.
+
+	.PF	P	Paragraph realignment while printing.  
+May be ON, OFF, or DIS (for 
+discretionary).  When ON, subsequent 
+paragraphs are realigned as they are 
+printed.  When OFF, paragraphs are not 
+realigned.  When DIS, paragraphs are 
+realigned only when merge print data is 
+substituted in the document.  Paragraphs 
+are aligned using the left, right, and 
+paragraph margins currently in effect.
+
+	.PG	P	Number pages.  At print time the page 
+number is printed at the bottom of the 
+page unless a footer overrides it.  
+Usually used to restore page numbering 
+after being turned off with .OP.
+
+	.PL	E P	Page length.  The total number of lines 
+in a page assuming 6 lines per inch.  An 
+eleven inch page contains 66 lines.
+
+	.PM	E P	Paragraph margin.  The left margin to 
+use for the first line of every  
+subsequent paragraph.  Used for both 
+regular and hanging indents.
+
+	.PN	E P	Page number.  The current page number.
+
+	.PO	P	Page offset.  The number of print 
+columns from the left edge of the paper 
+to the left margin of text.  The current 
+setting of character width (.CW) deter 
+mines the actual amount of 
+indentation.  .PO can optionally specify 
+even or odd number page offsets.
+
+	.PR	P	Printer information.  Currently used to 
+select the print orientation for laser 
+printers (use .PR OR=L for landscape, 
+and .PR OR=P for portrait).
+
+	.PS	P	Proportional spacing ON/OFF.  Subsequent 
+text is to be printed using a 
+proportional font.
+
+	.RM	E P	Right margin.  Determines the right edge 
+of subsequent paragraphs.
+
+	.RP	M	Repeat.  Command to repetitively print 
+copies of a document.  The .DF command 
+may interfere with the .RP command.
+
+	.RR	E P	Ruler.  Embeds a ruler line to be used 
+for subsequent typing and alignment.  
+The text following the .RR is the exact 
+image of the ruler line above the text 
+on the screen.  A .RR with a # (0-9) 
+specifies a preformatted ruler line 
+(stored in the user area).
+
+	.RV	M	Read variable.  Merge print command used 
+to read one or more of the next data 
+from a file into variables.
+
+	.SB	E P	Suppress blank lines on/off.  Starting 
+with WordStar 6.0 Rev. D,  Soft lines at 
+the beginning of pages will be 
+automatically suppressed.  This dot 
+command controls the display and 
+printing of blank hard returns at the 
+beginning of pages.
+
+	.SR	P	Sub/superscript roll.  The increments 
+(in 1/48ths of an inch) which the 
+carriage is to roll up or down for sub
+script and superscript printing.  
+Default is 3 (3/48ths of an inch).
+
+	.SV	M	Set variable.  Merge print command used 
+to store data in a variable.
+
+	.TB	E P	Tab stops.  Sets multiple tab stops for 
+further editing/printing in the 
+document.
+
+	.TC	T	Table of contents.  The text following  
+the .TC is a table of contents entry.  A 
+"#" indicates where the page number is 
+to go in the entry.  .TC1 through .TC9 
+are used to simultaneously build nine 
+other tables.
+
+	.UJ	P	Micro justify.  Specifies whether 
+subsequent lines are to be micro- 
+justified at print time.  When ON, the 
+white space necessary to right justify a 
+line is spread in very fine increments 
+evenly over the line.  When OFF, whole 
+blanks are used to spread the white 
+space.  When DIS, the printer driver 
+decides; microjustification is not 
+performed if it slows down printing 
+dramatically.
+
+	.UL	P	Continuous underlining ON/OFF.  Enables 
+or disables underlining of blanks 
+between words.
+
+	.XE .XQ	P	Custom  print  control.  The  hex  pairs
+	.XR .XW		following the dot command define the 
+custom print control for ^E, ^Q, ^R, and 
+^W encountered in the text respectively.  
+The definition may include up to five 
+bytes.
+
+	.XL	P	Form feed.  The hex pairs following .XL 
+define the print control string to be 
+sent to eject the paper to the following 
+page when printing.
+
+	.XX	P	Strikeout character.  Redefines the 
+character used for strikeouts.

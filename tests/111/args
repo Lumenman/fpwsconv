@@ -1,0 +1,5 @@
+./-TOC-TAG.WS
+-r
+-q
+-o
+got/out.rtf

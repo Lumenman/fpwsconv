@@ -41,7 +41,7 @@ compared bytewise only — `AnsiCompareStr`, a sorted `TStringList` and the like
 ## Testing
 
 `runtests` runs every case in `tests\` and compares the files written with `expect\` byte by byte.
-A case folder holds the input (`in.ws` and any `.fi`, `.df` or picture files it uses), `args` (the
+A case folder holds the input (the document, `in.ws` in the synthetic cases, and any `.fi`, `.df` or picture files it uses), `args` (the
 command line, one argument per line, run from the case folder) and `expect\`; `tests\index.txt` names
 the cases. Build and run on Windows:
 
@@ -52,7 +52,8 @@ DOS: `builddos.bat` builds `dos\runtests.exe` as well; `dosbox-x -conf test-dos.
 with the DOS build and writes the result to `dos\test.log`.
 
 The expected files were checked against the Python converter this program was translated from
-(its unit tests, including the real WordStar 7.0 documents in `samples\`). When a fix changes the output
+(its unit tests, including the real WordStar 7.0 documents in `samples\`; cases 104-133 are documents from
+the WordStar 7 collection at https://sfwriter.com/ws7.htm in md, txt, rtf and rtf `-q`). When a fix changes the output
 on purpose, replace the case's `expect\` files with the new, verified output.
 
 ## Origin and license

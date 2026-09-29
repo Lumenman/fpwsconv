@@ -1,0 +1,40 @@
+Noted Tuesday, February 10, 2015, in Winnipeg, and posted on the 
+Yahoo! Groups WordStar group:
+
+WordStar recognizes an undocumented ".wi" dot command:
+
+
+It's a regular dot command, showing a "." in the flag column, not 
+a "1," which indicates a dot command that works best at the top 
+of a page, or a ":" for a merge-print dot command.  (And invalid 
+dot commands show a "?" -- try ".wx" for instance; ".wi" is not 
+invalid.)
+
+My hope was that it was an undocumented "widow-orphan control" 
+dot command, but it doesn't seem to do anything.  I tried it on 
+its own and with arguments of:
+
+ .wi 0
+ .wi 1
+ .wi 2
+ .wi off
+ .wi on
+ .wi dis 
+  
+It's recognized in WordStar for DOS 4.0 right through to WordStar 
+7.0.  
+
+It's not for character-width; that's the ".cw" dot command.  And 
+I doubt it stands for "WordStar International," since, as I said, 
+the command is recognized in WordStar 4.0, and the company was 
+known as MicroPro International back then.
+
+Anyone know what it's for?  
+
+Rob
+Noted Tuesday, November 9, 2021:
+
+In all of the WordStar program files, there is only one reference 
+to "widow," and that's in WSHELP.OVR, but I can find no way to 
+access that message from within a WordStar document.  There are 
+zero referencs to "orphan."
