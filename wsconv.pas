@@ -134,7 +134,7 @@ begin
   else if rtf then value := ChangeFileExt(inFile, '.rtf')
   else if textmode then value := ChangeFileExt(inFile, '.txt')
   else value := ChangeFileExt(inFile, '.md');
-  if SameFileName(ExpandFileName(value), ExpandFileName(inFile)) then
+  if LowerCase(ExpandFileName(value)) = LowerCase(ExpandFileName(inFile)) then   { SameFileName crashes under DOS }
     Fail('the output file would replace the input file: ' + value + ' (use -o)');
 
   try
