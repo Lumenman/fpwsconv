@@ -469,6 +469,11 @@ begin
     Exit('<!-- .fi ' + name + ': nested too deep -->');
   end;
   table := ReadTableFile(path, spec, codepage);
+  if table.error <> '' then
+  begin
+    if textmode then Exit('');
+    Exit('<!-- .fi ' + name + ': ' + table.error + ' -->');
+  end;
   if table.ok then
   begin
     rows := nil;

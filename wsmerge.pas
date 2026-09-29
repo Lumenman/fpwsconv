@@ -15,6 +15,7 @@ type
   TRows = array of TUStrArray;
   TTable = record
     ok, hasNames: Boolean;
+    error: UStr;                    { set with ok = False: a damaged file of a known kind }
     names: TUStrArray;
     rows: TRows;
   end;
@@ -304,8 +305,10 @@ end;
 { ---------------------------------------------------------------- dBASE }
 
 function ReadDbf(const data: TData; codepage: Integer): TTable;
-{ field names and records of a dBASE III/IV file; ok = False if not one. codepage 0: guessed. }
-var count, head, reclen, pos, k, off, f: Integer;
+{ field names and records of a dBASE III/IV file; ok = False if not one, error set if damaged.
+  codepage 0: guessed. }
+var count: Int64;
+    head, reclen, pos, k, off, f, total: Integer;
     cp: Integer;
     sizes: array of Integer;
     rec: TData;
@@ -313,6 +316,7 @@ var count, head, reclen, pos, k, off, f: Integer;
 begin
   Result.ok := False;
   Result.hasNames := True;
+  Result.error := '';
   Result.names := nil;
   Result.rows := nil;
   if (Length(data) < 33) or not (DB(data, 0) in [$03, $83, $8B, $F5, $30]) then Exit;
@@ -321,15 +325,23 @@ begin
   reclen := W16(data, 10);
   cp := PickCp(codepage, Slice(data, head, Length(data)));
   sizes := nil;
+  total := 1;                                        { the deletion flag }
   pos := 32;
   while (pos + 32 <= head) and (DB(data, pos) <> $0D) do
   begin
     Append(Result.names, DecodeAscii(UntilZero(Slice(data, pos, pos + 11))));
     SetLength(sizes, Length(sizes) + 1);
     sizes[High(sizes)] := DB(data, pos + 16);
+    Inc(total, sizes[High(sizes)]);
     Inc(pos, 32);
   end;
-  if (Length(sizes) = 0) or (Int64(head) + Int64(reclen) * count > Length(data) + reclen) then Exit;
+  { a record must hold its fields, and the records must be in the file (the final byte may be missing) }
+  if (Length(sizes) = 0) or (head > Length(data)) or (reclen < total)
+     or (head + Int64(reclen) * count > Length(data) + reclen) then
+  begin
+    Result.error := 'damaged dBASE file';
+    Exit;
+  end;
   for k := 0 to count - 1 do
   begin
     rec := Slice(data, head + k * reclen, head + (k + 1) * reclen);
@@ -360,6 +372,7 @@ var data: TData;
 begin
   Result.ok := False;
   Result.hasNames := False;
+  Result.error := '';
   Result.names := nil;
   Result.rows := nil;
   if not ReadFileData(path, data) then Exit;
@@ -982,7 +995,9 @@ begin
     Exit;
   end;
   table := ReadTableFile(path, rest, codepage);
-  if table.ok then
+  if table.error <> '' then
+    Append(messages, 'merge data file ' + name + ': ' + table.error)
+  else if table.ok then
   begin
     data.hasNames := table.hasNames;
     data.names := table.names;
