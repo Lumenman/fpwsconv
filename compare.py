@@ -134,6 +134,7 @@ def rtf_init(self, data, base_dir='.', codepage=None, *a, **kw):
 
 
 def run_tests():
+    original = wsconvert.Converter, wsrtf.RtfWriter
     wsconvert.Converter = ShadowConverter
     ShadowRtf.__init__ = rtf_init
     wsrtf.RtfWriter = ShadowRtf
@@ -145,6 +146,7 @@ def run_tests():
         pass
     finally:
         os.chdir(cwd)
+        wsconvert.Converter, wsrtf.RtfWriter = original     # the corpus runs the plain classes
 
 
 # ---------------------------------------------------------------- 2. corpus

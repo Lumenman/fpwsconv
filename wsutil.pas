@@ -340,19 +340,22 @@ end;
 { ---------------------------------------------------------------- regular expressions }
 
 var
-  Cache: TStringList;
+  { compiled patterns; a plain array compared code unit by code unit (a sorted TStringList
+    compares with AnsiCompareStr, which crashes under DOS without a code page table) }
+  CachePat: TUStrArray;
+  CacheRx: array of TRegExpr;
 
 function Rx(const pattern: UStr): TRegExpr;
 var k: Integer;
-    key: string;
 begin
-  key := U8(pattern);
-  k := Cache.IndexOf(key);
-  if k >= 0 then Exit(TRegExpr(Cache.Objects[k]));
+  for k := 0 to High(CachePat) do
+    if CachePat[k] = pattern then Exit(CacheRx[k]);
   Result := TRegExpr.Create(pattern);
   Result.ModifierM := False;
   Result.ModifierS := False;           { . does not match a newline (as in Python) }
-  Cache.AddObject(key, Result);
+  Append(CachePat, pattern);
+  SetLength(CacheRx, Length(CacheRx) + 1);
+  CacheRx[High(CacheRx)] := Result;
 end;
 
 function ReMatch(const pattern, s: UStr): TRegExpr;
@@ -764,11 +767,8 @@ begin
   Result := IntToStr(Trunc(v));
 end;
 
-initialization
-  Cache := TStringList.Create;
-  Cache.Sorted := True;
-  Cache.CaseSensitive := True;
-  Cache.OwnsObjects := True;
+var
+  k: Integer;
 finalization
-  Cache.Free;
+  for k := 0 to High(CacheRx) do CacheRx[k].Free;
 end.

@@ -4,3 +4,6 @@ lib/
 *.ppu
 *.log
 log.txt
+libdos/
+dos/
+dostest/

@@ -6,7 +6,7 @@ program wsconv;
 {$mode objfpc}{$H+}{$codepage utf8}
 
 uses
-  {$ifdef go32v2}fpwidestring, unicodeducet,{$endif}
+  {$ifdef go32v2}fpwidestring,{$endif}
   SysUtils, Classes, Math, wsutil, wsdoc, wsmerge, wsmd, wsrtf;
 
 procedure Usage;
@@ -131,33 +131,41 @@ begin
 
   if not FileExists(inFile) then Fail('file not found: ' + inFile);
 
-  if rtf then
-  begin
-    if not ConvertFileRtf(inFile, outFile, codepage, quotes, written, images) then Fail('cannot read ' + inFile);
-    if images > 0 then WriteLn('Written: ', written, ', ', images, ' picture(s)')
-    else WriteLn('Written: ', written);
-    Halt(0);
-  end;
-
-  if outFile = '' then
-    if textmode then outFile := ChangeFileExt(inFile, '.txt') else outFile := ChangeFileExt(inFile, '.md');
-  if not ReadFileData(inFile, d) then Fail('cannot read ' + inFile);
-  conv := TConverter.Create(d, textmode, ExtractFileDir(ExpandFileName(inFile)), 0, merge, preset, inFile,
-                            codepage, ExtractFileDir(ExpandFileName(outFile)));
   try
-    text := StripChars(conv.Convert, #10) + #10;
-    outBytes := U8(text);
-    f := TFileStream.Create(outFile, fmCreate);
-    try
-      f.WriteBuffer(outBytes[1], Length(outBytes));
-    finally
-      f.Free;
+    if rtf then
+    begin
+      if not ConvertFileRtf(inFile, outFile, codepage, quotes, written, images) then Fail('cannot read ' + inFile);
+      if images > 0 then WriteLn('Written: ', written, ', ', images, ' picture(s)')
+      else WriteLn('Written: ', written);
+      Halt(0);
     end;
-    imgs := '';
-    for name in conv.images do imgs := imgs + ', ' + name;
-    WriteLn('Written: ', outFile, U8(imgs));
-  finally
-    conv.Free;
+
+    if outFile = '' then
+      if textmode then outFile := ChangeFileExt(inFile, '.txt') else outFile := ChangeFileExt(inFile, '.md');
+    if not ReadFileData(inFile, d) then Fail('cannot read ' + inFile);
+    conv := TConverter.Create(d, textmode, ExtractFileDir(ExpandFileName(inFile)), 0, merge, preset, inFile,
+                              codepage, ExtractFileDir(ExpandFileName(outFile)));
+    try
+      text := StripChars(conv.Convert, #10) + #10;
+      outBytes := U8(text);
+      f := TFileStream.Create(outFile, fmCreate);
+      try
+        f.WriteBuffer(outBytes[1], Length(outBytes));
+      finally
+        f.Free;
+      end;
+      imgs := '';
+      for name in conv.images do imgs := imgs + ', ' + name;
+      WriteLn('Written: ', outFile, U8(imgs));
+    finally
+      conv.Free;
+    end;
+  except
+    on E: Exception do
+    begin                                        { stdout: DOS cannot redirect stderr }
+      WriteLn('wsconv: error: ', E.ClassName, ': ', E.Message);
+      Halt(1);
+    end;
   end;
   preset.Free;
 end.
