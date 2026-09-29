@@ -103,6 +103,7 @@ begin
   if (width <= 0) or (height <= 0) or (tw <= 0) or (th <= 0) then raise EPix.Create('empty PIX');
   rb := (tw + 7) div 8;                               { bytes in a tile row of one plane }
   mb := (rb + 7) div 8;                               { bytes in its mask }
+  if Int64(across) * tw * down * th > 1 shl 26 then raise EPix.Create('PIX too large');   { 64M pixels }
   stride := across * tw;
   SetLength(pix, stride * down * th);
   for n := 0 to down * across - 1 do

@@ -130,6 +130,12 @@ begin
   end;
 
   if not FileExists(inFile) then Fail('file not found: ' + inFile);
+  if outFile <> '' then value := outFile
+  else if rtf then value := ChangeFileExt(inFile, '.rtf')
+  else if textmode then value := ChangeFileExt(inFile, '.txt')
+  else value := ChangeFileExt(inFile, '.md');
+  if SameFileName(ExpandFileName(value), ExpandFileName(inFile)) then
+    Fail('the output file would replace the input file: ' + value + ' (use -o)');
 
   try
     if rtf then
