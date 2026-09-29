@@ -57,7 +57,8 @@ begin
   if i + 3 >= Length(data) then Exit;
   total := W16(data, i + 1) + 3;
   e := i + total;
-  if (total < 7) or (e > Length(data)) or (DB(data, e - 1) <> $1D) then Exit;
+  if (total < 7) or (e > Length(data)) or (DB(data, e - 1) <> $1D)
+     or (W16(data, e - 3) <> W16(data, i + 1)) then Exit;
   kind := DB(data, i + 3);
   payload := Slice(data, i + 4, e - 3);
   next := e;

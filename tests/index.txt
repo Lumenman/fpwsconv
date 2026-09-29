@@ -138,3 +138,5 @@
 138 rtf: .fi on the last line without CR
 139 rtf: .fi on the last line before 1Ah
 140 rtf: .pa on the last line without CR
+141 damaged sequence: end count 0, start count 8 (not a sequence)
+142 valid sequence with the same bytes and matching counts
