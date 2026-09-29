@@ -1,5 +1,5 @@
 { wsconv: WordStar (3.x-7.0) documents to Markdown, plain text or RTF.
-  Free Pascal port of wsconvert-master\wsconvert.py (same options and output; compare.py checks
+  Free Pascal translation of the Python converter (same options and output; compare.py checks
   both give the same results). Builds for Windows (fpc wsconv.pas) and DOS (go32v2, see README). }
 program wsconv;
 
@@ -13,7 +13,7 @@ procedure Usage;
 begin
   WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] ws_file');
   WriteLn;
-  WriteLn('Convert a WordStar document to Markdown or plain text.');
+  WriteLn('Convert a WordStar document to Markdown, plain text or RTF.');
   WriteLn;
   WriteLn('  ws_file               the WordStar file to convert');
   WriteLn('  -o, --output OUTPUT   output file name');

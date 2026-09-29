@@ -156,7 +156,7 @@ def corpus_files():
     files = []
     for pat in ('**/*.WS', '**/*.ws', '**/*.DOC', '**/*.doc'):
         files += glob.glob(os.path.join(root, pat), recursive=True)
-    skip = ('sandbox', 'wsconvert')
+    skip = ('sandbox', 'fpwsconv')
     return sorted({f for f in files if not any(s in f.split(os.sep) for s in skip)})
 
 

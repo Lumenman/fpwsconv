@@ -1,6 +1,6 @@
 """Checks the DOS build (dos\\wsconv.exe, go32v2) against the Windows build in DOSBox-X.
 Usage: python dostest.py   (build first: DOSBox-X with build-dos.conf; Windows: fpc wsconv.pas)
-Converts ..\\wsconvert-master\\samples\\*.WS to md, txt and rtf with both and compares the files."""
+Converts samples\\*.WS to md, txt and rtf with both and compares the files."""
 import glob
 import os
 import shutil
@@ -8,8 +8,8 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SAMPLES = os.path.join(HERE, '..', 'wsconvert-master', 'samples')
-DOSBOX = r'D:\DOSBox-X\dosbox-x.exe'
+SAMPLES = os.path.join(HERE, 'samples')
+DOSBOX = os.environ.get('DOSBOX_X', r'D:\DOSBox-X\dosbox-x.exe')
 OUT = os.path.join(HERE, 'dostest')
 
 CONF = r'''[sdl]
