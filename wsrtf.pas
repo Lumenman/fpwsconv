@@ -883,7 +883,7 @@ begin
     end;
   if not found then
   begin
-    FillChar(st, SizeOf(st), 0);
+    st := Default(TStyle);
     st.color := -1;
   end;
   if st.just <> #0 then fmt := '\q' + st.just else fmt := '\ql';

@@ -141,3 +141,4 @@
 141 damaged sequence: end count 0, start count 8 (not a sequence)
 142 valid sequence with the same bytes and matching counts
 143 picture: PIX with 65535x65535 tiles is refused (link kept)
+144 .fi worksheet: sparse cells, huge range spec

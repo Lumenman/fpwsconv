@@ -119,7 +119,7 @@ begin
       item := block + 5 + k * 33;                  { 24 name + 1 + 2 + 2 + 4 pointer }
       if item + 24 > Length(data) then Exit;
       if not namesOnly and (item + 33 > Length(data)) then Exit;
-      FillChar(st, SizeOf(st), 0);
+      st := Default(TStyle);
       st.name := Strip(DecodeBytes(Slice(data, item, item + 24), cp));
       st.color := -1;
       if not namesOnly then

@@ -266,7 +266,8 @@ end;
 
 function WorksheetRows(cells: TCells; useRange: Boolean; rg: TRange): TRows;
 var key: Int64;
-    c, r, col, row: Integer;
+    c, r, col, row, k: Integer;
+    used: array of Integer;
     line: TUStrArray;
     v: UStr;
     any: Boolean;
@@ -284,8 +285,23 @@ begin
       rg.r1 := Min(rg.r1, row); rg.r2 := Max(rg.r2, row);
     end;
   end;
-  for r := rg.r1 to rg.r2 do
+  { only the rows holding cells: empty rows are dropped anyway, and a range may be huge }
+  used := nil;
+  for key in cells.Keys do
   begin
+    row := key shr 20;
+    if (row >= rg.r1) and (row <= rg.r2) then
+    begin
+      SetLength(used, Length(used) + 1);
+      used[High(used)] := row;
+    end;
+  end;
+  specialize TArrayHelper<Integer>.Sort(used);
+  if rg.c2 - rg.c1 > 255 then rg.c2 := rg.c1 + 255;  { ponytail: Lotus/Quattro have 256 columns; wider only from a range spec }
+  for k := 0 to High(used) do
+  begin
+    if (k > 0) and (used[k] = used[k - 1]) then Continue;
+    r := used[k];
     line := nil;
     any := False;
     for c := rg.c1 to rg.c2 do
