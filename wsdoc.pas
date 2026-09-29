@@ -35,6 +35,7 @@ type
 function ReadSequence(const data: TData; i: SizeInt; out kind: Integer; out payload: TData;
                       out next: SizeInt): Boolean;
 function ExtChar(b, cp: Integer): UStr;
+function ExtByte(c: WideChar; cp: Integer): Integer;
 function ReadStyles(const data: TData; cp: Integer; namesOnly: Boolean = False): TStyles;
 function ParagraphNumber(const p: TData; compound: Boolean = True): UStr;
 function FileKind(const data: TData): TFileKind;
@@ -74,6 +75,15 @@ function ExtChar(b, cp: Integer): UStr;
 begin
   if (b > 0) and (b < $20) then Result := LOW_GLYPHS[b + 1]
   else Result := DecodeByte(b, cp);
+end;
+
+function ExtByte(c: WideChar; cp: Integer): Integer;
+{ the reverse of ExtChar: xx of the extended character 1Bh xx 1Ch for c, -1 if cp has no such character }
+begin
+  for Result := $80 to $FF do
+    if DecodeByte(Result, cp) = c then Exit;
+  Result := Pos(c, LOW_GLYPHS) - 1;
+  if Result <= 0 then Result := -1;
 end;
 
 function ReadStyles(const data: TData; cp: Integer; namesOnly: Boolean): TStyles;

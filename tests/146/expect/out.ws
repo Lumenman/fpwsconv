@@ -1,0 +1,7 @@
+†.NET is a line starting with a dot.
+	Tabbed line with a tab.
+A very long plain text line that must be wrapped by the converter ç
+at the right margin of sixty-five columns, keeping  double  ç
+spaces.
+
+   Indented line.

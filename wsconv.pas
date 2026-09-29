@@ -7,11 +7,11 @@ program wsconv;
 
 uses
   {$ifdef go32v2}fpwidestring,{$endif}
-  SysUtils, Classes, Math, wsutil, wsdoc, wsmerge, wsmd, wsrtf;
+  SysUtils, Classes, Math, wsutil, wsdoc, wsmerge, wsmd, wsrtf, wsfrom;
 
 procedure Usage;
 begin
-  WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] ws_file');
+  WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] [-w] ws_file');
   WriteLn;
   WriteLn('Convert a WordStar document to Markdown, plain text or RTF.');
   WriteLn;
@@ -24,6 +24,8 @@ begin
   WriteLn('  -m, --merge           merge print: fill &variables& from .df data files, run .if/.rv/.ma/...');
   WriteLn('                        (one copy of the document per record)');
   WriteLn('  -s, --set NAME=VALUE  value of a merge variable (answers .av prompts); repeatable');
+  WriteLn('  -w, --to-ws           the other way: UTF-8 text or Markdown (.md, .markdown) to a WordStar');
+  WriteLn('                        document (WordStar 4 style, .ws; code page 1125 unless -c)');
   WriteLn('  -c, --codepage CP     DOS code page of the text: 437, 866 (Russian / Ukrainian), 1125');
   WriteLn('                        (Ukrainian), 850 ... or auto (default: 866 if extended characters form');
   WriteLn('                        words, else 437)');
@@ -38,9 +40,9 @@ end;
 var
   inFile, outFile, cpArg, arg, value, written: string;
   name, imgs: UStr;
-  textmode, rtf, quotes, merge: Boolean;
+  textmode, rtf, quotes, merge, intoWs: Boolean;
   preset: TVars;
-  codepage, k, images, eq: Integer;
+  codepage, k, images, eq, missing: Integer;
   d: TData;
   conv: TConverter;
   text: UStr;
@@ -62,7 +64,7 @@ begin
   {$endif}
   SetExceptionMask([exInvalidOp, exDenormalized, exZeroDivide, exOverflow, exUnderflow, exPrecision]);
   inFile := ''; outFile := ''; cpArg := 'auto';
-  textmode := False; rtf := False; quotes := False; merge := False;
+  textmode := False; rtf := False; quotes := False; merge := False; intoWs := False;
   preset := TVars.Create;
   k := 1;
   while k <= ParamCount do
@@ -80,6 +82,7 @@ begin
     else if (arg = '-r') or (arg = '--rtf') then rtf := True
     else if (arg = '-q') or (arg = '--quotes') then quotes := True
     else if (arg = '-m') or (arg = '--merge') then merge := True
+    else if (arg = '-w') or (arg = '--to-ws') then intoWs := True
     else if (arg = '-o') or (arg = '--output') then
     begin
       if value = '' then value := NextValue(arg);
@@ -131,6 +134,7 @@ begin
 
   if not FileExists(inFile) then Fail('file not found: ' + inFile);
   if outFile <> '' then value := outFile
+  else if intoWs then value := ChangeFileExt(inFile, '.ws')
   else if rtf then value := ChangeFileExt(inFile, '.rtf')
   else if textmode then value := ChangeFileExt(inFile, '.txt')
   else value := ChangeFileExt(inFile, '.md');
@@ -138,6 +142,21 @@ begin
     Fail('the output file would replace the input file: ' + value + ' (use -o)');
 
   try
+    if intoWs then
+    begin
+      if not ReadFileData(inFile, d) then Fail('cannot read ' + inFile);
+      if codepage = 0 then codepage := 1125;
+      outBytes := ToWs(UTF8Decode(d), Pos(LowerCase(ExtractFileExt(inFile)), '.md .markdown') > 0, codepage, missing);
+      f := TFileStream.Create(value, fmCreate);
+      try
+        if Length(outBytes) > 0 then f.WriteBuffer(outBytes[1], Length(outBytes));
+      finally
+        f.Free;
+      end;
+      if missing > 0 then WriteLn('Written: ', value, ', ', missing, ' character(s) not in code page ', codepage, ' (as ?)')
+      else WriteLn('Written: ', value);
+      Halt(0);
+    end;
     if rtf then
     begin
       if not ConvertFileRtf(inFile, outFile, codepage, quotes, written, images) then Fail('cannot read ' + inFile);

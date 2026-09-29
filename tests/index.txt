@@ -142,3 +142,5 @@
 142 valid sequence with the same bytes and matching counts
 143 picture: PIX with 65535x65535 tiles is refused (link kept)
 144 .fi worksheet: sparse cells, huge range spec
+145 to WordStar: Markdown (Cyrillic cp1125, emphasis, lists, quote, code, table), checked by WordStar 7 resave
+146 to WordStar: plain text (dot at line start, tab, wrapping, spaces)
