@@ -17,7 +17,7 @@ type
 
 function OpenImage(const path: string): TPicture;
 function PngData(img: TFPMemoryImage): TData;
-function SavePng(img: TFPMemoryImage; const path: string): Boolean;
+function SavePng(const d: TData; const path: string): Boolean;
 function LocateGraphic(const baseDir, dosPath: string): string;
 function ImageSource(const path: string): string;
 function ScreenAspect(var w, h: Integer): Boolean;
@@ -247,13 +247,11 @@ begin
   end;
 end;
 
-function SavePng(img: TFPMemoryImage; const path: string): Boolean;
-var d: TData;
-    f: TFileStream;
+function SavePng(const d: TData; const path: string): Boolean;
+var f: TFileStream;
 begin
   Result := False;
   try
-    d := PngData(img);
     f := TFileStream.Create(path, fmCreate);
     try
       if d <> '' then f.WriteBuffer(d[1], Length(d));

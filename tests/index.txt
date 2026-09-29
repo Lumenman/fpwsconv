@@ -134,3 +134,4 @@
 134 merge: unary + and - in .ma
 135 include: damaged dBASE file (record length 0)
 136 merge: damaged dBASE file (too many records)
+137 pictures: same name in two folders, repeated picture, picture in a .fi document

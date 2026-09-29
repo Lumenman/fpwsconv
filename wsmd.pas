@@ -18,7 +18,9 @@ type
     kind: TFileKind;
     codepage, cp: Integer;               { codepage as given (0: guess for every file separately) }
     styles: TStyles;
-    images: TUStrArray;                  { PNG files written }
+    images: TUStrArray;                  { PNG files written (in root) }
+    imageSources: array of string;       { their source files, lower-case full paths }
+    root: TConverter;                    { the top document: .fi documents share its pictures }
     constructor Create(const aData: TData; aTextmode: Boolean; const aBaseDir: string; aDepth: Integer;
                        aMerge: Boolean; aPreset: TVars; const aDocPath: string; aCodepage: Integer;
                        const aImageDir: string);
@@ -240,6 +242,8 @@ begin
   styles := ReadStyles(data, cp, True);
   imageDir := aImageDir;
   images := nil;
+  imageSources := nil;
+  root := Self;
 end;
 
 function TConverter.Convert: UStr;
@@ -486,7 +490,8 @@ begin
     Exit(TableText(rows, textmode));
   end;
   ReadFileData(path, d);
-  sub := TConverter.Create(d, textmode, ExtractFileDir(path), depth + 1, merge, nil, '', codepage, '');
+  sub := TConverter.Create(d, textmode, ExtractFileDir(path), depth + 1, merge, nil, '', codepage, imageDir);
+  sub.root := root;
   try
     Result := StripChars(sub.Convert, #10);
   finally
@@ -497,22 +502,47 @@ end;
 function TConverter.Graphic(const name: UStr): UStr;
 { Markdown image for a graphic tag: the picture converted to PNG next to the output when it can be
   found and read, otherwise a link to the file named in the document. }
-var src: string;
-    stem: UStr;
+var src, key, path: string;
+    stem, pngName: UStr;
     pic: TPicture;
+    png, old: TData;
+    k, n: Integer;
+
+  function Taken(const f: UStr): Boolean;
+  var j: Integer;
+  begin
+    for j := 0 to High(root.images) do
+      if Lower(root.images[j]) = Lower(f) then Exit(True);
+    Result := False;
+  end;
+
 begin
   src := '';
   if imageDir <> '' then src := ImageSource(LocateGraphic(baseDir, string(name)));
   if src <> '' then
   begin
     stem := Lower(UTF8Decode(ChangeFileExt(ExtractFileName(src), '')));
+    key := LowerCase(ExpandFileName(src));
+    for k := 0 to High(root.imageSources) do                 { the same picture again }
+      if root.imageSources[k] = key then Exit('![' + stem + '](' + root.images[k] + ')');
     pic := OpenImage(src);
     if pic.img <> nil then
     try
-      if SavePng(pic.img, JoinPath(imageDir, string(stem + '.png'))) then
+      png := PngData(pic.img);
+      { a free name: not given to another picture, and no other file of that name in the folder
+        (the same PNG left by an earlier run is replaced) }
+      n := 1;
+      repeat
+        if n = 1 then pngName := stem + '.png' else pngName := stem + '-' + UStr(IntToStr(n)) + '.png';
+        path := JoinPath(imageDir, string(pngName));
+        Inc(n);
+      until not Taken(pngName) and (not FileExists(path) or (ReadFileData(path, old) and (old = png)));
+      if (png <> '') and SavePng(png, path) then
       begin
-        Append(images, stem + '.png');
-        Exit('![' + stem + '](' + stem + '.png)');
+        Append(root.images, pngName);
+        SetLength(root.imageSources, Length(root.imageSources) + 1);
+        root.imageSources[High(root.imageSources)] := key;
+        Exit('![' + stem + '](' + pngName + ')');
       end;
     finally
       pic.img.Free;
