@@ -5,10 +5,18 @@ builds for Windows and for DOS (go32v2).
 
     wsconv [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c 437|866|1125|auto] FILE.WS
     wsconv -w [-o OUTPUT] [-c CP] FILE.md|FILE.txt
+    wsconv [options] FOLDER|MASK|FILE ... [-o OUTPUT_FOLDER]
+
+Several files: a folder converts its WordStar documents (`.BAK` backups, plain text and the converter's
+own output are skipped; with `-w` its `.md`, `.markdown` and `.txt` files), a mask (`DOCS\*.WS`) the
+matching ones; files can also be listed. `-o` is then the output folder (created if missing; default: next to
+each input). Inputs whose outputs would share a name keep their extension in it (`LETTER.WS`, `LETTER.DOC`
+→ `LETTER_WS.md`, `LETTER_DOC.md`). A file that fails is reported and the rest are converted; the exit
+code is 1 if any failed. Subfolders are not searched.
 
 | Option | Meaning |
 |---|---|
-| `-o OUTPUT` | output file name |
+| `-o OUTPUT` | output file name (several files: output folder) |
 | `-t` | unformatted plain text instead of Markdown |
 | `-r` | RTF with fonts, margins, alignment, notes and pictures |
 | `-q` | RTF: typographic quotes, `--` as an em dash, `...` as an ellipsis |

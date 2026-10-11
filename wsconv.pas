@@ -11,12 +11,13 @@ uses
 
 procedure Usage;
 begin
-  WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] [-w] ws_file');
+  WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] [-w] ws_file ...');
   WriteLn;
   WriteLn('Convert a WordStar document to Markdown, plain text or RTF.');
   WriteLn;
-  WriteLn('  ws_file               the WordStar file to convert');
-  WriteLn('  -o, --output OUTPUT   output file name');
+  WriteLn('  ws_file               the WordStar file to convert; a folder (its WordStar documents, not *.BAK)');
+  WriteLn('                        or a mask (DOCS\*.WS) converts several files');
+  WriteLn('  -o, --output OUTPUT   output file name (several files: output folder, created if missing)');
   WriteLn('  -t, --textmode        output to unformatted (text) file');
   WriteLn('  -r, --rtf             output RTF with fonts, margins, alignment, notes and pictures (no merging)');
   WriteLn('  -q, --quotes          RTF: typographic quotes for straight " and '' (opening or closing by the');
@@ -37,23 +38,126 @@ begin
   Halt(2);
 end;
 
+type
+  EFail = class(Exception);           { a reported failure (Fail in single-file mode) }
+
 var
-  inFile, outFile, cpArg, arg, value, written: string;
-  name, imgs: UStr;
-  textmode, rtf, quotes, merge, intoWs: Boolean;
+  outFile, cpArg, arg, value, outName, outDir: string;
+  textmode, rtf, quotes, merge, intoWs, batch: Boolean;
   preset: TVars;
-  codepage, k, images, eq, missing: Integer;
-  d: TData;
-  conv: TConverter;
-  text: UStr;
-  outBytes: RawByteString;
-  f: TFileStream;
+  codepage, k, i, eq, done, failed: Integer;
+  inputs, used: TStringList;
 
 function NextValue(const opt: string): string;
 begin
   Inc(k);
   if k > ParamCount then Fail('argument ' + opt + ': expected one argument');
   Result := ParamStr(k);
+end;
+
+function OutExt: string;
+begin
+  if intoWs then Result := '.ws'
+  else if rtf then Result := '.rtf'
+  else if textmode then Result := '.txt'
+  else Result := '.md';
+end;
+
+function Wanted(const path: string): Boolean;
+{ a file found in a folder or by a mask: a WordStar document (with -w: Markdown or text); not a backup or
+  something the converter writes }
+var ext: string;
+    d: TData;
+begin
+  ext := LowerCase(ExtractFileExt(path));
+  if intoWs then Exit((ext = '.md') or (ext = '.markdown') or (ext = '.txt'));
+  if Pos(' ' + ext + ' ', ' .bak .md .markdown .txt .rtf .png ') > 0 then Exit(False);
+  Result := ReadFileData(path, d) and (FileKind(d) <> fkAscii);
+end;
+
+procedure AddInputs(const spec: string);
+{ spec: a file, a folder (its files) or a mask like DOCS\*.WS }
+var sr: TSearchRec;
+    mask, dir: string;
+begin
+  if DirectoryExists(spec) then mask := IncludeTrailingPathDelimiter(spec) + '*'
+  else if (Pos('*', spec) > 0) or (Pos('?', spec) > 0) then mask := spec
+  else
+  begin
+    inputs.Add(spec);
+    Exit;
+  end;
+  batch := True;
+  dir := ExtractFilePath(mask);
+  if FindFirst(mask, faAnyFile and not faDirectory, sr) = 0 then
+  begin
+    repeat
+      if (sr.Attr and faDirectory = 0) and Wanted(dir + sr.Name) then inputs.Add(dir + sr.Name);
+    until FindNext(sr) <> 0;
+    FindClose(sr);
+  end;
+end;
+
+procedure ConvertOne(const inFile, outFile: string);
+{ outFile '' = next to inFile with OutExt; failures raise EFail or another exception }
+var
+  value, written: string;
+  name, imgs: UStr;
+  images, missing: Integer;
+  d: TData;
+  conv: TConverter;
+  text: UStr;
+  outBytes: RawByteString;
+  f: TFileStream;
+  cp: Integer;
+begin
+  if not FileExists(inFile) then raise EFail.Create('file not found: ' + inFile);
+  if outFile <> '' then value := outFile else value := ChangeFileExt(inFile, OutExt);
+  if LowerCase(ExpandFileName(value)) = LowerCase(ExpandFileName(inFile)) then   { SameFileName crashes under DOS }
+    raise EFail.Create('the output file would replace the input file: ' + value + ' (use -o)');
+  cp := codepage;
+
+  if intoWs then
+  begin
+    if not ReadFileData(inFile, d) then raise EFail.Create('cannot read ' + inFile);
+    if cp = 0 then cp := 1125;
+    outBytes := ToWs(UTF8Decode(d), Pos(LowerCase(ExtractFileExt(inFile)), '.md .markdown') > 0, cp, missing);
+    f := TFileStream.Create(value, fmCreate);
+    try
+      if Length(outBytes) > 0 then f.WriteBuffer(outBytes[1], Length(outBytes));
+    finally
+      f.Free;
+    end;
+    if missing > 0 then WriteLn('Written: ', value, ', ', missing, ' character(s) not in code page ', cp, ' (as ?)')
+    else WriteLn('Written: ', value);
+    Exit;
+  end;
+  if rtf then
+  begin
+    if not ConvertFileRtf(inFile, outFile, cp, quotes, written, images) then raise EFail.Create('cannot read ' + inFile);
+    if images > 0 then WriteLn('Written: ', written, ', ', images, ' picture(s)')
+    else WriteLn('Written: ', written);
+    Exit;
+  end;
+
+  if not ReadFileData(inFile, d) then raise EFail.Create('cannot read ' + inFile);
+  conv := TConverter.Create(d, textmode, ExtractFileDir(ExpandFileName(inFile)), 0, merge, preset, inFile,
+                            cp, ExtractFileDir(ExpandFileName(value)));
+  try
+    text := StripChars(conv.Convert, #10) + #10;
+    outBytes := U8(text);
+    f := TFileStream.Create(value, fmCreate);
+    try
+      f.WriteBuffer(outBytes[1], Length(outBytes));
+    finally
+      f.Free;
+    end;
+    imgs := '';
+    for name in conv.images do imgs := imgs + ', ' + name;
+    WriteLn('Written: ', value, U8(imgs));
+  finally
+    conv.Free;
+  end;
 end;
 
 begin
@@ -63,9 +167,10 @@ begin
   SetMultiByteRTLFileSystemCodePage(CP_UTF8);
   {$endif}
   SetExceptionMask([exInvalidOp, exDenormalized, exZeroDivide, exOverflow, exUnderflow, exPrecision]);
-  inFile := ''; outFile := ''; cpArg := 'auto';
-  textmode := False; rtf := False; quotes := False; merge := False; intoWs := False;
+  outFile := ''; cpArg := 'auto';
+  textmode := False; rtf := False; quotes := False; merge := False; intoWs := False; batch := False;
   preset := TVars.Create;
+  inputs := TStringList.Create;
   k := 1;
   while k <= ParamCount do
   begin
@@ -113,11 +218,10 @@ begin
       end;
     end
     else if (Length(arg) > 1) and (arg[1] = '-') then Fail('unrecognized arguments: ' + arg)
-    else if inFile = '' then inFile := arg
-    else Fail('unrecognized arguments: ' + arg);
+    else AddInputs(arg);
     Inc(k);
   end;
-  if inFile = '' then
+  if (inputs.Count = 0) and not batch then
   begin
     Usage;
     Fail('the following arguments are required: ws_file');
@@ -132,65 +236,50 @@ begin
     if not KnownCodepage(codepage) then Fail('unknown code page: ' + cpArg);
   end;
 
-  if not FileExists(inFile) then Fail('file not found: ' + inFile);
-  if outFile <> '' then value := outFile
-  else if intoWs then value := ChangeFileExt(inFile, '.ws')
-  else if rtf then value := ChangeFileExt(inFile, '.rtf')
-  else if textmode then value := ChangeFileExt(inFile, '.txt')
-  else value := ChangeFileExt(inFile, '.md');
-  if LowerCase(ExpandFileName(value)) = LowerCase(ExpandFileName(inFile)) then   { SameFileName crashes under DOS }
-    Fail('the output file would replace the input file: ' + value + ' (use -o)');
-
-  try
-    if intoWs then
-    begin
-      if not ReadFileData(inFile, d) then Fail('cannot read ' + inFile);
-      if codepage = 0 then codepage := 1125;
-      outBytes := ToWs(UTF8Decode(d), Pos(LowerCase(ExtractFileExt(inFile)), '.md .markdown') > 0, codepage, missing);
-      f := TFileStream.Create(value, fmCreate);
-      try
-        if Length(outBytes) > 0 then f.WriteBuffer(outBytes[1], Length(outBytes));
-      finally
-        f.Free;
-      end;
-      if missing > 0 then WriteLn('Written: ', value, ', ', missing, ' character(s) not in code page ', codepage, ' (as ?)')
-      else WriteLn('Written: ', value);
-      Halt(0);
-    end;
-    if rtf then
-    begin
-      if not ConvertFileRtf(inFile, outFile, codepage, quotes, written, images) then Fail('cannot read ' + inFile);
-      if images > 0 then WriteLn('Written: ', written, ', ', images, ' picture(s)')
-      else WriteLn('Written: ', written);
-      Halt(0);
-    end;
-
-    if outFile = '' then
-      if textmode then outFile := ChangeFileExt(inFile, '.txt') else outFile := ChangeFileExt(inFile, '.md');
-    if not ReadFileData(inFile, d) then Fail('cannot read ' + inFile);
-    conv := TConverter.Create(d, textmode, ExtractFileDir(ExpandFileName(inFile)), 0, merge, preset, inFile,
-                              codepage, ExtractFileDir(ExpandFileName(outFile)));
+  if (inputs.Count = 1) and not batch then
+  begin
     try
-      text := StripChars(conv.Convert, #10) + #10;
-      outBytes := U8(text);
-      f := TFileStream.Create(outFile, fmCreate);
-      try
-        f.WriteBuffer(outBytes[1], Length(outBytes));
-      finally
-        f.Free;
+      ConvertOne(inputs[0], outFile);
+    except
+      on E: EFail do Fail(E.Message);
+      on E: Exception do
+      begin                                        { stdout: DOS cannot redirect stderr }
+        WriteLn('wsconv: error: ', E.ClassName, ': ', E.Message);
+        Halt(1);
       end;
-      imgs := '';
-      for name in conv.images do imgs := imgs + ', ' + name;
-      WriteLn('Written: ', outFile, U8(imgs));
-    finally
-      conv.Free;
     end;
-  except
-    on E: Exception do
-    begin                                        { stdout: DOS cannot redirect stderr }
-      WriteLn('wsconv: error: ', E.ClassName, ': ', E.Message);
-      Halt(1);
+    Halt(0);
+  end;
+
+  { several files: -o is a folder; inputs whose outputs would share a name (LETTER.WS, LETTER.DOC) keep
+  their extension in it (LETTER_WS.md, LETTER_DOC.md) }
+  if (outFile <> '') and not ForceDirectories(outFile) then Fail('cannot create folder ' + outFile);
+  used := TStringList.Create;              { output names in lower case, in the order of inputs }
+  for k := 0 to inputs.Count - 1 do
+  begin
+    if outFile <> '' then outDir := IncludeTrailingPathDelimiter(outFile) else outDir := ExtractFilePath(inputs[k]);
+    used.Add(LowerCase(outDir + ChangeFileExt(ExtractFileName(inputs[k]), OutExt)));
+  end;
+  done := 0; failed := 0;
+  for k := 0 to inputs.Count - 1 do
+  begin
+    if outFile <> '' then outDir := IncludeTrailingPathDelimiter(outFile) else outDir := ExtractFilePath(inputs[k]);
+    outName := outDir + ChangeFileExt(ExtractFileName(inputs[k]), OutExt);
+    eq := 0;
+    for i := 0 to used.Count - 1 do
+      if used[i] = used[k] then Inc(eq);   { bytewise: no locale compare under DOS }
+    if eq > 1 then outName := outDir + StringReplace(ExtractFileName(inputs[k]), '.', '_', [rfReplaceAll]) + OutExt;
+    try
+      ConvertOne(inputs[k], outName);
+      Inc(done);
+    except
+      on E: Exception do
+      begin
+        WriteLn('wsconv: ', inputs[k], ': error: ', E.Message);
+        Inc(failed);
+      end;
     end;
   end;
-  preset.Free;
+  WriteLn(done, ' file(s) converted, ', failed, ' failed');
+  if (failed > 0) or (done = 0) then Halt(1);
 end.
