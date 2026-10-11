@@ -24,6 +24,8 @@ type
     lh: Integer;                     { line height in twips (.lh; default 1/6"); 0 = automatic (.lh a) }
     keepLines: Integer;              { .cp n: lines still to keep on one page }
     header, footer: UStr;
+    header0, footer0: UStr;          { those in effect where the text starts (the document's own) }
+    hfChanged: Boolean;              { .he / .fo changed after the text started: a new section }
     tabs: array of TTab;             { none = every 0.5" (RTF default too) }
     cols, gutter: Integer;
     kern: Boolean;                   { .kr (on unless turned off) }
@@ -264,7 +266,7 @@ begin
   tabs := nil;
   cols := 1; gutter := TWIP div 5;
   kern := True;
-  newSection := False; started := False;
+  newSection := False; started := False; hfChanged := False; header0 := ''; footer0 := '';
 end;
 
 procedure TLayout.Dot(const cmd, arg: UStr);
@@ -364,8 +366,16 @@ begin
     else if a = 'r' then align := 'r'
     else if a = 'c' then align := 'c';
   end
-  else if (cmd = 'he') or (cmd = 'h1') then header := Strip(arg)
-  else if (cmd = 'fo') or (cmd = 'f1') then footer := Strip(arg);
+  else if (cmd = 'he') or (cmd = 'h1') then
+  begin
+    header := Strip(arg);
+    hfChanged := started;
+  end
+  else if (cmd = 'fo') or (cmd = 'f1') then
+  begin
+    footer := Strip(arg);
+    hfChanged := started;
+  end;
 end;
 
 function TLayout.Pard(alignLine: Char): UStr;
@@ -739,16 +749,24 @@ var outs, para: TUStrArray;
     if inNote then Append(outs, text + ' ')
     else
     begin
-      if layout.newSection then                    { .co: the columns start a section (no page break) }
-      begin
-        layout.newSection := False;
-        if Length(outs) > 0 then
+      if layout.newSection or layout.hfChanged then
+      begin                                        { .co: the columns start a section (no page break); }
+        if Length(outs) > 0 then                   { so do new headers / footers (.he, .fo) }
         begin
           last := outs[High(outs)];
           outs[High(outs)] := Copy(last, 1, Max(0, Length(last) - 5)) + '\sect'#10;
         end;
         if layout.started and (Length(outs) = 0) then Append(outs, '\sect' + layout.Columns)
         else Append(outs, layout.Columns);
+        if layout.hfChanged then
+          Append(outs, HF(layout.header, 'header') + HF(layout.footer, 'footer'));
+        layout.newSection := False;
+        layout.hfChanged := False;
+      end;
+      if not layout.started then
+      begin
+        layout.header0 := layout.header;
+        layout.footer0 := layout.footer;
       end;
       layout.started := True;
       keep := '';
@@ -1109,8 +1127,13 @@ var text, hfs, fontTbl, styleTbl, colorTbl, head, n, m: UStr;
 begin
   text := Body(data);
   hfs := '';
-  if layout.header <> '' then hfs := hfs + HF(layout.header, 'header');
-  if layout.footer <> '' then hfs := hfs + HF(layout.footer, 'footer');
+  if not layout.started then
+  begin
+    layout.header0 := layout.header;
+    layout.footer0 := layout.footer;
+  end;
+  if layout.header0 <> '' then hfs := hfs + HF(layout.header0, 'header');
+  if layout.footer0 <> '' then hfs := hfs + HF(layout.footer0, 'footer');
   fontTbl := '';
   for k := 0 to High(fonts.names) do
   begin
