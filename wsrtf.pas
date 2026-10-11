@@ -754,7 +754,8 @@ var outs, para: TUStrArray;
         if Length(outs) > 0 then                   { so do new headers / footers (.he, .fo) }
         begin
           last := outs[High(outs)];
-          outs[High(outs)] := Copy(last, 1, Max(0, Length(last) - 5)) + '\sect'#10;
+          { \par kept: LibreOffice drops a paragraph ended by \sect alone }
+          outs[High(outs)] := Copy(last, 1, Max(0, Length(last) - 1)) + '\sect'#10;
         end;
         if layout.started and (Length(outs) = 0) then Append(outs, '\sect' + layout.Columns)
         else Append(outs, layout.Columns);
