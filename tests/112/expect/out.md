@@ -1,3 +1,55 @@
+<!-- &@&, at &!& -->
+
+<!-- ToC may include centering, tabs, ^P fences, and ^P=, ^P-, and ^P! tags -->
+
+<!-- .tc creates *._T0  |  .tc1 creates *._T1  |  .tc2 creates *._T2  |  etc. -->
+
+**THE OPPENHEIMER ALTERNATIVE**
+
+*Table of Contents*
+
+~~Real Events~~ / Alternate History
+
+---
+
+<!-- ToC may include centering, tabs, ^P fences, and ^P=, ^P-, and ^P! tags -->
+
+<!-- .tc creates *._T0  |  .tc1 creates *._T1  |  .tc2 creates *._T2  |  etc. -->
+
+**THE OPPENHEIMER ALTERNATIVE**
+
+<u>Table of Contents</u>
+
+*Generated &@&, at &!&*
+
+---
+
+---
+
+~~Rabi Epigram   [→](#tc4)~~
+
+**Prologue**
+
+~~Prologue: |February 1967| Hawksnest Bay   [→](#tc5)~~
+
+**Chapter 1**
+
+^_____^ **1936** ^_______________________________________________________________^
+
+~~|Summer 1936| Oppie meets Jean Tatlock   [→](#tc6)~~
+
+~~|Later in Summer 1936| Oppie begins dating Jean [→](#tc12)~~
+
+**Chapter 2**
+
+^_____^ **1942** ^_______________________________________________________________^
+
+| ~~\|October 5, 1942\| Groves meets Szilard in Chicago | [→](#tc13)~~ |
+|---|---|
+| ~~\|October 8, 1942\| Oppie & Groves meet for first time | [→](#tc14)~~ |
+
+---
+
 <!-- (((Hyperlink URLs))) are specified in file C:\WS\RTF-RJS\LINKS.MRG -->
 
 <!-- THE OPPENHEIMER ALTERNATIVE: the 24th novel by Robert J. Sawyer -->
@@ -16,6 +68,8 @@
 | <!-- | my macros for converting to RTF automatically add the accented --> |
 
 <!-- └ uppercase Ü into both "Übermensch" and "Über alles." -->
+
+<a id="ix1"></a><a id="ix2"></a>
 
 <!-- tc .po ((8.5-7.8)/2)-.3i -->
 
@@ -1476,7 +1530,7 @@ exception of Peter Oppenheimer, is now deceased.  The Manhattan
 Project and Project *Orion* both really existed as described here, 
 and the Institute for Advanced Study still exists.
 
-The chapter-head quotes are all real, and, 
+The c<a id="ix3"></a>hapter-head quotes are all real, and, 
 thanks to the published recollections of the 
 participants, official transcripts, illicit 
 recordings, and so on, some of this novel's 
@@ -1495,6 +1549,8 @@ dialog is real, too.
 <!-- .l#  p 1 3 -->
 
 <!-- Header: Sawyer / The Oppenheimer Alternative / # -->
+
+<a id="tc4"></a>
 
 <!-- Tuesday, October 30, 2018, from RABI: SCIENTIST AND CITIZEN -->
 
@@ -1526,6 +1582,8 @@ Prologue
 <!-- @@ Audible: there's a fair bit of German in this novel and some Dutch; -->
 
 <!-- you may want to choose a narrator who is familiar with those languages. -->
+
+<a id="tc5"></a>
 
 <!-- first scene written for this novel -->
 
@@ -1592,6 +1650,8 @@ thorough scholar ...*
 <!-- Tuesday, September 10, 2019, in Mississauga -->
 
 <!-- @@ Audible: Haakon is "HOKE-on" -->
+
+<a id="tc6"></a>
 
 "You're bad luck for me," said Haakon Chevalier.  "I hope 
 you know that."
@@ -1746,7 +1806,7 @@ but mostly in art, not stocks."
 She tilted her head again, and the light from the porcelain 
 table lamp hit her just *so,* and he suddenly realized where he'd 
 seen that face before.  Oppie's favorite book was Baudelaire's 
-poetry collection *Les Fleurs du mal.*  The shape of Jean's face 
+poetry collection *<a id="ix7"></a>Le<a id="ix8"></a>s Fleurs <a id="ix9"></a>du <a id="ix10"></a>ma<a id="ix11"></a>l.*  The shape of Jean's face 
 and the curve and length of her nose were identical to that of 
 the woman in the etching accompanying Baudelaire's heartbreaking 
 *"Une Martyre"* in the glorious 1917 edition.  He frowned, ousting 
@@ -1784,6 +1844,8 @@ said sadly, "it was nice meeting you."  He made his way toward
 the staircase that led up to his lonely room.
 
 #
+
+<a id="tc12"></a>
 
 Jean was present at the next party Mary Ellen hosted, and 
 the one after that, each time just as lovely, just as magnetic.  
@@ -1880,6 +1942,8 @@ Six Years Later: 1942
 who thinks the future is uncertain.*
 
 **--Leo Szilard**
+
+<a id="tc13"></a>
 
 <!-- Friday, May 4, 2018, on drive to Ticonderoga, NY -->
 
@@ -2011,6 +2075,8 @@ shaking his head.
 
 #
 
+<a id="tc14"></a>
+
 <!-- two months after Luiminaries meeting -->
 
 <!-- Wednesday, April 18, 2018, in Missisauga -->
@@ -2111,3 +2177,19 @@ It was all falling into place; Kitty would be so pleased.
 "Your wish is my command, General."
 
 ---
+
+
+---
+
+- .lm .3i, [→](#ix1)
+- .pm 0i, [→](#ix2)
+
+- D, [→](#ix9)
+
+- H, [→](#ix3)
+
+- L, [→](#ix7), [→](#ix11)
+
+- M, [→](#ix10)
+
+- S, [→](#ix8)

@@ -21,6 +21,10 @@ type
     images: TUStrArray;                  { PNG files written (in root) }
     imageSources: array of string;       { their source files, lower-case full paths }
     root: TConverter;                    { the top document: .fi documents share its pictures }
+    tocRaw: array[0..9] of TData;        { (root) lines of the tables of contents .tc, .tc1 ... .tc9 }
+    ixItems: TIndexItems;                { (root) index entries }
+    anchors: Integer;                    { (root) anchors written for them }
+    noIndex: Boolean;                    { converting a table of contents: its ^PK are not entries }
     constructor Create(const aData: TData; aTextmode: Boolean; const aBaseDir: string; aDepth: Integer;
                        aMerge: Boolean; aPreset: TVars; const aDocPath: string; aCodepage: Integer;
                        const aImageDir: string);
@@ -30,6 +34,11 @@ type
     function InsertFile(const name, spec: UStr): UStr;
     function Graphic(const name: UStr): UStr;
     function Sequence(skind: Integer; const p: TData; inNote, lineStart: Boolean): UStr;
+    function Entry(const raw: TData; const line: UStr): UStr;
+    function AddIndex(const text: UStr; parse: Boolean): UStr;
+    procedure PutItem(const it: TIndexItem);
+    function Contents: UStr;
+    function IndexMd: UStr;
   end;
 
 function MdBlocks(const text: UStr): UStr;
@@ -249,13 +258,96 @@ end;
 function TConverter.Convert: UStr;
 begin
   Result := ConvertChunk(data, False, False);
+  if (root = Self) and not textmode then Result := Contents + Result + IndexMd;
+end;
+
+procedure TConverter.PutItem(const it: TIndexItem);
+begin
+  if it.main = '' then Exit;
+  SetLength(root.ixItems, Length(root.ixItems) + 1);
+  root.ixItems[High(root.ixItems)] := it;
+end;
+
+function TConverter.AddIndex(const text: UStr; parse: Boolean): UStr;
+{ an index entry here (.ix, ^ONI): its anchor }
+var it: TIndexItem;
+begin
+  Result := '';
+  if textmode or root.noIndex then Exit;
+  it := IndexItem(text, root.anchors + 1, parse);
+  if it.main = '' then Exit;
+  PutItem(it);
+  if it.cross then Exit;                             { no page number: nothing points here }
+  Inc(root.anchors);
+  Result := '<a id="ix' + UStr(IntToStr(it.id)) + '"></a>';
+end;
+
+function TConverter.Entry(const raw: TData; const line: UStr): UStr;
+{ .tc / .ix line (raw: its bytes): kept for the table of contents / index; an anchor where it points }
+var list: Integer;
+    payload: TData;
+    found: Boolean;
+begin
+  Result := '';
+  if textmode or root.noIndex then Exit;
+  if TocLine(raw, list, payload) then
+  begin
+    payload := TocPage(payload, 'WSTOCREF' + IntToStr(root.anchors + 1) + 'X', found);
+    root.tocRaw[list] := root.tocRaw[list] + payload + #13#10;
+    if found then
+    begin
+      Inc(root.anchors);
+      Result := '<a id="tc' + UStr(IntToStr(root.anchors)) + '"></a>';
+    end;
+  end
+  else Result := AddIndex(Strip(Copy(line, 4, MaxInt)), True);
+end;
+
+function TConverter.Contents: UStr;
+{ the tables of contents (.tc, then .tc1 ... .tc9) as WordStar builds them, page numbers as links }
+var n: Integer;
+    s: UStr;
+begin
+  Result := '';
+  noIndex := True;
+  for n := 0 to 9 do
+    if tocRaw[n] <> '' then
+    begin
+      s := CollapseNewlines(MdBlocks(ConvertChunk(tocRaw[n], True, False)));
+      s := Strip(ReSubStr('WSTOCREF(\d+)X', s, '[→](#tc$1)'));
+      if EndsWith(s, '---') then s := RStrip(Copy(s, 1, Length(s) - 3));   { its own .pa at the end }
+      Result := Result + s + #10#10'---'#10#10;
+    end;
+  noIndex := False;
+end;
+
+function TConverter.IndexMd: UStr;
+{ the index as WordStar builds it, as nested lists; page numbers as links to the places }
+var ln: TIndexLine;
+    r: TIndexRef;
+    s: UStr;
+begin
+  Result := '';
+  for ln in IndexLines(ixItems) do
+  begin
+    if ln.blank then Result := Result + #10;
+    if ln.sub then s := '  - ' else s := '- ';
+    s := s + ln.text;
+    for r in ln.refs do
+      if r.bold then s := s + ', **[→](#ix' + UStr(IntToStr(r.id)) + ')**'
+      else s := s + ', [→](#ix' + UStr(IntToStr(r.id)) + ')';
+    Result := Result + s + #10;
+  end;
+  if Result <> '' then Result := #10#10'---'#10#10 + Result;
 end;
 
 function TConverter.ConvertChunk(const chunk: TData; isChunk, inNote: Boolean): UStr;
 var outs: UStr;
     dotline: UStr;
-    inDot, lineStart, tabbed, pendingBreak, under: Boolean;
-    i, nx: SizeInt;
+    inDot, lineStart, tabbed, pendingBreak, under, marking: Boolean;
+    i, nx, dotStart: SizeInt;
+    markId: Integer;
+    markText: UStr;
     c, skind, nxt: Integer;
     payload: TData;
     s, ch, m: UStr;
@@ -279,6 +371,10 @@ begin
   tabbed := False;                     { a tab sequence opened this line: a '.' after it is text }
   pendingBreak := False;
   under := False;                      { inside ^S underline }
+  marking := False;                    { inside ^PK ... ^PK: text for the index }
+  markText := '';
+  dotStart := 0;
+  markId := 0;
   i := 0;
   while i < Length(chunk) do
   begin
@@ -310,6 +406,7 @@ begin
       begin
         ch := ExtChar(DB(chunk, i + 1), cp);
         if inDot then dotline := dotline + ch else Emit(ch);
+        if marking and not inDot then markText := markText + ch;
         Inc(i, 3);
       end
       else Inc(i);
@@ -333,10 +430,14 @@ begin
     begin
       if inDot then
       begin
-        s := DotCommand(dotline);
+        s := Lower(Copy(dotline, 2, 2));
+        if (s = 'tc') or (s = 'ix') then s := Entry(Slice(chunk, dotStart, i - 1), dotline)
+        else s := DotCommand(dotline);
         inDot := False;
         dotline := '';
-        if s <> '' then
+        if (s <> '') and pendingBreak and StartsWith(s, '<a id=') and EndsWith(outs, '</a>') then
+          outs := outs + s                           { anchors of consecutive .tc / .ix lines: one line }
+        else if s <> '' then
         begin
           Emit(s);
           pendingBreak := True;
@@ -383,6 +484,18 @@ begin
           pendingBreak := True;
         end;
       end
+      else if c = $0B then                           { ^PK: marks text for the index }
+      begin
+        if marking then PutItem(IndexItem(markText, markId, False))
+        else if not textmode and not root.noIndex then
+        begin                                        { the anchor here, the entry at the end mark }
+          Inc(root.anchors);
+          markId := root.anchors;
+          Emit('<a id="ix' + UStr(IntToStr(markId)) + '"></a>');
+        end;
+        marking := not marking and not textmode and not root.noIndex;
+        markText := '';
+      end
       else if textmode then
       else if c = $13 then                           { underline: HTML, Markdown has none }
       begin
@@ -408,10 +521,12 @@ begin
     begin
       inDot := True;
       dotline := '.';
+      dotStart := i - 1;
       lineStart := False;
       Continue;
     end;
     if inDot then dotline := dotline + ch else Emit(ch);
+    if marking and not inDot then markText := markText + ch;
   end;
 
   if inDot then
@@ -584,6 +699,7 @@ begin
     if inNote then Exit(' ') else Exit(#9);
   end;
   if skind = SEQ_PARNUM then Exit(ParagraphNumber(p, parnumCompound));
+  if skind = SEQ_INDEX then Exit(AddIndex(DecodeBytes(UntilZero(p), cp), True));   { ^ONI }
   if (skind = SEQ_GRAPHIC) and not textmode then
   begin
     name := Strip(DecodeBytes(UntilZero(p), cp));

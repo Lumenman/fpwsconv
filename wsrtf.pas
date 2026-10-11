@@ -50,6 +50,11 @@ type
     layout: TLayout;
     images: Integer;
     quotes: Boolean;                 { straight quotes -> typographic }
+    root: TRtfWriter;                { the top document: .fi documents add their entries to it }
+    tocRaw: array[0..9] of TData;    { (root) lines of the tables of contents .tc, .tc1 ... .tc9 }
+    ixItems: TIndexItems;            { (root) index entries }
+    anchors: Integer;                { (root) bookmarks written for them }
+    noIndex: Boolean;                { a table of contents: its ^PK are not entries }
     constructor Create(const aData: TData; const aBaseDir: string; aCodepage, aDepth: Integer;
                        aFonts: TFontList; const aDocPath: string; aQuotes: Boolean);
     destructor Destroy; override;
@@ -61,6 +66,11 @@ type
     function Note(nkind: Integer; const p: TData): UStr;
     function Body(const d: TData; inNote: Boolean = False): UStr;
     procedure DotCommand(const line: UStr; var para: TUStrArray);
+    function Entry(const raw: TData; const line: UStr): UStr;
+    function AddIndex(const text: UStr; parse: Boolean): UStr;
+    procedure PutItem(const it: TIndexItem);
+    function Contents: UStr;
+    function IndexRtf: UStr;
     function HF(const text, hkind: UStr): UStr;
     function Document: UStr;
   end;
@@ -422,6 +432,7 @@ begin
   ownLayout := True;
   images := 0;
   quotes := aQuotes;
+  root := Self;
 end;
 
 destructor TRtfWriter.Destroy;
@@ -528,6 +539,134 @@ begin
   Result := '{\super\chftn}{\footnote' + alt + '\pard\plain{\super\chftn} ' + text + '}';
 end;
 
+function Bookmark(const name: UStr): UStr;
+begin
+  Result := '{\*\bkmkstart ' + name + '}{\*\bkmkend ' + name + '}';
+end;
+
+function PageRefs(const rtf: UStr): UStr;
+{ WSTOCREFnX (the page number of a .tc line) -> a PAGEREF field to bookmark _tcn }
+var k, e: Integer;
+    rest: UStr;
+begin
+  Result := '';
+  rest := rtf;
+  k := Pos('WSTOCREF', rest);
+  while k > 0 do
+  begin
+    e := k + 8;
+    while (e <= Length(rest)) and IsDigit(rest[e]) do Inc(e);
+    Result := Result + Copy(rest, 1, k - 1) + Field('PAGEREF _tc' + Copy(rest, k + 8, e - k - 8) + ' \\h', '#');
+    rest := Copy(rest, e + 1, MaxInt);              { past the X }
+    k := Pos('WSTOCREF', rest);
+  end;
+  Result := Result + rest;
+end;
+
+procedure TRtfWriter.PutItem(const it: TIndexItem);
+begin
+  if it.main = '' then Exit;
+  SetLength(root.ixItems, Length(root.ixItems) + 1);
+  root.ixItems[High(root.ixItems)] := it;
+end;
+
+function TRtfWriter.AddIndex(const text: UStr; parse: Boolean): UStr;
+{ an index entry here (.ix, ^ONI): a bookmark for the index's page number and a hidden XE field, so a
+  word processor can build its own index too }
+var it: TIndexItem;
+    inst: UStr;
+begin
+  Result := '';
+  if root.noIndex then Exit;
+  it := IndexItem(text, root.anchors + 1, parse);
+  if it.main = '' then Exit;
+  PutItem(it);
+  inst := 'XE "' + RtfText(it.main);
+  if it.cross then inst := inst + '" \\t "' + RtfText(it.sub)
+  else if it.sub <> '' then inst := inst + ':' + RtfText(it.sub);
+  inst := inst + '"';
+  if it.bold then inst := inst + ' \\b';
+  Result := '{\v ' + Field(inst, '') + '}';
+  if it.cross then Exit;
+  Inc(root.anchors);
+  Result := Bookmark('_ix' + UStr(IntToStr(it.id))) + Result;
+end;
+
+function TRtfWriter.Entry(const raw: TData; const line: UStr): UStr;
+{ .tc / .ix line (raw: its bytes): kept for the table of contents / index; a bookmark where it points
+  and a hidden TC / XE field }
+var list, level: Integer;
+    payload: TData;
+    found: Boolean;
+    t: UStr;
+begin
+  Result := '';
+  if root.noIndex then Exit;
+  if not TocLine(raw, list, payload) then Exit(AddIndex(Strip(Copy(line, 4, MaxInt)), True));
+  payload := TocPage(payload, 'WSTOCREF' + IntToStr(root.anchors + 1) + 'X', found);
+  root.tocRaw[list] := root.tocRaw[list] + payload + #13#10;
+  if not found then Exit;
+  Inc(root.anchors);
+  t := Copy(line, 4, MaxInt);                      { the text: no page number, dot leader, indent }
+  if (t <> '') and IsDigit(t[1]) then t := Copy(t, 2, MaxInt);
+  if StartsWith(t, ' ') then t := Copy(t, 2, MaxInt);
+  t := RStripChars(Replace(ReSubStr('&#[^&]*&', t, ''), '#', ''), ' .'#9);
+  level := 1 + (Length(t) - Length(LStrip(t)) + 1) div 2;
+  t := '"' + RtfText(Strip(t)) + '" \\l ' + UStr(IntToStr(Min(level, 9)));
+  if list > 0 then t := t + ' \\f ' + UStr(Chr(Ord('C') + list));   { .tc1 -> D ... .tc9 -> L }
+  Result := Bookmark('_tc' + UStr(IntToStr(root.anchors))) + '{\v ' + Field('TC ' + t, '') + '}';
+end;
+
+function TRtfWriter.Contents: UStr;
+{ the tables of contents (.tc, then .tc1 ... .tc9) as WordStar builds them, each on new pages; page
+  numbers are PAGEREF fields the word processor fills in }
+var n: Integer;
+    sub: TRtfWriter;
+    t: UStr;
+begin
+  Result := '';
+  for n := 0 to 9 do
+    if tocRaw[n] <> '' then
+    begin
+      sub := TRtfWriter.Create(tocRaw[n], baseDir, cp, depth + 1, fonts, docPath, quotes);
+      try
+        sub.kind := kind;                            { lines of this document: its format and styles }
+        sub.styles := styles;
+        sub.noIndex := True;
+        t := PageRefs(sub.Body(sub.data));
+        Inc(images, sub.images);
+      finally
+        sub.Free;
+      end;
+      if EndsWith(t, '\page }\par'#10) then                { its own .pa at the end }
+        t := Copy(t, 1, Length(t) - Length('\page }\par'#10)) + '}\par'#10;
+      if Result <> '' then Result := Result + '\pard\page'#10;
+      Result := Result + t;
+    end;
+  { a section of its own: the document's pages are numbered from 1, as without it }
+  if Result <> '' then Result := Result + '\sect\sectd\pgnrestart\pgnstarts1'#10;
+end;
+
+function TRtfWriter.IndexRtf: UStr;
+{ the index as WordStar builds it, after a page break; page numbers are PAGEREF fields }
+var ln: TIndexLine;
+    r: TIndexRef;
+    t: UStr;
+begin
+  Result := '';
+  for ln in IndexLines(ixItems) do
+  begin
+    if ln.blank then Result := Result + '\pard\plain\par'#10;
+    t := RtfText(ln.text);
+    for r in ln.refs do
+      if r.bold then t := t + ', {\b ' + Field('PAGEREF _ix' + UStr(IntToStr(r.id)) + ' \\h', '#') + '}'
+      else t := t + ', ' + Field('PAGEREF _ix' + UStr(IntToStr(r.id)) + ' \\h', '#');
+    if ln.sub then Result := Result + '\pard\plain\li360 {' + t + '}\par'#10
+    else Result := Result + '\pard\plain {' + t + '}\par'#10;
+  end;
+  if Result <> '' then Result := '\pard\page'#10 + Result;
+end;
+
 function TRtfWriter.Body(const d: TData; inNote: Boolean): UStr;
 { RTF of the text: paragraphs, character formatting, notes }
 var outs, para: TUStrArray;
@@ -543,6 +682,10 @@ var outs, para: TUStrArray;
     r: TRegExpr;
     tri: array[0..3] of TTri;
     on: Boolean;
+    dotStart: SizeInt;
+    marking: Boolean;                 { inside ^PK ... ^PK: text for the index }
+    markText: UStr;
+    markId: Integer;
 
   procedure Put(ch: UStr; nxt: Integer);
   var opening: Boolean;
@@ -559,6 +702,7 @@ var outs, para: TUStrArray;
       else if opening then ch := '‘' else ch := '’';
     end;
     Append(para, RtfText(ch));
+    if marking then markText := markText + ch;
     prev := ch;
     lineStart := False;
   end;
@@ -615,6 +759,10 @@ begin
   font := '';
   color := '';
   prev := ' ';                                     { the text's last character (for quotes) }
+  dotStart := 0;
+  marking := False;
+  markText := '';
+  markId := 0;
   i := 0;
   while i < Length(d) do
   begin
@@ -634,6 +782,7 @@ begin
       begin
         if not inNote then Append(para, Note(skind, p));
       end
+      else if skind = SEQ_INDEX then Append(para, AddIndex(DecodeBytes(UntilZero(p), cp), True))   { ^ONI }
       else if (skind = SEQ_TAB) and (Length(p) >= 5) then
       begin
         if DB(p, 4) in [$21, $5B] then             { center / right align line tab (^OC, ^O]) }
@@ -739,7 +888,9 @@ begin
       begin
         { .cc (conditional column break) with 8Ch: the column did break when WordStar laid it out }
         if (Lower(Copy(dotline, 2, 2)) = 'cc') and (DB(d, i) = $8C) then Append(para, '\column ');
-        DotCommand(dotline, para);
+        s := Lower(Copy(dotline, 2, 2));
+        if (s = 'tc') or (s = 'ix') then Append(para, Entry(Slice(d, dotStart, i - 1), dotline))
+        else DotCommand(dotline, para);
         inDot := False;
         dotline := '';
       end
@@ -778,6 +929,26 @@ begin
       end
       else if c = $0F then Append(para, '\~')
       else if c = $0C then Append(para, '\page ')
+      else if c = $0B then                           { ^PK: marks text for the index }
+      begin
+        if marking then
+        begin
+          markText := Strip(markText);
+          if markText <> '' then
+          begin
+            PutItem(IndexItem(markText, markId, False));
+            Append(para, '{\v ' + Field('XE "' + RtfText(IndexItem(markText, 0, False).main) + '"', '') + '}');
+          end;
+        end
+        else if not root.noIndex then
+        begin                                        { the bookmark here, the entry at the end mark }
+          Inc(root.anchors);
+          markId := root.anchors;
+          Append(para, Bookmark('_ix' + UStr(IntToStr(markId))));
+        end;
+        marking := not marking and not root.noIndex;
+        markText := '';
+      end
       else if ToggleIndex(c) >= 0 then
       begin
         k := ToggleIndex(c);
@@ -795,6 +966,7 @@ begin
     begin
       inDot := True;
       dotline := '.';
+      dotStart := i - 1;
       lineStart := False;
       Continue;
     end;
@@ -842,6 +1014,7 @@ begin
     if (path <> '') and ReadFileData(path, d) then
     begin
       sub := TRtfWriter.Create(d, ExtractFileDir(path), cp, depth + 1, fonts, '', quotes);
+      sub.root := root;
       try
         sub.layout.Free;
         sub.layout := layout;
@@ -928,7 +1101,7 @@ begin
       text := Copy(text, e + 1, MaxInt);
     end;
   end;
-  Result := head + hfs + text + '}'#10;
+  Result := head + hfs + Contents + text + IndexRtf + '}'#10;
 end;
 
 function ConvertFileRtf(const path, outPath: string; codepage: Integer; quotes: Boolean;

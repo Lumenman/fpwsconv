@@ -31,6 +31,16 @@ footnotes, endnotes, annotations and comments; extended characters in DOS code p
 included); pictures (`.PIX`, `.PCX` … → PNG next to the output); merge printing with data from comma-delimited
 data files, dBASE `.DBF`, Lotus `.WK1` and Quattro `.WQ1`.
 
+Table of contents and index, as WordStar's Opening menu T and I build them (checked against WordStar 7's
+`.TOC` / `.IDX`): the `.tc` lines (`.tc1` … `.tc9`: further tables) with their formatting and dot commands
+become the table of contents at the start, `#` or `&#…&` its page number; `.ix`, `^ONI` and text marked with
+`^PK` become the index at the end (sorted ignoring case, first letter capitalized, `main, sub` as a
+subentry, `+` bold page number, `-` cross reference without a page number, `\` quotes the next character;
+a blank line where the first letter changes). Markdown: links `→` to anchors at the places instead of page
+numbers. RTF: the table of contents is a section of its own (the document's pages are numbered from 1),
+page numbers are `PAGEREF` fields to bookmarks that the word processor fills in, and hidden `TC` / `XE`
+fields let it build its own table of contents and index. Plain text (`-t`) leaves both out.
+
 To WordStar (`-w`): the document is in the WordStar 4 style (no header; WordStar 7 opens it and saves it in its own
 format). Paragraphs are wrapped at column 65 with soft returns; characters above 7Fh become extended characters
 (1Bh xx 1Ch), characters missing from the code page become `?` (counted in the message). Plain text: each line
@@ -50,7 +60,10 @@ Limitations:
 - Worksheets: at most 256 columns of a range; `.PIX` pictures: at most 64M pixels (larger ones stay links).
 - `.df` in a document included with `.fi` is looked up in the main document's folder (WordStar's rule not
   verified). Files named in a document are read wherever the path points, also outside its folder.
-- RTF is checked against the reference output, not visually in Word or LibreOffice.
+- RTF is checked against the reference output; the table of contents and index were also checked in
+  LibreOffice (page numbers filled in), not in Word, which shows them after the fields are updated (F9).
+- RTF index: an entry found twice on one page lists that page twice (`PAGEREF` per place; WordStar
+  merges them). Page numbers follow the word processor's layout, which may differ from WordStar's.
 
 Units: `wsutil` (code pages, strings, regular expressions, number formatting), `wsdoc` (document format),
 `wsmd` (Markdown / text), `wsrtf` (RTF), `wsfrom` (text / Markdown to WordStar), `wsmerge` (merge printing and data files), `wsimage` (pictures).

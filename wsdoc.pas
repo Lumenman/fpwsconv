@@ -41,6 +41,27 @@ function ParagraphNumber(const p: TData; compound: Boolean = True): UStr;
 function FileKind(const data: TData): TFileKind;
 function GuessDocCodepage(const data: TData; kind: TFileKind; codepage: Integer): Integer;
 
+{ ---- table of contents and index (what WordStar's Opening menu T and I build) }
+type
+  TIndexItem = record                  { one index entry at one place in the text }
+    main, sub: UStr;                   { sub: '' for a main entry; the cross reference text if cross }
+    cross, bold: Boolean;              { -text: no page number; +text: page number in bold }
+    id: Integer;                       { the place (anchor / bookmark number) }
+  end;
+  TIndexItems = array of TIndexItem;
+  TIndexRef = record id: Integer; bold: Boolean; end;
+  TIndexLine = record
+    text: UStr;
+    sub, blank: Boolean;               { a subentry (indented); a blank line before (new first letter) }
+    refs: array of TIndexRef;
+  end;
+  TIndexLines = array of TIndexLine;
+
+function IndexItem(const text: UStr; id: Integer; parse: Boolean): TIndexItem;
+function IndexLines(const items: TIndexItems): TIndexLines;
+function TocLine(const raw: TData; out list: Integer; out payload: TData): Boolean;
+function TocPage(const payload, token: TData; out found: Boolean): TData;
+
 implementation
 
 uses wsmerge;
@@ -287,6 +308,179 @@ begin
   if codepage <> 0 then Result := codepage
   else if kind = fkWs4 then Result := 437
   else Result := GuessCodepage(data, kind = fkWs5);
+end;
+
+function IndexItem(const text: UStr; id: Integer; parse: Boolean): TIndexItem;
+{ text of .ix or ^ONI (parse: "+" bold page number, "-" cross reference, "main, sub", "\" quotes the
+  next character) or of text marked with ^PK (as it is). WordStar capitalizes the main entry. }
+var i: Integer;
+    part: UStr;
+    inSub: Boolean;
+begin
+  Result.main := ''; Result.sub := ''; Result.cross := False; Result.bold := False; Result.id := id;
+  part := '';
+  inSub := False;
+  i := 1;
+  if parse then
+  begin
+    if StartsWith(text, '+') then begin Result.bold := True; Inc(i); end;
+    if Copy(text, i, 1) = '-' then begin Result.cross := True; Inc(i); end;
+  end;
+  while i <= Length(text) do
+  begin
+    if parse and (text[i] = '\') and (i < Length(text)) then
+    begin
+      part := part + text[i + 1];
+      Inc(i, 2);
+      Continue;
+    end;
+    if parse and (text[i] = ',') and not inSub then
+    begin
+      Result.main := Strip(part);
+      part := '';
+      inSub := True;
+    end
+    else part := part + text[i];
+    Inc(i);
+  end;
+  if inSub then Result.sub := Strip(part) else Result.main := Strip(part);
+  if Result.main <> '' then Result.main := Upper(Copy(Result.main, 1, 1)) + Copy(Result.main, 2, MaxInt);
+end;
+
+function IndexLines(const items: TIndexItems): TIndexLines;
+{ the index as WordStar writes it: sorted ignoring case, one line per main entry with its page numbers,
+  subentries and cross references on indented lines below, a blank line where the first letter changes }
+var sorted: TIndexItems;
+    t: TIndexItem;
+    i, j: Integer;
+    key, prevMain, prevSub, letter, prevLetter: UStr;
+    ln: TIndexLine;
+
+  function Less(const a, b: TIndexItem): Boolean;    { code point order: no locale compare under DOS }
+  begin
+    if Upper(a.main) <> Upper(b.main) then Exit(Upper(a.main) < Upper(b.main));
+    if Upper(a.sub) <> Upper(b.sub) then Exit(Upper(a.sub) < Upper(b.sub));
+    Result := a.id < b.id;
+  end;
+
+  procedure AddLine(const text: UStr; sub, blank: Boolean);
+  begin
+    ln.text := text; ln.sub := sub; ln.blank := blank; ln.refs := nil;
+    SetLength(Result, Length(Result) + 1);
+    Result[High(Result)] := ln;
+  end;
+
+  procedure AddRef(const it: TIndexItem);
+  var k: Integer;
+  begin
+    if it.cross then Exit;
+    k := Length(Result[High(Result)].refs);
+    SetLength(Result[High(Result)].refs, k + 1);
+    Result[High(Result)].refs[k].id := it.id;
+    Result[High(Result)].refs[k].bold := it.bold;
+  end;
+
+begin
+  Result := nil;
+  sorted := Copy(items);
+  for i := 1 to High(sorted) do                      { ponytail: insertion sort, fine for hundreds of entries }
+  begin
+    t := sorted[i];
+    j := i - 1;
+    while (j >= 0) and Less(t, sorted[j]) do
+    begin
+      sorted[j + 1] := sorted[j];
+      Dec(j);
+    end;
+    sorted[j + 1] := t;
+  end;
+  prevMain := #0; prevSub := #0; prevLetter := '';
+  for t in sorted do
+  begin
+    if t.main = '' then Continue;
+    key := Upper(t.main);
+    if key <> prevMain then
+    begin
+      letter := Copy(key, 1, 1);
+      AddLine(t.main, False, (Length(Result) > 0) and (letter <> prevLetter));
+      prevLetter := letter;
+      prevMain := key;
+      prevSub := '';
+    end;
+    if t.sub = '' then AddRef(t)
+    else
+    begin
+      if Upper(t.sub) <> prevSub then AddLine(t.sub, True, False);
+      prevSub := Upper(t.sub);
+      AddRef(t);
+    end;
+  end;
+end;
+
+function TocLine(const raw: TData; out list: Integer; out payload: TData): Boolean;
+{ raw: a dot command line as bytes. True for .tc / .tc1 ... .tc9: list 0-9 and the line of the table of
+  contents (after one space) }
+var i: Integer;
+begin
+  Result := (Length(raw) >= 3) and (raw[1] = '.') and (LowerCase(Copy(raw, 2, 2)) = 'tc');
+  if not Result then Exit;
+  list := 0;
+  i := 4;
+  if (i <= Length(raw)) and (raw[i] in ['1'..'9']) then
+  begin
+    list := Ord(raw[i]) - Ord('0');
+    Inc(i);
+  end;
+  if (i <= Length(raw)) and (raw[i] = ' ') then Inc(i);
+  payload := Copy(raw, i, MaxInt);
+end;
+
+function TocPage(const payload, token: TData; out found: Boolean): TData;
+{ the page number in a .tc line (# or a variable &#...&, e.g. &#/r&) replaced by token; sequences and
+  extended characters are skipped, their bytes are not text }
+var i, k: SizeInt;
+    kind: Integer;
+    p: TData;
+begin
+  Result := '';
+  found := False;
+  i := 0;
+  while i < Length(payload) do
+  begin
+    if (DB(payload, i) = $1D) and ReadSequence(payload, i, kind, p, k) then
+    begin
+      Result := Result + Slice(payload, i, k);
+      i := k;
+      Continue;
+    end;
+    if (DB(payload, i) = $1B) and (DB(payload, i + 2) = $1C) then
+    begin
+      Result := Result + Slice(payload, i, i + 3);
+      Inc(i, 3);
+      Continue;
+    end;
+    if (DB(payload, i) = Ord('&')) and (DB(payload, i + 1) = Ord('#')) then
+    begin
+      k := i + 2;
+      while (k < Length(payload)) and not (DB(payload, k) in [Ord('&'), $0D]) do Inc(k);
+      if DB(payload, k) = Ord('&') then
+      begin
+        Result := Result + token;
+        found := True;
+        i := k + 1;
+        Continue;
+      end;
+    end;
+    if DB(payload, i) = Ord('#') then
+    begin
+      Result := Result + token;
+      found := True;
+      Inc(i);
+      Continue;
+    end;
+    Result := Result + payload[i + 1];
+    Inc(i);
+  end;
 end;
 
 end.
