@@ -346,6 +346,6 @@ this is «Buy-My-Book Ware:» if you find this package useful, please buy a copy
 novels, either for yourself or for a friend.
 
 For more information about my writing, please see my website _ over 800 documents all 
-handcoded in HTML using WordStar's non-document mode _ at *https://sfwriter.com*.
+handcoded in HTML using WordStar's non-document mode _ at <u>https://sfwriter.com</u>.
 
 ---

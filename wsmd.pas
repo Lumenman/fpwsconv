@@ -45,7 +45,7 @@ begin
   Result := True;
   case c of
     $02, $04: m := '**';                { bold; double strike -> bold }
-    $13, $19: m := '*';                 { underline -> italic; italic }
+    $19: m := '*';                      { italic }
     $14: m := '^';                      { superscript (pandoc) }
     $16: m := '~';                      { subscript (pandoc) }
     $18: m := '~~';                     { strikeout }
@@ -254,7 +254,7 @@ end;
 function TConverter.ConvertChunk(const chunk: TData; isChunk, inNote: Boolean): UStr;
 var outs: UStr;
     dotline: UStr;
-    inDot, lineStart, tabbed, pendingBreak: Boolean;
+    inDot, lineStart, tabbed, pendingBreak, under: Boolean;
     i, nx: SizeInt;
     c, skind, nxt: Integer;
     payload: TData;
@@ -278,6 +278,7 @@ begin
   lineStart := True;                   { at the start of a hard line }
   tabbed := False;                     { a tab sequence opened this line: a '.' after it is text }
   pendingBreak := False;
+  under := False;                      { inside ^S underline }
   i := 0;
   while i < Length(chunk) do
   begin
@@ -382,7 +383,15 @@ begin
           pendingBreak := True;
         end;
       end
-      else if not textmode and MdMark(c, m) then Emit(m);
+      else if textmode then
+      else if c = $13 then                           { underline: HTML, Markdown has none }
+      begin
+        under := not under;                          { ^S^S^S...^S^S^S: no empty <u></u> pairs }
+        if under then begin m := '<u>'; s := '</u>'; end else begin m := '</u>'; s := '<u>'; end;
+        if not pendingBreak and EndsWith(outs, s) then SetLength(outs, Length(outs) - Length(s))
+        else Emit(m);
+      end
+      else if MdMark(c, m) then Emit(m);
       Continue;                                      { LF, soft hyphen, printer codes: skip }
     end;
 

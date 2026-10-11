@@ -20,7 +20,7 @@ function ToWs(const s: UStr; markdown: Boolean; cp: Integer; out missing: Intege
 implementation
 
 const
-  C_BOLD = #2; C_STRIKE = #$18; C_ITALIC = #$19;
+  C_BOLD = #2; C_UNDER = #$13; C_STRIKE = #$18; C_ITALIC = #$19;
   TAB_WIDTH = 5;                       { WordStar's default tab stops }
 
 var
@@ -38,7 +38,7 @@ var b: Integer;
 begin
   if c < #$80 then
   begin
-    if (c >= ' ') and (c <> #$7F) or (c in [#9, C_BOLD, C_STRIKE, C_ITALIC]) then Result := AnsiChar(Ord(c))
+    if (c >= ' ') and (c <> #$7F) or (c in [#9, C_BOLD, C_UNDER, C_STRIKE, C_ITALIC]) then Result := AnsiChar(Ord(c))
     else Result := '';                 { other control characters would be print controls }
     Exit;
   end;
@@ -128,11 +128,11 @@ begin
 end;
 
 function InlineMd(const s: UStr): UStr;
-{ emphasis to print controls (** __ bold, * _ italic, ~~ strikeout), links and images to their text,
+{ emphasis to print controls (** __ bold, * _ italic, ~~ strikeout, <u> </u> underline), links and images to their text,
   code spans and backslash escapes to literal text }
 var
   i, j, n, k: Integer;
-  bold, italic, strike: Boolean;
+  bold, italic, strike, under: Boolean;
   prev, next: WideChar;
   m, code, res: UStr;
 
@@ -152,7 +152,7 @@ var
 
 begin
   res := '';
-  bold := False; italic := False; strike := False;
+  bold := False; italic := False; strike := False; under := False;
   i := 1;
   while i <= Length(s) do
   begin
@@ -204,6 +204,13 @@ begin
       Inc(i, Length(code) + 2);
       Continue;
     end;
+    if (Lower(Copy(s, i, 3)) = '<u>') and not under or (Lower(Copy(s, i, 4)) = '</u>') and under then
+    begin
+      under := not under;
+      res := res + C_UNDER;
+      Inc(i, 4 - Ord(under));
+      Continue;
+    end;
     if (m = '**') and Toggle(bold, C_BOLD, 2, False) then Continue;
     if (m = '__') and Toggle(bold, C_BOLD, 2, True) then Continue;
     if (m = '~~') and Toggle(strike, C_STRIKE, 2, False) then Continue;
@@ -215,6 +222,7 @@ begin
   if bold then res := res + C_BOLD;                        { WordStar would keep them on past the paragraph }
   if italic then res := res + C_ITALIC;
   if strike then res := res + C_STRIKE;
+  if under then res := res + C_UNDER;
   Result := res;
 end;
 

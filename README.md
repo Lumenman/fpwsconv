@@ -17,7 +17,7 @@ builds for Windows and for DOS (go32v2).
 | `-w` | the other way: UTF-8 Markdown (`.md`, `.markdown`) or plain text to a WordStar document (`.ws`), code page 1125 unless `-c` |
 | `-c CP` | DOS code page of the text: 437, 866 (Russian / Ukrainian), 1125 (Ukrainian), 850 … or `auto` (866 if extended characters form words, else 437) |
 
-What is handled: bold, italic, underline, strike-out, super/subscript and other print controls; dot commands
+What is handled: bold, italic, underline (`<u>` in Markdown), strike-out, super/subscript and other print controls; dot commands
 (headers, footers, margins, page breaks, comments); styles and paragraph numbering; tabs and columns;
 footnotes, endnotes, annotations and comments; extended characters in DOS code pages (Cyrillic
 included); pictures (`.PIX`, `.PCX` … → PNG next to the output); merge printing with data from comma-delimited
@@ -26,7 +26,7 @@ data files, dBASE `.DBF`, Lotus `.WK1` and Quattro `.WQ1`.
 To WordStar (`-w`): the document is in the WordStar 4 style (no header; WordStar 7 opens it and saves it in its own
 format). Paragraphs are wrapped at column 65 with soft returns; characters above 7Fh become extended characters
 (1Bh xx 1Ch), characters missing from the code page become `?` (counted in the message). Plain text: each line
-is a paragraph. Markdown: `**`/`__` bold, `*`/`_` italic, `~~` strike-out; headings in bold; list items with a
+is a paragraph. Markdown: `**`/`__` bold, `*`/`_` italic, `~~` strike-out, `<u>`…`</u>` underline; headings in bold; list items with a
 hanging indent; quotes indented; code blocks and table rows as they are; links and pictures as their text.
 A line that would start with `.` gets a soft space in front, so it is not a dot command. RTF to WordStar: use
 Star Exchange (`RTFCONV.EXE` in WordStar 7's `CONVERT`).

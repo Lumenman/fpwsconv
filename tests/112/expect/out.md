@@ -159,7 +159,7 @@ Draft:  &@&
 
 A Personal Request to the Art Director
 
-(Please do *****NOT***** set in type)
+(Please do <u>NOT</u> set in type)
 
 If you choose to depict J. Robert Oppenheimer on the book's 
 cover, may I please ask you not to depict him smoking?  Yes, 
@@ -174,7 +174,7 @@ thanks!
 
 Notes for the Copyeditor
 
-(Please do *****NOT***** set in type)
+(Please do <u>NOT</u> set in type)
 
 <!-- ┌ The other issue I'm thinking about is abbreviations.  Today, the -->
 
@@ -427,7 +427,7 @@ U.S.
 
 U.S.A.
 
-*****EXCEPTION:*****
+<u>EXCEPTION:</u>
 
 In the acronym-heavy scene in which Feynman is reading the 
 dossier on von Braun, I've deliberately left out all the periods 
@@ -530,7 +530,7 @@ not "Say *what*?" or "Say *what?*"
 
 <!-- added Friday, April 20, 2012, in Winnipeg -->
 
-*****EXCEPTIONS:*****
+<u>EXCEPTIONS:</u>
 
 Although the names of sailing vessels and spaceships are 
 italicized, if they are being used in the possessive form the 
