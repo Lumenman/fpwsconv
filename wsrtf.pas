@@ -23,6 +23,7 @@ type
     spacing: Integer;
     lh: Integer;                     { line height in twips (.lh; default 1/6"); 0 = automatic (.lh a) }
     keepLines: Integer;              { .cp n: lines still to keep on one page }
+    ulWords: Boolean;                { .ul off: underline words only, not the spaces between them }
     header, footer: UStr;
     header0, footer0: UStr;          { those in effect where the text starts (the document's own) }
     hfChanged: Boolean;              { .he / .fo changed after the text started: a new section }
@@ -262,7 +263,7 @@ constructor TLayout.Create;
 begin
   pl := 11 * TWIP; mt := TWIP div 2; mb := TWIP * 4 div 3; po := TWIP * 8 div 10;
   lm := 0; rm := Round(6.4 * TWIP); hasPm := False; pm := 0;
-  align := 'l'; spacing := 1; lh := TWIP div 6; keepLines := 0; header := ''; footer := '';
+  align := 'l'; spacing := 1; lh := TWIP div 6; keepLines := 0; ulWords := False; header := ''; footer := '';
   tabs := nil;
   cols := 1; gutter := TWIP div 5;
   kern := True;
@@ -316,6 +317,7 @@ begin
     end;
   end
   else if cmd = 'kr' then kern := not ((a = 'off') or (a = '0') or (a = 'n') or (a = 'no'))
+  else if cmd = 'ul' then ulWords := (a = 'off') or (a = '0') or (a = 'n') or (a = 'no')
   else if cmd = 'co' then
   begin
     parts := nil;
@@ -739,6 +741,11 @@ var outs, para: TUStrArray;
     lineStart := False;
   end;
 
+  function OnRtf(j: Integer): UStr;                  { attribute on; underline by words after .ul off }
+  begin
+    if (j = 1) and layout.ulWords then Result := '\ulw ' else Result := '\' + TOGGLE_NAMES[j] + ' ';
+  end;
+
   procedure Flush;
   var text, keep: UStr;
       j, lines: Integer;
@@ -786,7 +793,7 @@ var outs, para: TUStrArray;
     if font <> '' then Append(para, font);        { the font, colour and attributes run on across paragraphs }
     if color <> '' then Append(para, color);
     for j := 0 to 5 do
-      if state[j] then Append(para, '\' + TOGGLE_NAMES[j] + ' ');
+      if state[j] then Append(para, OnRtf(j));
   end;
 
   function Off(j: Integer): UStr;
@@ -890,7 +897,7 @@ begin
           if state[k] <> on then
           begin
             state[k] := on;
-            if on then Append(para, '\' + TOGGLE_NAMES[k] + ' ')
+            if on then Append(para, OnRtf(k))
             else Append(para, '\' + TOGGLE_NAMES[k] + Off(k) + ' ');
           end;
         end;
@@ -1001,7 +1008,7 @@ begin
       begin
         k := ToggleIndex(c);
         state[k] := not state[k];
-        if state[k] then Append(para, '\' + TOGGLE_NAMES[k] + ' ')
+        if state[k] then Append(para, OnRtf(k))
         else Append(para, '\' + TOGGLE_NAMES[k] + Off(k) + ' ');
         if (k >= 4) and not state[k] then para[High(para)] := '\nosupersub ';
       end;
