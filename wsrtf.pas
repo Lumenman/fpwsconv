@@ -21,6 +21,8 @@ type
     hasPm: Boolean;
     align: Char;
     spacing: Integer;
+    lh: Integer;                     { line height in twips (.lh; default 1/6"); 0 = automatic (.lh a) }
+    keepLines: Integer;              { .cp n: lines still to keep on one page }
     header, footer: UStr;
     tabs: array of TTab;             { none = every 0.5" (RTF default too) }
     cols, gutter: Integer;
@@ -223,16 +225,28 @@ begin
 end;
 
 function Measure(const arg: UStr; unitTw: Double; out v: Integer): Boolean;
-{ Dot command value in twips: a number with " is inches, otherwise lines (1/6") or columns (1/10") }
+{ Dot command value in twips: a number with a unit (" i in: inches, p pt: points, c cm: centimeters),
+  otherwise in unitTw (lines of 1/6", columns of 1/10", 1/48" ...) }
 var r: TRegExpr;
     x: Double;
+    u: UStr;
 begin
-  r := ReMatch('\s*(-?(?:\d+(?:\.\d*)?|\.\d+))\s*(")?', arg);
+  r := ReMatch('\s*(-?(?:\d+(?:\.\d*)?|\.\d+))\s*("|in|i|pt|p|cm|c)?', Lower(arg));
   Result := r <> nil;
   v := 0;
   if not Result then Exit;
   ParsePyFloat(Group(r, 1), x);
-  if HasGroup(r, 2) then v := Round(x * TWIP) else v := Round(x * unitTw);
+  u := Group(r, 2);
+  if (u = '"') or (u = 'i') or (u = 'in') then v := Round(x * TWIP)
+  else if (u = 'p') or (u = 'pt') then v := Round(x * 20)
+  else if (u = 'c') or (u = 'cm') then v := Round(x * TWIP / 2.54)
+  else v := Round(x * unitTw);
+end;
+
+function HasUnit(const arg: UStr): Boolean;
+{ the value has a unit (a measure, not columns counted from 1) }
+begin
+  Result := ReMatch('\s*-?(?:\d+(?:\.\d*)?|\.\d+)\s*("|in|i|pt|p|cm|c)', Lower(arg)) <> nil;
 end;
 
 function FloorDiv(a, b: Integer): Integer;
@@ -246,7 +260,7 @@ constructor TLayout.Create;
 begin
   pl := 11 * TWIP; mt := TWIP div 2; mb := TWIP * 4 div 3; po := TWIP * 8 div 10;
   lm := 0; rm := Round(6.4 * TWIP); hasPm := False; pm := 0;
-  align := 'l'; spacing := 1; header := ''; footer := '';
+  align := 'l'; spacing := 1; lh := TWIP div 6; keepLines := 0; header := ''; footer := '';
   tabs := nil;
   cols := 1; gutter := TWIP div 5;
   kern := True;
@@ -270,7 +284,7 @@ begin
       if Measure(LStripChars(t, '#'), col, v) then
       begin
         SetLength(tabs, Length(tabs) + 1);
-        if Contains(t, '"') then tabs[High(tabs)].pos := v else tabs[High(tabs)].pos := v - col;
+        if HasUnit(t) then tabs[High(tabs)].pos := v else tabs[High(tabs)].pos := v - col;
         tabs[High(tabs)].dec := StartsWith(t, '#');
       end;
   end
@@ -321,17 +335,22 @@ begin
   else if (cmd = 'po') or (cmd = 'poe') or (cmd = 'poo') then begin if Measure(arg, col, v) then po := v; end
   else if cmd = 'lm' then
   begin
-    if Measure(arg, col, v) then if Contains(arg, '"') then lm := v else lm := v - col;   { column 1 = 0" }
+    if Measure(arg, col, v) then if HasUnit(arg) then lm := v else lm := v - col;   { column 1 = 0" }
   end
   else if cmd = 'rm' then
   begin
-    if Measure(arg, col, v) then if Contains(arg, '"') then rm := v else rm := v - col;
+    if Measure(arg, col, v) then if HasUnit(arg) then rm := v else rm := v - col;
   end
   else if cmd = 'pm' then
   begin
     found := Measure(arg, col, v);
     hasPm := found;
-    if found then if Contains(arg, '"') then pm := v else pm := v - col;
+    if found then if HasUnit(arg) then pm := v else pm := v - col;
+  end
+  else if cmd = 'lh' then
+  begin
+    if StartsWith(a, 'a') then lh := 0                   { automatic: from the font }
+    else if Measure(arg, TWIP / 48, v) and (v > 0) then lh := v;
   end
   else if cmd = 'ls' then
   begin
@@ -362,7 +381,10 @@ begin
   if kern then Result := Result + '\kerning1';
   Result := Result + '\q' + al + '\li' + UStr(IntToStr(lm)) + '\ri' + UStr(IntToStr(Max(0, colw - rm)));
   if hasPm then Result := Result + '\fi' + UStr(IntToStr(pm - lm));
-  if spacing > 1 then Result := Result + '\sl' + UStr(IntToStr(240 * spacing)) + '\slmult1';
+  { exact line height, as WordStar prints (a larger font does not move the lines apart), times the
+    line spacing; automatic: the word processor's single spacing }
+  if lh > 0 then Result := Result + '\sl-' + UStr(IntToStr(lh * spacing)) + '\slmult0'
+  else if spacing > 1 then Result := Result + '\sl' + UStr(IntToStr(240 * spacing)) + '\slmult1';
   sorted := Copy(tabs);
   for k := 1 to High(sorted) do                   { sorted by position, then decimal flag }
   begin
@@ -708,8 +730,8 @@ var outs, para: TUStrArray;
   end;
 
   procedure Flush;
-  var text: UStr;
-      j: Integer;
+  var text, keep: UStr;
+      j, lines: Integer;
       last: UStr;
   begin
     text := SysVars(JoinStr(para, ''), docPath);
@@ -729,7 +751,14 @@ var outs, para: TUStrArray;
         else Append(outs, layout.Columns);
       end;
       layout.started := True;
-      Append(outs, layout.Pard(alignLine) + heading + '{' + text + '}\par'#10);
+      keep := '';
+      if layout.keepLines > 0 then
+      begin                                        { .cp n: the next n lines on one page }
+        lines := Max(1, Length(text) div 80);        { ponytail: rough line count of the paragraph }
+        if lines < layout.keepLines then keep := '\keep\keepn' else keep := '\keep';
+        layout.keepLines := Max(0, layout.keepLines - lines);
+      end;
+      Append(outs, layout.Pard(alignLine) + keep + heading + '{' + text + '}\par'#10);
     end;
     para := nil;
     alignLine := #0;
@@ -993,6 +1022,7 @@ var cmd, arg, full: UStr;
     d: TData;
     sub: TRtfWriter;
     r: TRegExpr;
+    k: Integer;
 begin
   cmd := Strip(Lower(Copy(line, 2, 2)));
   arg := Copy(line, 4, MaxInt);
@@ -1000,6 +1030,11 @@ begin
   if cmd = 'pa' then
   begin
     Append(para, '\page ');
+    Exit;
+  end;
+  if cmd = 'cp' then
+  begin
+    if Measure(arg, 1, k) then layout.keepLines := k;
     Exit;
   end;
   if cmd = 'cb' then

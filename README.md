@@ -64,6 +64,10 @@ Limitations:
   LibreOffice (page numbers filled in), not in Word, which shows them after the fields are updated (F9).
 - RTF index: an entry found twice on one page lists that page twice (`PAGEREF` per place; WordStar
   merges them). Page numbers follow the word processor's layout, which may differ from WordStar's.
+- RTF pages: lines are spaced exactly as WordStar prints them (`.lh`, default 6 lines per inch; `.lh a`:
+  the word processor's spacing), `.cp` keeps the next lines on one page. With fixed-pitch fonts the page
+  breaks then match WordStar's (MICKEE.WS: same pages up to its two-column part); with proportional fonts
+  lines wrap by the word processor's font metrics, so pages drift.
 
 Units: `wsutil` (code pages, strings, regular expressions, number formatting), `wsdoc` (document format),
 `wsmd` (Markdown / text), `wsrtf` (RTF), `wsfrom` (text / Markdown to WordStar), `wsmerge` (merge printing and data files), `wsimage` (pictures).
