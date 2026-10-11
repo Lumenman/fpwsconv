@@ -62,6 +62,10 @@ Limitations:
   verified). Files named in a document are read wherever the path points, also outside its folder.
 - RTF is checked against the reference output; the table of contents and index were also checked in
   LibreOffice (page numbers filled in), not in Word, which shows them after the fields are updated (F9).
+  RTF was compared with Star Exchange, WordStar 7's own converter (`CONVERT\RTFCONV.EXE`): same page size
+  (US Letter), margins and line spacing; comments (`..`, `.ig`) are hidden text as there. Star Exchange
+  drops paragraph numbers and Cyrillic (it writes code page 437), and its page breaks drift further from
+  WordStar's than these.
 - RTF index: an entry found twice on one page lists that page twice (`PAGEREF` per place; WordStar
   merges them). Page numbers follow the word processor's layout, which may differ from WordStar's.
 - RTF pages: lines are spaced exactly as WordStar prints them (`.lh`, default 6 lines per inch; `.lh a`:

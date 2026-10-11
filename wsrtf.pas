@@ -1045,7 +1045,12 @@ var cmd, arg, full: UStr;
 begin
   cmd := Strip(Lower(Copy(line, 2, 2)));
   arg := Copy(line, 4, MaxInt);
-  if StartsWith(line, '..') or (cmd = 'ig') then Exit;
+  if StartsWith(line, '..') or (cmd = 'ig') then
+  begin                                            { comment: hidden text, as Star Exchange keeps it }
+    if StartsWith(line, '..') then full := Strip(Copy(line, 3, MaxInt)) else full := Strip(arg);
+    if full <> '' then Append(para, '{\v ' + RtfText(full) + '\line}');
+    Exit;
+  end;
   if cmd = 'pa' then
   begin
     Append(para, '\page ');
