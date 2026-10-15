@@ -694,7 +694,6 @@ function TParser.Atom: Double;
 var st: Integer;
     name: UStr;
     v: Double;
-    fs: TFormatSettings;
     t: string;
 begin
   Skip;
@@ -729,9 +728,7 @@ begin
     { leading zeros in an integer literal are a syntax error in Python }
     if (Length(t) > 1) and (t[1] = '0') and (Pos('.', t) = 0) and (Pos('e', LowerCase(t)) = 0)
        and (StrToInt64Def(t, 1) <> 0) then Fail;
-    fs := DefaultFormatSettings;
-    fs.DecimalSeparator := '.';
-    if not TryStrToFloat(t, v, fs) then Fail;
+    if not TryStrToFloat(t, v, DefaultFormatSettings) then Fail;
     Exit(v);
   end;
   if CharIn(s[p], 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_') then

@@ -743,7 +743,6 @@ end;
 
 function ParsePyFloat(const s: UStr; out v: Double): Boolean;
 var t: string;
-    fs: TFormatSettings;
     k: Integer;
 begin
   t := LowerCase(string(U8(Strip(s))));
@@ -756,10 +755,7 @@ begin
   for k := 1 to Length(t) do
     if not (t[k] in ['0'..'9', '.', 'e', '+', '-']) then Exit(False);
   if (t[1] = '.') and (Length(t) = 1) then Exit(False);
-  fs := DefaultFormatSettings;
-  fs.DecimalSeparator := '.';
-  fs.ThousandSeparator := #0;
-  Result := TryStrToFloat(t, v, fs);
+  Result := TryStrToFloat(t, v, DefaultFormatSettings);
 end;
 
 function IntStr(v: Double): string;
@@ -769,6 +765,9 @@ end;
 
 var
   k: Integer;
+initialization
+  DefaultFormatSettings.DecimalSeparator := '.';   { numbers are Python's, not the OS locale's }
+  DefaultFormatSettings.ThousandSeparator := #0;
 finalization
   for k := 0 to High(CacheRx) do CacheRx[k].Free;
 end.
