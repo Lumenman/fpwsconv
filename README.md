@@ -11,7 +11,7 @@ Several files: a folder converts its WordStar documents (`.BAK` backups, plain t
 own output are skipped; with `-w` its `.md`, `.markdown` and `.txt` files), a mask (`DOCS\*.WS`) the
 matching ones; files can also be listed. `-o` is then the output folder (created if missing; default: next to
 each input). Inputs whose outputs would share a name keep their extension in it (`LETTER.WS`, `LETTER.DOC`
-→ `LETTER_WS.md`, `LETTER_DOC.md`). A file that fails is reported and the rest are converted; the exit
+→ `LETTER_WS.md`, `LETTER_DOC.md`; `-2`, `-3` if that name is taken too). A file that fails is reported and the rest are converted; the exit
 code is 1 if any failed. Subfolders are not searched.
 
 | Option | Meaning |

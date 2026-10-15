@@ -47,6 +47,7 @@ var
   preset: TVars;
   codepage, k, i, eq, done, failed: Integer;
   inputs, used: TStringList;
+  base: string;
 
 function NextValue(const opt: string): string;
 begin
@@ -160,6 +161,14 @@ begin
   end;
 end;
 
+function Taken(const name: string): Boolean;     { bytewise: no locale compare under DOS }
+var j: Integer;
+begin
+  for j := 0 to used.Count - 1 do
+    if used[j] = LowerCase(name) then Exit(True);
+  Result := False;
+end;
+
 begin
   {$ifdef windows}
   SetMultiByteConversionCodePage(CP_UTF8);
@@ -207,6 +216,7 @@ begin
     else if (Length(arg) > 2) and (arg[1] = '-') and (arg[2] in ['o', 'c', 's']) then
     begin                                          { -oFILE, -c866, -sNAME=VALUE }
       value := Copy(arg, 3, MaxInt);
+      if value[1] = '=' then Delete(value, 1, 1);  { -o=FILE }
       case arg[2] of
         'o': outFile := value;
         'c': cpArg := value;
@@ -254,7 +264,7 @@ begin
   { several files: -o is a folder; inputs whose outputs would share a name (LETTER.WS, LETTER.DOC) keep
   their extension in it (LETTER_WS.md, LETTER_DOC.md) }
   if (outFile <> '') and not ForceDirectories(outFile) then Fail('cannot create folder ' + outFile);
-  used := TStringList.Create;              { output names in lower case, in the order of inputs }
+  used := TStringList.Create;              { output names in lower case, in the order of inputs, then variants }
   for k := 0 to inputs.Count - 1 do
   begin
     if outFile <> '' then outDir := IncludeTrailingPathDelimiter(outFile) else outDir := ExtractFilePath(inputs[k]);
@@ -266,9 +276,20 @@ begin
     if outFile <> '' then outDir := IncludeTrailingPathDelimiter(outFile) else outDir := ExtractFilePath(inputs[k]);
     outName := outDir + ChangeFileExt(ExtractFileName(inputs[k]), OutExt);
     eq := 0;
-    for i := 0 to used.Count - 1 do
+    for i := 0 to inputs.Count - 1 do
       if used[i] = used[k] then Inc(eq);   { bytewise: no locale compare under DOS }
-    if eq > 1 then outName := outDir + StringReplace(ExtractFileName(inputs[k]), '.', '_', [rfReplaceAll]) + OutExt;
+    if eq > 1 then
+    begin                                  { the variant must not take another input's name: LETTER_WS-2.md }
+      base := outDir + StringReplace(ExtractFileName(inputs[k]), '.', '_', [rfReplaceAll]);
+      outName := base + OutExt;
+      i := 1;
+      while Taken(outName) do
+      begin
+        Inc(i);
+        outName := base + '-' + IntToStr(i) + OutExt;
+      end;
+      used.Add(LowerCase(outName));
+    end;
     try
       ConvertOne(inputs[k], outName);
       Inc(done);
