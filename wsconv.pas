@@ -248,6 +248,8 @@ begin
 
   if (inputs.Count = 1) and not batch then
   begin
+    if (outFile <> '') and DirectoryExists(outFile) then   { -o FOLDER: the output goes into it }
+      outFile := IncludeTrailingPathDelimiter(outFile) + ChangeFileExt(ExtractFileName(inputs[0]), OutExt);
     try
       ConvertOne(inputs[0], outFile);
     except
