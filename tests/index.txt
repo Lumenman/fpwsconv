@@ -146,3 +146,4 @@
 146 to WordStar: plain text (dot at line start, tab, wrapping, spaces)
 152 .fi WK1 currency 2.675 rounds half up from repr on a comma-decimal OS locale ($2.68)
 153 batch: variant name LETTER_WS.md taken by another input becomes LETTER_WS-2.md; -o=FOLDER
+154 RTF: .p# ,o shows only the last level of the paragraph number (3.)

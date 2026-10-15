@@ -55,6 +55,7 @@ type
     layout: TLayout;
     images: Integer;
     quotes: Boolean;                 { straight quotes -> typographic }
+    parnumCompound: Boolean;         { .p# ...,c (full number) or ,o (last level only) }
     root: TRtfWriter;                { the top document: .fi documents add their entries to it }
     tocRaw: array[0..9] of TData;    { (root) lines of the tables of contents .tc, .tc1 ... .tc9 }
     ixItems: TIndexItems;            { (root) index entries }
@@ -197,7 +198,7 @@ end;
 
 function SysVars(const rtf: UStr; const docPath: string): UStr;
 { WordStar's system variables (filled in at print time): page, date, time -> RTF fields the word
-  processor fills in; file name and path -> those of the WordStar document (as text) }
+  processor fills in; file name, drive, folder and path -> those of the WordStar document (as text) }
 var i: Integer;
     rest: UStr;
 begin
@@ -212,6 +213,17 @@ begin
     else if StartsWith(rest, '&*&') then
     begin
       Result := Result + RtfText(UTF8Decode(ExtractFileName(docPath)));
+      Inc(i, 3);
+    end
+    else if StartsWith(rest, '&:&') then
+    begin
+      if docPath <> '' then Result := Result + RtfText(UTF8Decode(ExtractFileDrive(ExpandFileName(docPath))));
+      Inc(i, 3);
+    end
+    else if StartsWith(rest, '&.&') then
+    begin
+      if docPath <> '' then
+        Result := Result + RtfText(UTF8Decode(ExcludeTrailingPathDelimiter(ExtractFileDir(ExpandFileName(docPath)))));
       Inc(i, 3);
     end
     else if StartsWith(rest, '&\\&') then
@@ -455,6 +467,7 @@ begin
   cp := GuessDocCodepage(data, kind, aCodepage);
   styles := ReadStyles(data, cp);
   depth := aDepth;
+  parnumCompound := True;
   ownFonts := aFonts = nil;
   if ownFonts then
   begin
@@ -852,7 +865,7 @@ begin
         end;
         lineStart := False;
       end
-      else if skind = SEQ_PARNUM then Append(para, RtfText(ParagraphNumber(p) + ' '))
+      else if skind = SEQ_PARNUM then Append(para, RtfText(ParagraphNumber(p, parnumCompound) + ' '))
       else if skind = SEQ_GRAPHIC then
       begin
         s := Strip(DecodeBytes(UntilZero(p), cp));
@@ -1049,6 +1062,8 @@ var cmd, arg, full: UStr;
     sub: TRtfWriter;
     r: TRegExpr;
     k: Integer;
+    opts: TUStrArray;
+    o: UStr;
 begin
   cmd := Strip(Lower(Copy(line, 2, 2)));
   arg := Copy(line, 4, MaxInt);
@@ -1071,6 +1086,13 @@ begin
   if cmd = 'cb' then
   begin
     Append(para, '\column ');
+    Exit;
+  end;
+  if cmd = 'p#' then                               { .p# n,style,c/o }
+  begin
+    opts := nil;
+    for o in SplitStr(arg, ',') do Append(opts, Lower(Strip(o)));
+    if (Length(opts) >= 3) and ((opts[2] = 'c') or (opts[2] = 'o')) then parnumCompound := opts[2] = 'c';
     Exit;
   end;
   if cmd = 'co' then layout.newSection := True;
