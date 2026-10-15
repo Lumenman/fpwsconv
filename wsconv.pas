@@ -1,6 +1,6 @@
 { wsconv: WordStar (3.x-7.0) documents to Markdown, plain text or RTF.
-  Free Pascal translation of the Python converter (same options and output; compare.py checks
-  both give the same results). Builds for Windows (fpc wsconv.pas) and DOS (go32v2, see README). }
+  Free Pascal translation of the Python converter (same options and output; the Python version
+  gives the same results, see README). Builds for Windows (fpc wsconv.pas) and DOS (go32v2, see README). }
 program wsconv;
 
 {$mode objfpc}{$H+}{$codepage utf8}
@@ -122,7 +122,7 @@ begin
   begin
     if not ReadFileData(inFile, d) then raise EFail.Create('cannot read ' + inFile);
     if cp = 0 then cp := 1125;
-    outBytes := ToWs(UTF8Decode(d), Pos(LowerCase(ExtractFileExt(inFile)), '.md .markdown') > 0, cp, missing);
+    outBytes := ToWs(UTF8Decode(d), (LowerCase(ExtractFileExt(inFile)) = '.md') or (LowerCase(ExtractFileExt(inFile)) = '.markdown'), cp, missing);
     f := TFileStream.Create(value, fmCreate);
     try
       if Length(outBytes) > 0 then f.WriteBuffer(outBytes[1], Length(outBytes));

@@ -1050,7 +1050,7 @@ begin
   begin
     on := False;
     for s in para do if Strip(s) <> '' then on := True;
-    if on and not inDot then Flush;
+    if on then Flush;
   end;
   Result := JoinStr(outs, '');
 end;

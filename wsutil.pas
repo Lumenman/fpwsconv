@@ -1,6 +1,6 @@
 { Helpers for wsconv: file data access, DOS code pages, Python-like string functions,
   regular expressions and exact number formatting (the converter was first written in Python;
-  outputs are checked against it by compare.py). }
+  outputs are checked against it). }
 unit wsutil;
 
 {$mode objfpc}{$H+}{$codepage utf8}
