@@ -1,0 +1,4 @@
+in.ws
+-r
+-o
+got/out.rtf

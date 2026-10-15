@@ -56,6 +56,8 @@ Limitations:
 - The output file may not be the input file (`-o`, or `-t` on a `.txt` document): that is an error.
 - A 1Dh sequence cut off at the end of the file drops the rest of the text. In a file damaged inside, a stray
   1Dh followed by bytes that read as a length past the end drops the rest as well.
+- RTF has one header and one footer (`.he`/`.h1`, `.fo`/`.f1`); `.h2`-`.h5`, `.f2`-`.f5` and even/odd page
+  ones (`.h1e`, `.f3o` ...) are kept as hidden text.
 - A damaged `.DBF` is reported (merge message, or a comment for `.fi`), not read as text.
 - Worksheets: at most 256 columns of a range; `.PIX` pictures: at most 64M pixels (larger ones stay links).
 - `.df` in a document included with `.fi` is looked up in the main document's folder (WordStar's rule not

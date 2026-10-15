@@ -1073,6 +1073,12 @@ begin
     if full <> '' then Append(para, '{\v ' + RtfText(full) + '\line}');
     Exit;
   end;
+  r := ReMatch('(?i)\.(he|h[1-5]|fo|f[1-5])([eo]?)(?:\s|$)', line);
+  if (r <> nil) and ((Group(r, 2) <> '') or CharIn(Lower(Group(r, 1))[2], '2345')) then
+  begin                                            { .h2-.h5, .f2-.f5, even/odd pages: kept as hidden text }
+    Append(para, '{\v ' + RtfText(Strip(line)) + '\line}');
+    Exit;
+  end;
   if cmd = 'pa' then
   begin
     Append(para, '\page ');

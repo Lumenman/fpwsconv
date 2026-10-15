@@ -147,3 +147,4 @@
 152 .fi WK1 currency 2.675 rounds half up from repr on a comma-decimal OS locale ($2.68)
 153 batch: variant name LETTER_WS.md taken by another input becomes LETTER_WS-2.md; -o=FOLDER
 154 RTF: .p# ,o shows only the last level of the paragraph number (3.)
+155 RTF: .h2-.h5, .f2-.f5 and even/odd (.h1e, .f3o) headers and footers as hidden text
