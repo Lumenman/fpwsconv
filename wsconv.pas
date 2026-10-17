@@ -35,7 +35,7 @@ begin
   WriteLn('                        (Ukrainian), 850 ... or auto (default: 866 if extended characters form');
   WriteLn('                        words, else 437)');
   WriteLn('  -e, --encoding CP     encoding of the Markdown or text (output; input with -w): utf8 (default)');
-  WriteLn('                        or a DOS code page as for -c; DOS: of the -s values too');
+  WriteLn('                        or a DOS code page as for -c');
 end;
 
 procedure Fail(const msg: string);
@@ -78,18 +78,9 @@ end;
 
 function TextEncode(const s: UStr; out missing: Integer): RawByteString;
 { to the -e encoding; characters the code page lacks become ? }
-var j, b: Integer;
 begin
   missing := 0;
-  if textCp = 0 then Exit(U8(s));
-  SetLength(Result, Length(s));
-  for j := 1 to Length(s) do
-  begin
-    if Ord(s[j]) < $80 then b := Ord(s[j]) else b := ExtByte(s[j], textCp);
-    if b < 0 then begin b := Ord('?'); Inc(missing); end
-    else if (b < $80) and (Ord(s[j]) >= $80) then begin b := Ord('?'); Inc(missing); end;  { ExtByte's 01h-1Fh glyphs }
-    Result[j] := Chr(b);
-  end;
+  if textCp = 0 then Result := U8(s) else Result := EncodeBytes(s, textCp, missing);
 end;
 
 function OutExt: string;
@@ -284,11 +275,7 @@ begin
   for value in sets do
   begin
     eq := Pos('=', value);
-    {$ifdef go32v2}    { the DOS command line is in the DOS code page; Windows passes UTF-8 }
-    if eq > 0 then preset.AddOrSetValue(TextDecode(Copy(value, 1, eq - 1)), TextDecode(Copy(value, eq + 1, MaxInt)));
-    {$else}
-    if eq > 0 then preset.AddOrSetValue(UTF8Decode(Copy(value, 1, eq - 1)), UTF8Decode(Copy(value, eq + 1, MaxInt)));
-    {$endif}
+    if eq > 0 then preset.AddOrSetValue(ConsoleDecode(Copy(value, 1, eq - 1)), ConsoleDecode(Copy(value, eq + 1, MaxInt)));
   end;
 
   if (inputs.Count = 1) and not batch then

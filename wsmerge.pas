@@ -920,10 +920,10 @@ begin
   { interactive only: with input redirected (no answers typed) the value is empty }
   Result := '';
   if not StdinIsConsole then Exit;
-  Write(StdErr, U8(prompt + ' '));         { stderr: stdout may be the output (-o -) }
+  Write(StdErr, ConsoleEncode(prompt + ' '));         { stderr: stdout may be the output (-o -) }
   if EOF(Input) then Exit;
   ReadLn(line);
-  Result := UTF8Decode(line);
+  Result := ConsoleDecode(line);
 end;
 
 function TMerger.SystemVar(const name: UStr; out value: UStr): Boolean;

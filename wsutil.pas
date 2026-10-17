@@ -27,6 +27,9 @@ function UntilZero(const d: TData): TData;                      { d.split(b'\0',
 function KnownCodepage(cp: Integer): Boolean;
 function DecodeByte(b: Integer; cp: Integer): WideChar;
 function DecodeBytes(const s: TData; cp: Integer): UStr;
+function EncodeBytes(const s: UStr; cp: Integer; out missing: Integer): RawByteString;   { ? for the missing }
+function ConsoleDecode(const s: RawByteString): UStr;      { command line, typed text }
+function ConsoleEncode(const s: UStr): RawByteString;       { prompts }
 
 { ---- strings as in Python }
 function IsSpace(c: WideChar): Boolean;
@@ -77,6 +80,10 @@ function ParsePyFloat(const s: UStr; out v: Double): Boolean;    { float(s) }
 function IntStr(v: Double): string;                              { str(int(v)) for |v| < 1e15 }
 
 implementation
+
+{$ifdef go32v2}
+uses go32;
+{$endif}
 
 {$I cptables.inc}
 
@@ -176,6 +183,57 @@ var i: SizeInt;
 begin
   SetLength(Result, Length(s));
   for i := 1 to Length(s) do Result[i] := DecodeByte(Ord(s[i]), cp);
+end;
+
+function EncodeBytes(const s: UStr; cp: Integer; out missing: Integer): RawByteString;
+var i: SizeInt;
+    b: Integer;
+begin
+  missing := 0;
+  SetLength(Result, Length(s));
+  for i := 1 to Length(s) do
+  begin
+    b := Ord(s[i]);
+    if b >= $80 then
+    begin
+      b := $FF;
+      while (b >= $80) and (DecodeByte(b, cp) <> s[i]) do Dec(b);
+      if b < $80 then begin b := Ord('?'); Inc(missing); end;
+    end;
+    Result[i] := Chr(b);
+  end;
+end;
+
+var consoleCp: Integer = -1;
+
+function GetConsoleCp: Integer;
+{ 0 = UTF-8 (Windows); DOS: the active code page (INT 21h AX=6601h), 437 if unknown }
+{$ifdef go32v2}
+var r: trealregs;
+{$endif}
+begin
+  if consoleCp < 0 then
+  begin
+    consoleCp := 0;
+    {$ifdef go32v2}
+    FillChar(r, SizeOf(r), 0);
+    r.ax := $6601;
+    RealIntr($21, r);
+    if (r.flags and 1 = 0) and KnownCodepage(r.bx) then consoleCp := r.bx else consoleCp := 437;
+    {$endif}
+  end;
+  Result := consoleCp;
+end;
+
+function ConsoleDecode(const s: RawByteString): UStr;
+begin
+  if GetConsoleCp = 0 then Result := UTF8Decode(s) else Result := DecodeBytes(s, GetConsoleCp);
+end;
+
+function ConsoleEncode(const s: UStr): RawByteString;
+var missing: Integer;
+begin
+  if GetConsoleCp = 0 then Result := U8(s) else Result := EncodeBytes(s, GetConsoleCp, missing);
 end;
 
 { ---------------------------------------------------------------- strings }
