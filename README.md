@@ -32,6 +32,9 @@ What is handled: bold, italic, underline (`<u>` in Markdown), strike-out, super/
 footnotes, endnotes, annotations and comments; extended characters in DOS code pages (Cyrillic
 included); pictures (`.PIX`, `.PCX` … → PNG next to the output); merge printing with data from comma-delimited
 data files, dBASE `.DBF`, Lotus `.WK1` and Quattro `.WQ1`.
+Tables typed with tabs or drawn with box characters become Markdown tables when their rows have the
+same number of cells; a drawn table that does not fit (merged cells, a cell on two lines) stays as drawn
+in a code block. Plain text and RTF keep tables as typed (RTF in Courier New, so the frames line up).
 
 Table of contents and index, as WordStar's Opening menu T and I build them (checked against WordStar 7's
 `.TOC` / `.IDX`): the `.tc` lines (`.tc1` … `.tc9`: further tables) with their formatting and dot commands

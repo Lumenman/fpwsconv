@@ -150,6 +150,18 @@ var outs: TUStrArray;
     cells: TUStrArray;
     isRow: Boolean;
 
+  function Boxed: Boolean;                         { a drawn frame: a border line of box-drawing characters }
+  var k: Integer;
+      c: WideChar;
+  begin
+    if Length(raws) >= 2 then
+      for k := 0 to High(raws) do
+        if Length(cellRows[k]) = 0 then
+          for c in raws[k] do
+            if (c >= #$2500) and (c <= #$257F) then Exit(True);
+    Result := False;
+  end;
+
   procedure Flush;
   var body: array of TUStrArray;
       k, n: Integer;
@@ -178,6 +190,12 @@ var outs: TUStrArray;
         Append(lines, '|' + RepeatStr('---|', Length(body[0])));
         for k := 1 to High(body) do Append(lines, '| ' + JoinStr(body[k], ' | ') + ' |');
         Append(outs, JoinStr(lines, #10));
+      end
+      else if Boxed then                           { irregular box table: as drawn, monospaced }
+      begin
+        lines := nil;
+        for k := 0 to High(raws) do Append(lines, Replace(StripChars(raws[k], #10), #9, ' '));
+        Append(outs, '```'#10 + JoinStr(lines, #10) + #10'```');
       end
       else
         for k := 0 to High(raws) do Append(outs, Replace(raws[k], #9, ' '));
