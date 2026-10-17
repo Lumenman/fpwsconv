@@ -20,7 +20,8 @@ begin
   WriteLn;
   WriteLn('  ws_file               the WordStar file to convert; a folder (its WordStar documents, not *.BAK)');
   WriteLn('                        or a mask (DOCS\*.WS) converts several files');
-  WriteLn('  -o, --output OUTPUT   output file name (several files: output folder, created if missing)');
+  WriteLn('  -o, --output OUTPUT   output file name, - for standard output (several files: output folder,');
+  WriteLn('                        created if missing)');
   WriteLn('  -t, --textmode        output to unformatted (text) file');
   WriteLn('  -r, --rtf             output RTF with fonts, margins, alignment, notes and pictures (no merging)');
   WriteLn('  -q, --quotes          RTF: typographic quotes for straight " and '' (opening or closing by the');
@@ -144,7 +145,6 @@ var
   conv: TConverter;
   text: UStr;
   outBytes: RawByteString;
-  f: TFileStream;
   cp: Integer;
 begin
   if not FileExists(inFile) then raise EFail.Create('file not found: ' + inFile);
@@ -158,12 +158,8 @@ begin
     if not ReadFileData(inFile, d) then raise EFail.Create('cannot read ' + inFile);
     if cp = 0 then cp := 1125;
     outBytes := ToWs(TextDecode(d), (LowerCase(ExtractFileExt(inFile)) = '.md') or (LowerCase(ExtractFileExt(inFile)) = '.markdown'), cp, missing);
-    f := TFileStream.Create(value, fmCreate);
-    try
-      if Length(outBytes) > 0 then f.WriteBuffer(outBytes[1], Length(outBytes));
-    finally
-      f.Free;
-    end;
+    WriteOutput(value, outBytes);
+    if value = '-' then Exit;
     if missing > 0 then WriteLn('Written: ', value, ', ', missing, ' character(s) not in code page ', cp, ' (as ?)')
     else WriteLn('Written: ', value);
     Exit;
@@ -171,6 +167,7 @@ begin
   if rtf then
   begin
     if not ConvertFileRtf(inFile, outFile, cp, quotes, written, images) then raise EFail.Create('cannot read ' + inFile);
+    if written = '-' then Exit;
     if images > 0 then WriteLn('Written: ', written, ', ', images, ' picture(s)')
     else WriteLn('Written: ', written);
     Exit;
@@ -182,12 +179,8 @@ begin
   try
     text := StripChars(conv.Convert, #10) + #10;
     outBytes := TextEncode(text, missing);
-    f := TFileStream.Create(value, fmCreate);
-    try
-      f.WriteBuffer(outBytes[1], Length(outBytes));
-    finally
-      f.Free;
-    end;
+    WriteOutput(value, outBytes);
+    if value = '-' then Exit;
     imgs := '';
     for name in conv.images do imgs := imgs + ', ' + name;
     if missing > 0 then imgs := imgs + ', ' + IntToStr(missing) + ' character(s) not in code page ' + IntToStr(textCp) + ' (as ?)';
@@ -315,6 +308,7 @@ begin
     Halt(0);
   end;
 
+  if outFile = '-' then Fail('-o - takes one input file');
   { several files: -o is a folder; inputs whose outputs would share a name (LETTER.WS, LETTER.DOC) keep
   their extension in it (LETTER_WS.md, LETTER_DOC.md) }
   if (outFile <> '') and not ForceDirectories(outFile) then Fail('cannot create folder ' + outFile);

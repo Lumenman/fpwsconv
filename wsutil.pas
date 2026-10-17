@@ -20,6 +20,7 @@ function W16(const d: TData; i: SizeInt): Integer;
 function D32(const d: TData; i: SizeInt): Int64;
 function Slice(const d: TData; a, b: SizeInt): TData;           { d[a:b] }
 function ReadFileData(const path: string; out d: TData): Boolean;
+procedure WriteOutput(const path: string; const bytes: RawByteString);   { '-' = standard output }
 function UntilZero(const d: TData): TData;                      { d.split(b'\0', 1)[0] }
 
 { ---- code pages: cp is a number (437, 866, 1125 ...), 0 = none }
@@ -108,6 +109,17 @@ begin
   if b > Length(d) then b := Length(d);
   if b <= a then Exit('');
   Result := Copy(d, a + 1, b - a);
+end;
+
+procedure WriteOutput(const path: string; const bytes: RawByteString);
+var f: TStream;
+begin
+  if path = '-' then f := THandleStream.Create(StdOutputHandle) else f := TFileStream.Create(path, fmCreate);
+  try
+    if bytes <> '' then f.WriteBuffer(bytes[1], Length(bytes));
+  finally
+    f.Free;
+  end;
 end;
 
 function ReadFileData(const path: string; out d: TData): Boolean;

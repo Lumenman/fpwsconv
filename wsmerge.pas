@@ -920,7 +920,7 @@ begin
   { interactive only: with input redirected (no answers typed) the value is empty }
   Result := '';
   if not StdinIsConsole then Exit;
-  Write(U8(prompt + ' '));
+  Write(StdErr, U8(prompt + ' '));         { stderr: stdout may be the output (-o -) }
   if EOF(Input) then Exit;
   ReadLn(line);
   Result := UTF8Decode(line);

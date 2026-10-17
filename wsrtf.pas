@@ -1208,7 +1208,6 @@ function ConvertFileRtf(const path, outPath: string; codepage: Integer; quotes: 
 var d: TData;
     w: TRtfWriter;
     rtf: RawByteString;
-    f: TFileStream;
 begin
   Result := False;
   images := 0;
@@ -1222,12 +1221,7 @@ begin
     w.Free;
   end;
   if outPath <> '' then written := outPath else written := ChangeFileExt(path, '.rtf');
-  f := TFileStream.Create(written, fmCreate);
-  try
-    if rtf <> '' then f.WriteBuffer(rtf[1], Length(rtf));
-  finally
-    f.Free;
-  end;
+  WriteOutput(written, rtf);
   Result := True;
 end;
 
