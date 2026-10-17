@@ -156,3 +156,4 @@
 156 single file, -o an existing folder: the output goes into it (got/in.md)
 157 -e 866: text output in a DOS code page, characters it lacks as ? (Python cp866 replace)
 158 -w -e 866: Markdown input in cp866 gives the same document as its UTF-8 version
+159 PIX: colors as printed (record 11h maps screen colors to EGA colors: black background -> white)

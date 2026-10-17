@@ -62,6 +62,8 @@ Limitations:
   ones (`.h1e`, `.f3o` ...) are kept as hidden text.
 - A damaged `.DBF` is reported (merge message, or a comment for `.fi`), not read as text.
 - Worksheets: at most 256 columns of a range; `.PIX` pictures: at most 64M pixels (larger ones stay links).
+- Color `.PIX` pictures get their print colors (Inset's map from screen colors to EGA colors: the black
+  screen background becomes white paper). Not checked against a color printout; one-bit pictures are ink on paper.
 - `.df` in a document included with `.fi` is looked up in the main document's folder (WordStar's rule not
   verified). Files named in a document are read wherever the path points, also outside its folder.
 - RTF is checked against the reference output; the table of contents and index were also checked in

@@ -28,6 +28,8 @@ const
   IMAGE_EXTS: array[0..7] of string = ('.pix', '.png', '.pcx', '.gif', '.tif', '.tiff', '.bmp', '.jpg');
   { Inset PIX palette levels (2 bits per component as the EGA sets them: 1 = 2/3, 2 = 1/3) }
   PIX_LEVEL: array[0..3] of Byte = ($00, $AA, $55, $FF);
+  { the 16 EGA colors in these levels (R, G, B; brown 6 = 1, 2, 0) }
+  EGA_LEVELS = '000001010011100101120111222223232233322323332333';
 
 function IsImageExt(const ext: string): Boolean;
 var e: string;
@@ -55,6 +57,8 @@ function ReadPix(const data: TData): TFPMemoryImage;
 { Picture of an Inset PIX file. The file starts with a record count and a table of records (type
   word, length word, offset dword). Type 0: width at +18, height at +20, bits per pixel at +22;
   type 1: 16 palette entries (0, R, G, B); type 2: tile height, width, tiles down, across;
+  type 11h: its last 16 bytes map the screen colors to EGA colors for printing (black screen
+  background -> white paper);
   8000h + n: tile n, left to right, top to bottom (tiles in the last row / column may run past the
   picture). A tile holds its bit planes one after another; in a plane the first row is stored as
   is, each next row as a mask (a bit per byte of the row, high bit first) followed by the bytes
@@ -64,7 +68,7 @@ var recType: array of Integer;
     k, e, off, width, height, bpp, th, tw, down, across, rb, mb, stride, n, i, x0, y0, rows,
       plane, y, b, bit, kk, base, c, outW, outH, x, sx, sy: Integer;
     pix: array of Byte;
-    t, mask, row, pal, r0, r2: TData;
+    t, mask, row, pal, r0, r2, pmap: TData;
     colors: array[0..255] of TFPColor;
 
   function Rec(typ: Integer; out d: TData): Boolean;
@@ -150,6 +154,17 @@ begin
   { one bit per pixel: ink on paper (the palette of WORDSTAR.PIX says white on black, but its .PCX
     and PIX2PCX's FIG1.PCX both have the set bits black) }
   if bpp = 1 then pal := #0#3#3#3#0#0#0#0 else Rec(1, pal);
+  { colors as printed, not as on screen: Inset's own choice, not checked against a color printout }
+  if (bpp > 1) and Rec($11, pmap) and (Length(pmap) >= 16) then
+  begin
+    SetLength(pal, 64);
+    for c := 0 to 15 do
+    begin
+      e := Ord(pmap[Length(pmap) - 15 + c]) and 15;
+      pal[4 * c + 1] := #0;
+      for k := 1 to 3 do pal[4 * c + 1 + k] := Chr(Ord(EGA_LEVELS[3 * e + k]) - Ord('0'));
+    end;
+  end;
   for c := 0 to 255 do
   begin
     colors[c] := colBlack;
