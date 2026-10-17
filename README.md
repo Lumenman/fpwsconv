@@ -16,6 +16,7 @@ code is 1 if any failed. Subfolders are not searched.
 
 | Option | Meaning |
 |---|---|
+| `--version` | print the version and exit |
 | `-o OUTPUT` | output file name, or an existing folder to write it in (several files: output folder) |
 | `-t` | unformatted plain text instead of Markdown |
 | `-r` | RTF with fonts, margins, alignment, notes and pictures |

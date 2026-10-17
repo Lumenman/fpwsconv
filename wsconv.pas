@@ -9,9 +9,12 @@ uses
   {$ifdef go32v2}fpwidestring,{$endif}
   SysUtils, Classes, Math, wsutil, wsdoc, wsmerge, wsmd, wsrtf, wsfrom;
 
+const
+  VERSION = '1.1.0';
+
 procedure Usage;
 begin
-  WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] [-e CP] [-w] ws_file ...');
+  WriteLn('usage: wsconv [-h] [--version] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] [-e CP] [-w] ws_file ...');
   WriteLn;
   WriteLn('Convert a WordStar document to Markdown, plain text or RTF.');
   WriteLn;
@@ -226,6 +229,7 @@ begin
       arg := Copy(arg, 1, eq - 1);
     end;
     if (arg = '-h') or (arg = '--help') then begin Usage; Halt(0); end
+    else if arg = '--version' then begin WriteLn('wsconv ', VERSION); Halt(0); end
     else if (arg = '-t') or (arg = '--textmode') then textmode := True
     else if (arg = '-r') or (arg = '--rtf') then rtf := True
     else if (arg = '-q') or (arg = '--quotes') then quotes := True
