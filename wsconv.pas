@@ -11,7 +11,7 @@ uses
 
 procedure Usage;
 begin
-  WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] [-w] ws_file ...');
+  WriteLn('usage: wsconv [-h] [-o OUTPUT] [-t] [-r] [-q] [-m] [-s NAME=VALUE] [-c CP] [-e CP] [-w] ws_file ...');
   WriteLn;
   WriteLn('Convert a WordStar document to Markdown, plain text or RTF.');
   WriteLn;
@@ -30,6 +30,8 @@ begin
   WriteLn('  -c, --codepage CP     DOS code page of the text: 437, 866 (Russian / Ukrainian), 1125');
   WriteLn('                        (Ukrainian), 850 ... or auto (default: 866 if extended characters form');
   WriteLn('                        words, else 437)');
+  WriteLn('  -e, --encoding CP     encoding of the Markdown or text (output; input with -w): utf8 (default)');
+  WriteLn('                        or a DOS code page as for -c; DOS: of the -s values too');
 end;
 
 procedure Fail(const msg: string);
@@ -42,11 +44,11 @@ type
   EFail = class(Exception);           { a reported failure (Fail in single-file mode) }
 
 var
-  outFile, cpArg, arg, value, outName, outDir: string;
+  outFile, cpArg, encArg, arg, value, outName, outDir: string;
   textmode, rtf, quotes, merge, intoWs, batch: Boolean;
   preset: TVars;
-  codepage, k, i, eq, done, failed: Integer;
-  inputs, used: TStringList;
+  codepage, textCp, k, i, eq, done, failed: Integer;
+  inputs, used, sets: TStringList;
   base: string;
 
 function NextValue(const opt: string): string;
@@ -54,6 +56,36 @@ begin
   Inc(k);
   if k > ParamCount then Fail('argument ' + opt + ': expected one argument');
   Result := ParamStr(k);
+end;
+
+function ParseCp(const s: string): Integer;      { 866, cp866 ...; -1 if unknown }
+var v: string;
+begin
+  v := LowerCase(s);
+  if Copy(v, 1, 2) = 'cp' then v := Copy(v, 3, MaxInt);
+  Result := StrToIntDef(v, -1);
+  if not KnownCodepage(Result) then Result := -1;
+end;
+
+function TextDecode(const s: RawByteString): UStr;    { Markdown / text bytes in the -e encoding }
+begin
+  if textCp = 0 then Result := UTF8Decode(s) else Result := DecodeBytes(s, textCp);
+end;
+
+function TextEncode(const s: UStr; out missing: Integer): RawByteString;
+{ to the -e encoding; characters the code page lacks become ? }
+var j, b: Integer;
+begin
+  missing := 0;
+  if textCp = 0 then Exit(U8(s));
+  SetLength(Result, Length(s));
+  for j := 1 to Length(s) do
+  begin
+    if Ord(s[j]) < $80 then b := Ord(s[j]) else b := ExtByte(s[j], textCp);
+    if b < 0 then begin b := Ord('?'); Inc(missing); end
+    else if (b < $80) and (Ord(s[j]) >= $80) then begin b := Ord('?'); Inc(missing); end;  { ExtByte's 01h-1Fh glyphs }
+    Result[j] := Chr(b);
+  end;
 end;
 
 function OutExt: string;
@@ -122,7 +154,7 @@ begin
   begin
     if not ReadFileData(inFile, d) then raise EFail.Create('cannot read ' + inFile);
     if cp = 0 then cp := 1125;
-    outBytes := ToWs(UTF8Decode(d), (LowerCase(ExtractFileExt(inFile)) = '.md') or (LowerCase(ExtractFileExt(inFile)) = '.markdown'), cp, missing);
+    outBytes := ToWs(TextDecode(d), (LowerCase(ExtractFileExt(inFile)) = '.md') or (LowerCase(ExtractFileExt(inFile)) = '.markdown'), cp, missing);
     f := TFileStream.Create(value, fmCreate);
     try
       if Length(outBytes) > 0 then f.WriteBuffer(outBytes[1], Length(outBytes));
@@ -146,7 +178,7 @@ begin
                             cp, ExtractFileDir(ExpandFileName(value)));
   try
     text := StripChars(conv.Convert, #10) + #10;
-    outBytes := U8(text);
+    outBytes := TextEncode(text, missing);
     f := TFileStream.Create(value, fmCreate);
     try
       f.WriteBuffer(outBytes[1], Length(outBytes));
@@ -155,6 +187,7 @@ begin
     end;
     imgs := '';
     for name in conv.images do imgs := imgs + ', ' + name;
+    if missing > 0 then imgs := imgs + ', ' + IntToStr(missing) + ' character(s) not in code page ' + IntToStr(textCp) + ' (as ?)';
     WriteLn('Written: ', value, U8(imgs));
   finally
     conv.Free;
@@ -176,10 +209,11 @@ begin
   SetMultiByteRTLFileSystemCodePage(CP_UTF8);
   {$endif}
   SetExceptionMask([exInvalidOp, exDenormalized, exZeroDivide, exOverflow, exUnderflow, exPrecision]);
-  outFile := ''; cpArg := 'auto';
+  outFile := ''; cpArg := 'auto'; encArg := 'utf8';
   textmode := False; rtf := False; quotes := False; merge := False; intoWs := False; batch := False;
   preset := TVars.Create;
   inputs := TStringList.Create;
+  sets := TStringList.Create;
   k := 1;
   while k <= ParamCount do
   begin
@@ -210,21 +244,22 @@ begin
     else if (arg = '-s') or (arg = '--set') then
     begin
       if value = '' then value := NextValue(arg);
-      eq := Pos('=', value);
-      if eq > 0 then preset.AddOrSetValue(UTF8Decode(Copy(value, 1, eq - 1)), UTF8Decode(Copy(value, eq + 1, MaxInt)));
+      sets.Add(value);
     end
-    else if (Length(arg) > 2) and (arg[1] = '-') and (arg[2] in ['o', 'c', 's']) then
-    begin                                          { -oFILE, -c866, -sNAME=VALUE }
+    else if (arg = '-e') or (arg = '--encoding') then
+    begin
+      if value = '' then value := NextValue(arg);
+      encArg := value;
+    end
+    else if (Length(arg) > 2) and (arg[1] = '-') and (arg[2] in ['o', 'c', 's', 'e']) then
+    begin                                          { -oFILE, -c866, -sNAME=VALUE, -e866 }
       value := Copy(arg, 3, MaxInt);
       if value[1] = '=' then Delete(value, 1, 1);  { -o=FILE }
       case arg[2] of
         'o': outFile := value;
         'c': cpArg := value;
-        's':
-          begin
-            eq := Pos('=', value);
-            if eq > 0 then preset.AddOrSetValue(UTF8Decode(Copy(value, 1, eq - 1)), UTF8Decode(Copy(value, eq + 1, MaxInt)));
-          end;
+        's': sets.Add(value);
+        'e': encArg := value;
       end;
     end
     else if (Length(arg) > 1) and (arg[1] = '-') then Fail('unrecognized arguments: ' + arg)
@@ -240,10 +275,23 @@ begin
   codepage := 0;
   if LowerCase(cpArg) <> 'auto' then
   begin
-    value := LowerCase(cpArg);
-    if Copy(value, 1, 2) = 'cp' then value := Copy(value, 3, MaxInt);
-    codepage := StrToIntDef(value, -1);
-    if not KnownCodepage(codepage) then Fail('unknown code page: ' + cpArg);
+    codepage := ParseCp(cpArg);
+    if codepage < 0 then Fail('unknown code page: ' + cpArg);
+  end;
+  textCp := 0;
+  if (LowerCase(encArg) <> 'utf8') and (LowerCase(encArg) <> 'utf-8') then
+  begin
+    textCp := ParseCp(encArg);
+    if textCp < 0 then Fail('unknown encoding: ' + encArg);
+  end;
+  for value in sets do
+  begin
+    eq := Pos('=', value);
+    {$ifdef go32v2}    { the DOS command line is in the DOS code page; Windows passes UTF-8 }
+    if eq > 0 then preset.AddOrSetValue(TextDecode(Copy(value, 1, eq - 1)), TextDecode(Copy(value, eq + 1, MaxInt)));
+    {$else}
+    if eq > 0 then preset.AddOrSetValue(UTF8Decode(Copy(value, 1, eq - 1)), UTF8Decode(Copy(value, eq + 1, MaxInt)));
+    {$endif}
   end;
 
   if (inputs.Count = 1) and not batch then

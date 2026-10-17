@@ -24,6 +24,7 @@ code is 1 if any failed. Subfolders are not searched.
 | `-s NAME=VALUE` | value of a merge variable (answers `.av` prompts); repeatable |
 | `-w` | the other way: UTF-8 Markdown (`.md`, `.markdown`) or plain text to a WordStar document (`.ws`), code page 1125 unless `-c` |
 | `-c CP` | DOS code page of the text: 437, 866 (Russian / Ukrainian), 1125 (Ukrainian), 850 … or `auto` (866 if extended characters form words, else 437) |
+| `-e CP` | encoding of the Markdown or plain text: `utf8` (default) or a DOS code page as for `-c` — the output, or the input with `-w`; characters the code page lacks become `?`. In the DOS build also the encoding of `-s` values (the DOS command line is in the DOS code page) |
 
 What is handled: bold, italic, underline (`<u>` in Markdown), strike-out, super/subscript and other print controls; dot commands
 (headers, footers, margins, page breaks, comments); styles and paragraph numbering; tabs and columns;

@@ -1,0 +1,8 @@
+in.ws
+-t
+-c
+1125
+-e
+866
+-o
+got/__fpcout.txt
